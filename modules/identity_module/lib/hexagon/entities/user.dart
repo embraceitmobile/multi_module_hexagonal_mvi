@@ -4,11 +4,9 @@ class User {
   final String surname;
   final String userName;
   final String emailAddress;
-  final bool isFirstLogin;
   final String address;
   final String phoneNumber;
   final String imagePath;
-  final bool isActive;
 
   User({
     required this.id,
@@ -19,8 +17,6 @@ class User {
     required this.address,
     required this.phoneNumber,
     required this.imagePath,
-    this.isFirstLogin = false,
-    this.isActive = false,
   });
 
   User copyWith({
@@ -43,8 +39,6 @@ class User {
         address: address ?? this.address,
         phoneNumber: phoneNumber ?? this.phoneNumber,
         imagePath: imagePath ?? this.imagePath,
-        isFirstLogin: isFirstLogin ?? this.isFirstLogin,
-        isActive: isActive ?? this.isActive,
       );
 
   @override
@@ -59,9 +53,7 @@ class User {
           emailAddress == other.emailAddress &&
           address == other.address &&
           phoneNumber == other.phoneNumber &&
-          imagePath == other.imagePath &&
-          isFirstLogin == other.isFirstLogin &&
-          isActive == other.isActive;
+          imagePath == other.imagePath;
 
   @override
   int get hashCode =>
@@ -72,12 +64,10 @@ class User {
       emailAddress.hashCode ^
       address.hashCode ^
       phoneNumber.hashCode ^
-      imagePath.hashCode ^
-      isFirstLogin.hashCode ^
-      isActive.hashCode;
+      imagePath.hashCode;
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, surname: $surname, userName: $userName, emailAddress: $emailAddress, address: $address, phoneNumber: $phoneNumber, imagePath: $imagePath, isFirstLogin: $isFirstLogin, isActive: $isActive }';
+    return 'User{id: $id, name: $name, surname: $surname, userName: $userName, emailAddress: $emailAddress, address: $address, phoneNumber: $phoneNumber, imagePath: $imagePath }';
   }
 }
