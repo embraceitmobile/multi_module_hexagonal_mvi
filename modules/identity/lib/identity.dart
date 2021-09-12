@@ -1,4 +1,4 @@
-library identity_module;
+library identity;
 
 /// A Calculator.
 class Calculator {

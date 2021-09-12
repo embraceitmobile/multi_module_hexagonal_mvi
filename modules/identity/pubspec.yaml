@@ -1,4 +1,4 @@
-name: identity_module
+name: identity
 description: Module for User state and authentication
 version: 0.0.1
 publish_to: none
@@ -10,6 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  get_it: ^6.1.1
+  injectable: ^1.2.2
 
   core:
     path: ../core

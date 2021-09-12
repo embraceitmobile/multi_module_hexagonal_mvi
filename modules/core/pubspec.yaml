@@ -13,6 +13,8 @@ dependencies:
 
   freezed: ^0.14.2
   freezed_annotation: ^0.14.2
+  get_it: ^6.1.1
+
 
 dev_dependencies:
   flutter_test:
