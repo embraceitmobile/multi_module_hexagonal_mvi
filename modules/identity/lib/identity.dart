@@ -7,4 +7,4 @@ export 'hexagon/interfaces/auth_repo.dart';
 export 'hexagon/interfaces/user_repo.dart';
 export 'hexagon/use_cases/base/auth_use_cases.dart';
 export 'hexagon/use_cases/base/user_use_cases.dart';
-export 'routes/identity_routes.dart';
+export 'ui/routes/identity_routes.dart';
