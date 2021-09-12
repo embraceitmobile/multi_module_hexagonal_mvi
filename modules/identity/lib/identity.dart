@@ -1,7 +1,10 @@
 library identity;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'di/identity_injection.dart';
+export 'hexagon/entities/auth_state.dart';
+export 'hexagon/entities/user.dart';
+export 'hexagon/interfaces/auth_repo.dart';
+export 'hexagon/interfaces/user_repo.dart';
+export 'hexagon/use_cases/base/auth_use_cases.dart';
+export 'hexagon/use_cases/base/user_use_cases.dart';
+export 'routes/identity_routes.dart';
