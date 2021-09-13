@@ -1,7 +1,7 @@
 name: core
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+publish_to: none
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -14,6 +14,13 @@ dependencies:
   freezed: ^0.14.2
   freezed_annotation: ^0.14.2
   get_it: ^6.1.1
+  dio: ^4.0.0
+  sembast: ^3.0.2
+
+  cubivue_utils:
+    git:
+      url: git@bitbucket.org:embraceit/cubivueutils.git # using SSH authentication
+      ref: 48ffb347 # update ref to the latest commit in the master branch
 
 
 dev_dependencies:
