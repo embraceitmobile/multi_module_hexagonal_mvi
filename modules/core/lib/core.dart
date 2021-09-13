@@ -11,6 +11,5 @@ export 'models/exceptions/invalid_data_exception.dart';
 export 'models/exceptions/network_exception.dart';
 export 'models/exceptions/null_exception.dart';
 export 'models/exceptions/parse_exception.dart';
-export 'models/network/auth_response.dart';
 export 'models/network/base_response.dart';
 export 'models/state/state.dart';

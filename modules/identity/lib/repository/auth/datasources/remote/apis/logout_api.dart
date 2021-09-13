@@ -1,5 +1,12 @@
-const logoutEndpoint = "/logout";
+import 'package:core/models/network/base_response.dart';
 
-class LogoutRequest {}
+const logoutEndpoint = "api/TokenAuth/Logout";
 
-class LogoutResponse {}
+class LogoutResponse {
+  final bool success;
+
+  LogoutResponse(this.success);
+
+  factory LogoutResponse.fromBaseResponse(BaseResponse response) =>
+      LogoutResponse(response.success == true || response.result == true);
+}
