@@ -1,15 +1,6 @@
 import 'package:sembast/sembast.dart';
 
-abstract class Entity {
-  static const unique_key = 'unique_key';
-
-  /// DbMap should not contain any sub-lists
-  Map<String, dynamic> toEntityMap();
-
-  external factory Entity.fromEntityMap(Map<String, dynamic> map);
-
-  String get uniqueKey;
-}
+import 'entity.dart';
 
 class DbFilters {
   static Filter byUniqueId(String uniqueId) =>

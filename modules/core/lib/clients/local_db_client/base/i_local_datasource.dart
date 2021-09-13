@@ -1,6 +1,5 @@
+import 'package:core/clients/local_db_client/base/entity.dart';
 import 'package:sembast/sembast.dart';
-
-import 'models.dart';
 
 abstract class ILocalDataSource<T> {
   /// Insert a single [item] into database

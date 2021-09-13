@@ -1,16 +1,13 @@
 import 'package:core/core.dart';
 import 'package:identity_module/hexagon/entities/auth_state.dart';
+import 'package:identity_module/hexagon/entities/auth_token.dart';
 
 abstract class AuthRepository {
   Future<bool> get isAuthenticated;
 
-  Future<String?> get accessToken;
+  Future<AuthToken?> get authToken;
 
-  Future<String?> get refreshToken;
-
-  Future<void> saveAccessToken(String accessToken);
-
-  Future<void> saveRefreshToken(String refreshToken);
+  Future<bool> saveAuthToken(AuthToken authToken);
 
   Stream<State<AuthState>> observeAuthState();
 

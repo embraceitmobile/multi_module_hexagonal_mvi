@@ -2,9 +2,11 @@ import 'package:core/core.dart';
 import 'package:identity_module/repository/auth/datasources/remote/apis/change_password_api.dart';
 import 'package:identity_module/repository/auth/datasources/remote/apis/login_api.dart';
 import 'package:identity_module/repository/auth/datasources/remote/apis/logout_api.dart';
+import 'package:injectable/injectable.dart';
 
 import 'i_auth_remote_datasource.dart';
 
+@Singleton(as: IAuthRemoteDatasource)
 class AuthRemoteDatasource implements IAuthRemoteDatasource {
   static const String TAG = "UserApiImplementation";
   final IRemoteApiClient<BaseResponse> _apiClient;

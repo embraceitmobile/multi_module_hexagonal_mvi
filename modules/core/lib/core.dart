@@ -1,5 +1,6 @@
 library core;
 
+export 'clients/local_db_client/base/entity.dart';
 export 'clients/local_db_client/base/i_local_db_client.dart';
 export 'clients/local_db_client/base/i_local_db_client.dart';
 export 'clients/local_db_client/base/models.dart';

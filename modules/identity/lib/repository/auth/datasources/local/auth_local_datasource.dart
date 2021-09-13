@@ -2,7 +2,9 @@ import 'package:core/clients/local_db_client/base/i_local_db_client.dart';
 import 'package:core/clients/local_db_client/local_data_source.dart';
 import 'package:identity_module/repository/auth/datasources/local/i_auth_local_datasource.dart';
 import 'package:identity_module/repository/auth/datasources/local/models/auth_model.dart';
+import 'package:injectable/injectable.dart';
 
+@Singleton(as: IAuthLocalDatasource)
 class AuthLocalDatasource extends LocalDataSource<AuthModel>
     implements IAuthLocalDatasource {
   static const TAG = "AuthLocalDatasource";
@@ -15,7 +17,12 @@ class AuthLocalDatasource extends LocalDataSource<AuthModel>
           mapper: (map) => AuthModel.fromEntityMap(map),
         );
 
-  Future<bool> hasAuth() async => await count() > 0;
+  Future<AuthModel?> get auth async {
+    final authList = await find();
+    return authList.isEmpty ? null : authList.first;
+  }
+
+  Future<bool> hasAuth() async => await auth != null;
 
   Future<int> saveAuth(AuthModel auth) async => await insertOrUpdate(auth);
 

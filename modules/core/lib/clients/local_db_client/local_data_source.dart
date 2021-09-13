@@ -4,6 +4,7 @@ import 'package:core/clients/local_db_client/sembast_client.dart';
 import 'package:cubivue_utils/basic_utils.dart';
 import 'package:sembast/sembast.dart';
 
+import 'base/entity.dart';
 import 'base/i_local_datasource.dart';
 import 'base/i_local_db_client.dart';
 import 'base/models.dart';
