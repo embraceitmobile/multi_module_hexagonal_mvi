@@ -5,9 +5,9 @@ import 'package:identity_module/hexagon/entities/auth_token.dart';
 abstract class AuthRepository {
   Future<bool> get isAuthenticated;
 
-  Future<AuthToken?> get authToken;
+  Future<AuthInfo?> get authToken;
 
-  Future<bool> saveAuthToken(AuthToken authToken);
+  Future<bool> saveAuthToken(AuthInfo authToken);
 
   Stream<State<AuthState>> observeAuthState();
 

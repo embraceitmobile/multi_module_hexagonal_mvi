@@ -17,7 +17,7 @@ class AuthRepoImpl implements AuthRepository {
 
   AuthRepoImpl(this._localDatasource, this._remoteDatasource);
 
-  Future<AuthToken?> get authToken async {
+  Future<AuthInfo?> get authToken async {
     final authModel = await _localDatasource.auth;
     if (authModel == null) return null;
 
@@ -39,9 +39,10 @@ class AuthRepoImpl implements AuthRepository {
       final response = await _remoteDatasource.login(
           LoginRequest(userNameOrEmailAddress: email, password: password));
 
-      await saveAuthToken(AuthToken(
+      await saveAuthToken(AuthInfo(
         accessToken: response.accessToken,
         refreshToken: response.refreshToken,
+        userId: response.userId,
       ));
 
       return true;
@@ -71,10 +72,10 @@ class AuthRepoImpl implements AuthRepository {
   }
 
   @override
-  Future<bool> saveAuthToken(AuthToken authToken) async {
+  Future<bool> saveAuthToken(AuthInfo authToken) async {
     try {
       final result =
-          await _localDatasource.saveAuth(AuthModel.fromAuthToken(authToken));
+          await _localDatasource.saveAuth(AuthModel.fromAuthInfo(authToken));
       return result > 0;
     } on Exception {
       rethrow;

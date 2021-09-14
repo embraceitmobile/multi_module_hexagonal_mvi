@@ -1,6 +1,11 @@
-class AuthToken {
+class AuthInfo {
+  final int userId;
   final String accessToken;
   final String refreshToken;
 
-  const AuthToken({required this.accessToken, required this.refreshToken});
+  const AuthInfo({
+    required this.userId,
+    required this.accessToken,
+    required this.refreshToken,
+  });
 }
