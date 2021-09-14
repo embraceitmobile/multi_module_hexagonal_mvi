@@ -8,7 +8,7 @@ import 'package:identity/repository/user/datasources/remote/apis/get_user_api.da
 import 'package:identity/repository/user/datasources/remote/i_user_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 
-@Singleton(as: UserRepository)
+@Singleton(as: UserRepository, dependsOn: [AuthRepository])
 class UserRepoImpl implements UserRepository {
   final IUserLocalDatasource _localDatasource;
   final IRemoteUserDatasource _remoteDatasource;

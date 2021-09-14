@@ -1,9 +1,9 @@
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 
-import 'injection.config.dart';
+import 'identity_injection.config.dart';
 
 @injectableInit
 Future<void> configureIdentityInjection() async {
-  await $initGetIt(getIt);
+  $initGetIt(getIt);
 }

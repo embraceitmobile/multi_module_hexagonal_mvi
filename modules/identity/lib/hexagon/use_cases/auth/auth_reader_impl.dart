@@ -3,7 +3,7 @@ import 'package:identity/hexagon/interfaces/auth_repo.dart';
 import 'package:identity/hexagon/use_cases/auth/auth_use_cases.dart';
 import 'package:injectable/injectable.dart';
 
-@Singleton(as: AuthReader)
+@Singleton(as: AuthReader, dependsOn: [AuthRepository])
 class AuthReaderImpl implements AuthReader {
   final AuthRepository _repository;
 
