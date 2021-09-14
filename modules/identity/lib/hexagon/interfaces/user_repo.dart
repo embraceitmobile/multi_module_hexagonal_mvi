@@ -10,9 +10,9 @@ abstract class UserRepository {
 
   Future<bool> updateUser(User user);
 
-  Future<void> clearUsers();
+  Future<bool> removeUser(int userId);
 
-  Future<void> clearActiveUserSession();
+  Future<void> clearUsers();
 
   Stream<State<User>?> observeActiveUser();
 }

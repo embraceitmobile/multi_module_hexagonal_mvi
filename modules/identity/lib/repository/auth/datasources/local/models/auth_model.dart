@@ -5,14 +5,13 @@ class AuthModel implements StateEntity {
   final String? accessToken;
   final String? refreshToken;
   final LocalState state;
-
-  String get uniqueKey => "key";
+  final String uniqueKey;
 
   const AuthModel({
     this.accessToken,
     this.refreshToken,
     this.state = LocalState.success,
-  });
+  }) : uniqueKey = "key";
 
   factory AuthModel.fromEntityMap(Map<String, dynamic> map) => AuthModel(
         accessToken: map["accessToken"],
@@ -35,7 +34,13 @@ class AuthModel implements StateEntity {
         "accessToken": accessToken,
         "refreshToken": refreshToken,
         "state": state.toInt,
+        Entity.unique_key: uniqueKey,
       };
+
+  AuthToken? get toAuthToken {
+    if (accessToken == null || refreshToken == null) return null;
+    return AuthToken(accessToken: accessToken!, refreshToken: refreshToken!);
+  }
 
   AuthModel copyWith({
     String? accessToken,

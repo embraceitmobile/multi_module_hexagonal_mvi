@@ -23,9 +23,7 @@ class AuthRepoImpl implements AuthRepository {
 
     switch (authModel.state) {
       case LocalState.success:
-        return AuthToken(
-            accessToken: authModel.accessToken!,
-            refreshToken: authModel.refreshToken!);
+        return authModel.toAuthToken;
       case LocalState.loading:
       case LocalState.failed:
         return null;

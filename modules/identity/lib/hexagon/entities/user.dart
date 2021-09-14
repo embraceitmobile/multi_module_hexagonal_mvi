@@ -8,7 +8,7 @@ class User {
   final String phoneNumber;
   final String imagePath;
 
-  User({
+  const User({
     required this.id,
     required this.name,
     required this.surname,
