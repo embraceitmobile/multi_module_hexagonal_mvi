@@ -14,6 +14,24 @@ class RemoteUserDatasource implements IRemoteUserDatasource {
   // injecting api client instance
   RemoteUserDatasource(this._apiClient);
 
+  Future<GetUserResponse> getUserById(GetUserRequest request) async {
+    try {
+      final response =
+          await _apiClient.post(getUserByIdEndpoint, data: request.toMap);
+
+      if (response == null)
+        throw InvalidDataException("Invalid response received from server");
+
+      return GetUserResponse.fromMap(response.result);
+    } on InvalidDataException {
+      rethrow;
+    } on NetworkException {
+      rethrow;
+    } on Exception catch (ex) {
+      throw NetworkException.fromException(ex);
+    }
+  }
+
   Future<GetUserResponse> getActiveUser() async {
     try {
       final response = await _apiClient.get(getUserEndpoint);

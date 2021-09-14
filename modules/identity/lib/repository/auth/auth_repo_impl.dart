@@ -17,7 +17,7 @@ class AuthRepoImpl implements AuthRepository {
 
   AuthRepoImpl(this._localDatasource, this._remoteDatasource);
 
-  Future<AuthInfo?> get authToken async {
+  Future<AuthInfo?> get authInfo async {
     final authModel = await _localDatasource.auth;
     if (authModel == null) return null;
 

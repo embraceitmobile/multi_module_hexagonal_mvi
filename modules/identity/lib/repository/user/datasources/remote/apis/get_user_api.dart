@@ -3,15 +3,18 @@ import 'dart:convert';
 import 'package:core/models/exceptions/invalid_data_exception.dart';
 
 const getUserEndpoint = "api/ServiceWorker/GetProfile";
+const getUserByIdEndpoint = "api/ServiceWorker/GetProfile";
 
 class GetUserRequest {
   final int userId;
 
   const GetUserRequest(this.userId);
+
+  Map<String, dynamic> get toMap => {"userId": userId};
 }
 
 class GetUserResponse {
-  final int? id;
+  final int id;
   final String? name;
   final String? surname;
   final String? userName;
@@ -37,7 +40,7 @@ class GetUserResponse {
 
   factory GetUserResponse.fromMap(Map<String, dynamic> map) {
     final userMap = map["user"];
-    if (userMap == null)
+    if (userMap == null || userMap["id"] == null)
       throw InvalidDataException(
           "Invalid response received from server for GetUserResponse");
 

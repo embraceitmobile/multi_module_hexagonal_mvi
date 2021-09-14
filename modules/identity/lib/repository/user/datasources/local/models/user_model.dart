@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/user.dart';
+import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 
 class UserModel implements StateEntity {
   final int id;
@@ -60,6 +61,19 @@ class UserModel implements StateEntity {
         state: LocalState.success,
       );
 
+  factory UserModel.fromUserResponse(GetUserResponse user) => UserModel(
+        id: user.id,
+        name: user.name,
+        surname: user.surname,
+        userName: user.userName,
+        emailAddress: user.emailAddress,
+        address: user.address,
+        phoneNumber: user.phoneNumber,
+        imagePath: user.imagePath,
+        isActive: true,
+        state: LocalState.success,
+      );
+
   @override
   Map<String, dynamic> toEntityMap() => {
         "id": id,
@@ -74,24 +88,16 @@ class UserModel implements StateEntity {
         Entity.unique_key: uniqueKey,
       };
 
-  User? get toUser {
-    switch (state) {
-      case LocalState.success:
-        return User(
-          id: id,
-          name: name ?? "",
-          userName: userName ?? "",
-          surname: surname ?? "",
-          emailAddress: emailAddress ?? "",
-          address: address ?? "",
-          phoneNumber: phoneNumber ?? "",
-          imagePath: imagePath ?? "",
-        );
-      case LocalState.loading:
-      case LocalState.failed:
-        return null;
-    }
-  }
+  User get toUser => User(
+        id: id,
+        name: name ?? "",
+        userName: userName ?? "",
+        surname: surname ?? "",
+        emailAddress: emailAddress ?? "",
+        address: address ?? "",
+        phoneNumber: phoneNumber ?? "",
+        imagePath: imagePath ?? "",
+      );
 
   UserModel copyWith(
           {String? name,
