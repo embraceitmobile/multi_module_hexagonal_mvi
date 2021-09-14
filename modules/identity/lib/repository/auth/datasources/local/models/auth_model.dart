@@ -1,16 +1,16 @@
 import 'package:core/core.dart';
 import 'package:identity_module/hexagon/entities/auth_token.dart';
 
-class AuthModel implements AuthToken, StateEntity {
-  final String accessToken;
-  final String refreshToken;
+class AuthModel implements StateEntity {
+  final String? accessToken;
+  final String? refreshToken;
   final LocalState state;
 
   String get uniqueKey => "key";
 
   const AuthModel({
-    required this.accessToken,
-    required this.refreshToken,
+    this.accessToken,
+    this.refreshToken,
     this.state = LocalState.success,
   });
 
@@ -26,17 +26,9 @@ class AuthModel implements AuthToken, StateEntity {
         state: LocalState.success,
       );
 
-  factory AuthModel.loading() => AuthModel(
-        accessToken: "",
-        refreshToken: "",
-        state: LocalState.loading,
-      );
+  factory AuthModel.loading() => AuthModel(state: LocalState.loading);
 
-  factory AuthModel.failed() => AuthModel(
-        accessToken: "",
-        refreshToken: "",
-        state: LocalState.failed,
-      );
+  factory AuthModel.failed() => AuthModel(state: LocalState.failed);
 
   @override
   Map<String, dynamic> toEntityMap() => {

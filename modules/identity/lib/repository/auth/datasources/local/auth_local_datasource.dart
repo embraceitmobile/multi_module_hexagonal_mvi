@@ -1,5 +1,6 @@
 import 'package:core/clients/local_db_client/base/i_local_db_client.dart';
 import 'package:core/clients/local_db_client/local_data_source.dart';
+import 'package:core/core.dart';
 import 'package:identity_module/repository/auth/datasources/local/i_auth_local_datasource.dart';
 import 'package:identity_module/repository/auth/datasources/local/models/auth_model.dart';
 import 'package:injectable/injectable.dart';
@@ -22,7 +23,10 @@ class AuthLocalDatasource extends LocalDataSource<AuthModel>
     return authList.isEmpty ? null : authList.first;
   }
 
-  Future<bool> hasAuth() async => await auth != null;
+  Future<bool> hasAuth() async {
+    final authModel = await auth;
+    return authModel != null && authModel.state == LocalState.success;
+  }
 
   Future<int> saveAuth(AuthModel auth) async => await insertOrUpdate(auth);
 

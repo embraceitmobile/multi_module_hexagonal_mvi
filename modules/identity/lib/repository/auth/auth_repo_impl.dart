@@ -17,7 +17,20 @@ class AuthRepoImpl implements AuthRepository {
 
   AuthRepoImpl(this._localDatasource, this._remoteDatasource);
 
-  Future<AuthToken?> get authToken async => await _localDatasource.auth;
+  Future<AuthToken?> get authToken async {
+    final authModel = await _localDatasource.auth;
+    if (authModel == null) return null;
+
+    switch (authModel.state) {
+      case LocalState.success:
+        return AuthToken(
+            accessToken: authModel.accessToken!,
+            refreshToken: authModel.refreshToken!);
+      case LocalState.loading:
+      case LocalState.failed:
+        return null;
+    }
+  }
 
   Future<bool> get isAuthenticated async => await _localDatasource.hasAuth();
 
@@ -93,8 +106,6 @@ class AuthRepoImpl implements AuthRepository {
           return State.success(AuthState.Authenticated);
         case LocalState.failed:
           return State.error(Exception("Error in getting auth state"));
-        default:
-          return State.nullOrEmpty();
       }
     });
   }
