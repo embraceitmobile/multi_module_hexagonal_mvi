@@ -1,8 +1,8 @@
 import 'package:core/clients/local_db_client/base/i_local_db_client.dart';
 import 'package:core/clients/local_db_client/local_data_source.dart';
 import 'package:core/core.dart';
-import 'package:identity_module/repository/auth/datasources/local/i_auth_local_datasource.dart';
-import 'package:identity_module/repository/auth/datasources/local/models/auth_model.dart';
+import 'package:identity/repository/auth/datasources/local/i_auth_local_datasource.dart';
+import 'package:identity/repository/auth/datasources/local/models/auth_model.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: IAuthLocalDatasource)
@@ -19,8 +19,8 @@ class AuthLocalDatasource extends LocalDataSource<AuthModel>
         );
 
   Future<AuthModel?> get auth async {
-    final authList = await find();
-    return authList.isEmpty ? null : authList.first;
+    final result = await find();
+    return result.firstOrNull();
   }
 
   Future<bool> hasAuth() async {

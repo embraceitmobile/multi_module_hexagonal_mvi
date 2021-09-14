@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:identity_module/hexagon/entities/auth_state.dart';
+import 'package:identity/hexagon/entities/auth_state.dart';
 
 abstract class AuthReader {
   Future<bool> get isLoggedIn;

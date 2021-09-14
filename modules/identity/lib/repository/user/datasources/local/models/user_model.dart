@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:identity_module/hexagon/entities/user.dart';
+import 'package:identity/hexagon/entities/user.dart';
 
 class UserModel implements StateEntity {
   final int id;
@@ -10,6 +10,7 @@ class UserModel implements StateEntity {
   final String? address;
   final String? phoneNumber;
   final String? imagePath;
+  final bool? isActive;
 
   final LocalState state;
   final String uniqueKey;
@@ -23,8 +24,22 @@ class UserModel implements StateEntity {
     this.address,
     this.phoneNumber,
     this.imagePath,
+    this.isActive,
     required this.state,
   }) : uniqueKey = '$id';
+
+  factory UserModel.fromEntityMap(Map<String, dynamic> map) => UserModel(
+        id: map["id"],
+        name: map["name"],
+        surname: map["surname"],
+        emailAddress: map["emailAddress"],
+        userName: map["userName"],
+        address: map["address"],
+        phoneNumber: map["phoneNumber"],
+        imagePath: map["imagePath"],
+        isActive: map["isActive"],
+        state: (map["state"] as int).toState,
+      );
 
   factory UserModel.loading(int userId) =>
       UserModel(id: userId, state: LocalState.loading);
@@ -41,6 +56,7 @@ class UserModel implements StateEntity {
         address: user.address,
         phoneNumber: user.phoneNumber,
         imagePath: user.imagePath,
+        isActive: true,
         state: LocalState.success,
       );
 
@@ -85,6 +101,7 @@ class UserModel implements StateEntity {
           String? address,
           String? phoneNumber,
           String? imagePath,
+          bool? isActive,
           LocalState? state}) =>
       UserModel(
         id: id,
@@ -95,6 +112,7 @@ class UserModel implements StateEntity {
         address: address ?? this.address,
         phoneNumber: phoneNumber ?? this.phoneNumber,
         imagePath: imagePath ?? this.imagePath,
+        isActive: isActive ?? this.isActive,
         state: state ?? this.state,
       );
 }

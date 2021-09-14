@@ -1,11 +1,11 @@
 import 'package:core/core.dart';
 import 'package:core/models/state/state.dart';
-import 'package:identity_module/hexagon/entities/auth_token.dart';
-import 'package:identity_module/identity.dart';
-import 'package:identity_module/repository/auth/datasources/local/i_auth_local_datasource.dart';
-import 'package:identity_module/repository/auth/datasources/local/models/auth_model.dart';
-import 'package:identity_module/repository/auth/datasources/remote/apis/change_password_api.dart';
-import 'package:identity_module/repository/auth/datasources/remote/i_auth_remote_datasource.dart';
+import 'package:identity/hexagon/entities/auth_info.dart';
+import 'package:identity/identity.dart';
+import 'package:identity/repository/auth/datasources/local/i_auth_local_datasource.dart';
+import 'package:identity/repository/auth/datasources/local/models/auth_model.dart';
+import 'package:identity/repository/auth/datasources/remote/apis/change_password_api.dart';
+import 'package:identity/repository/auth/datasources/remote/i_auth_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 
 import 'datasources/remote/apis/login_api.dart';

@@ -1,5 +1,8 @@
 library core;
 
+export 'package:dio/dio.dart';
+export 'package:sembast/sembast.dart';
+
 export 'clients/local_db_client/base/entity.dart';
 export 'clients/local_db_client/base/i_local_db_client.dart';
 export 'clients/local_db_client/base/i_local_db_client.dart';

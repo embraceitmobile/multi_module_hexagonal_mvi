@@ -198,3 +198,7 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
         snapshots.map((snapshot) => mapper(snapshot.value)).toList());
   }
 }
+
+extension IterableUtils on Iterable {
+  T? firstOrNull<T>() => this.isEmpty ? null : this.first;
+}

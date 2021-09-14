@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:identity_module/hexagon/entities/user.dart';
+import 'package:identity/hexagon/entities/user.dart';
 
 abstract class UserReader {
   Future<User?> get activeUser;

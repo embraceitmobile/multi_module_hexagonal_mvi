@@ -1,4 +1,4 @@
-import 'package:identity_module/repository/auth/datasources/local/models/auth_model.dart';
+import 'package:identity/repository/auth/datasources/local/models/auth_model.dart';
 
 abstract class IAuthLocalDatasource {
   Future<AuthModel?> get auth;

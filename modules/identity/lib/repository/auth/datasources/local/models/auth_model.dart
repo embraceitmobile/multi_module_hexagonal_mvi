@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:identity_module/hexagon/entities/auth_token.dart';
+import 'package:identity/hexagon/entities/auth_info.dart';
 
 class AuthModel implements StateEntity {
   final int? userId;
