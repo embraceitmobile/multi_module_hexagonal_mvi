@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'state.dart';
+part of 'data_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -80,7 +80,7 @@ mixin _$State<T> {
 
 /// @nodoc
 abstract class $StateCopyWith<T, $Res> {
-  factory $StateCopyWith(State<T> value, $Res Function(State<T>) then) =
+  factory $StateCopyWith(DataState<T> value, $Res Function(DataState<T>) then) =
       _$StateCopyWithImpl<T, $Res>;
 }
 
@@ -88,9 +88,9 @@ abstract class $StateCopyWith<T, $Res> {
 class _$StateCopyWithImpl<T, $Res> implements $StateCopyWith<T, $Res> {
   _$StateCopyWithImpl(this._value, this._then);
 
-  final State<T> _value;
+  final DataState<T> _value;
   // ignore: unused_field
-  final $Res Function(State<T>) _then;
+  final $Res Function(DataState<T>) _then;
 }
 
 /// @nodoc
@@ -205,7 +205,7 @@ class _$Data<T> implements Data<T> {
   }
 }
 
-abstract class Data<T> implements State<T> {
+abstract class Data<T> implements DataState<T> {
   const factory Data(T data) = _$Data<T>;
 
   T get data => throw _privateConstructorUsedError;
@@ -300,7 +300,7 @@ class _$Loading<T> implements Loading<T> {
   }
 }
 
-abstract class Loading<T> implements State<T> {
+abstract class Loading<T> implements DataState<T> {
   const factory Loading() = _$Loading<T>;
 }
 
@@ -416,7 +416,7 @@ class _$Error<T> implements Error<T> {
   }
 }
 
-abstract class Error<T> implements State<T> {
+abstract class Error<T> implements DataState<T> {
   const factory Error(Exception error) = _$Error<T>;
 
   Exception get error => throw _privateConstructorUsedError;
@@ -514,6 +514,6 @@ class _$NullOrEmpty<T> implements NullOrEmpty<T> {
   }
 }
 
-abstract class NullOrEmpty<T> implements State<T> {
+abstract class NullOrEmpty<T> implements DataState<T> {
   const factory NullOrEmpty() = _$NullOrEmpty<T>;
 }

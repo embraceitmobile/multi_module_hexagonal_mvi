@@ -20,7 +20,7 @@ class AuthModel implements StateEntity {
         userId: map["userId"],
         accessToken: map["accessToken"],
         refreshToken: map["refreshToken"],
-        state: (map["state"] as int).toState,
+        state: (map["data_state"] as int).toState,
       );
 
   factory AuthModel.fromAuthInfo(AuthInfo authInfo) => AuthModel(
@@ -39,7 +39,7 @@ class AuthModel implements StateEntity {
         "userId": userId,
         "accessToken": accessToken,
         "refreshToken": refreshToken,
-        "state": state.toInt,
+        "data_state": state.toInt,
         Entity.unique_key: uniqueKey,
       };
 

@@ -39,7 +39,7 @@ class UserModel implements StateEntity {
         phoneNumber: map["phoneNumber"],
         imagePath: map["imagePath"],
         isActive: map["isActive"],
-        state: (map["state"] as int).toState,
+        state: (map["data_state"] as int).toState,
       );
 
   factory UserModel.loading(int userId) =>
@@ -84,7 +84,7 @@ class UserModel implements StateEntity {
         "address": address,
         "phoneNumber": phoneNumber,
         "imagePath": imagePath,
-        "state": state.toInt,
+        "data_state": state.toInt,
         Entity.unique_key: uniqueKey,
       };
 

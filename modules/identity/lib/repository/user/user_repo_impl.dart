@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:core/models/state/state.dart';
 import 'package:identity/hexagon/entities/user.dart';
 import 'package:identity/hexagon/interfaces/auth_repo.dart';
 import 'package:identity/hexagon/interfaces/user_repo.dart';
@@ -15,7 +14,7 @@ class UserRepoImpl implements UserRepository {
   final IRemoteUserDatasource _remoteDatasource;
   final AuthRepository _authRepository;
 
-  UserRepoImpl(
+  const UserRepoImpl(
       this._localDatasource, this._remoteDatasource, this._authRepository);
 
   Future<User?> get activeUser async {
@@ -71,32 +70,57 @@ class UserRepoImpl implements UserRepository {
   }
 
   Future<bool> saveUser(User user) async {
-    return await _localDatasource.saveUser(UserModel.fromUser(user));
+    try {
+      return await _localDatasource.saveUser(UserModel.fromUser(user));
+    } on Exception {
+      rethrow;
+    }
   }
 
   Future<bool> updateUser(User user) async {
-    return await _localDatasource.updateUser(UserModel.fromUser(user));
+    try {
+      return await _localDatasource.updateUser(UserModel.fromUser(user));
+    } on Exception {
+      rethrow;
+    }
   }
 
   Future<bool> removeUser(int userId) async {
-    return await _localDatasource.removeUser(userId);
+    try {
+      return await _localDatasource.removeUser(userId);
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  Future<List<User>> get users async {
+    try {
+      final result = await _localDatasource.users;
+      return result.map((user) => user.toUser).toList();
+    } on Exception {
+      rethrow;
+    }
   }
 
   Future<bool> clearUsers() async {
-    return await _localDatasource.clearUsers();
+    try {
+      return await _localDatasource.clearUsers();
+    } on Exception {
+      rethrow;
+    }
   }
 
-  Stream<State<User>> observeActiveUser() {
+  Stream<DataState<User>> observeActiveUser() {
     return _localDatasource.observeActiveUser().map((user) {
-      if (user == null) return State.nullOrEmpty();
+      if (user == null) return DataState.nullOrEmpty();
 
       switch (user.state) {
         case LocalState.success:
-          return State.success(user.toUser);
+          return DataState.success(user.toUser);
         case LocalState.loading:
-          return State.loading();
+          return DataState.loading();
         case LocalState.failed:
-          return State.error(Exception());
+          return DataState.error(Exception());
       }
     });
   }

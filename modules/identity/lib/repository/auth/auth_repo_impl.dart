@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:core/models/state/state.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
 import 'package:identity/identity.dart';
 import 'package:identity/repository/auth/datasources/local/i_auth_local_datasource.dart';
@@ -15,7 +14,7 @@ class AuthRepoImpl implements AuthRepository {
   final IAuthLocalDatasource _localDatasource;
   final IAuthRemoteDatasource _remoteDatasource;
 
-  AuthRepoImpl(this._localDatasource, this._remoteDatasource);
+  const AuthRepoImpl(this._localDatasource, this._remoteDatasource);
 
   Future<AuthInfo?> get authInfo async {
     final authModel = await _localDatasource.auth;
@@ -32,7 +31,6 @@ class AuthRepoImpl implements AuthRepository {
 
   Future<bool> get isAuthenticated async => await _localDatasource.hasAuth();
 
-  @override
   Future<bool> login(String email, String password) async {
     try {
       await _localDatasource.saveAuth(AuthModel.loading());
@@ -52,26 +50,28 @@ class AuthRepoImpl implements AuthRepository {
     }
   }
 
-  @override
   Future<bool> logoutActiveUser({bool isForceLogout = false}) async {
-    final auth = await _localDatasource.auth;
+    try {
+      final auth = await _localDatasource.auth;
 
-    if (!isForceLogout) {
-      try {
-        if (auth == null)
-          throw InvalidDataException("No active user found to logout");
-        await _localDatasource
-            .saveAuth(auth.copyWith(state: LocalState.loading));
-        await _remoteDatasource.logout();
-      } on Exception {
-        rethrow;
+      if (!isForceLogout) {
+        try {
+          if (auth == null)
+            throw InvalidDataException("No active user found to logout");
+          await _localDatasource
+              .saveAuth(auth.copyWith(state: LocalState.loading));
+          await _remoteDatasource.logout();
+        } on Exception {
+          rethrow;
+        }
       }
-    }
 
-    return await _localDatasource.removeAuth();
+      return await _localDatasource.removeAuth();
+    } on Exception {
+      rethrow;
+    }
   }
 
-  @override
   Future<bool> saveAuthToken(AuthInfo authToken) async {
     try {
       final result =
@@ -93,18 +93,17 @@ class AuthRepoImpl implements AuthRepository {
     }
   }
 
-  @override
-  Stream<State<AuthState>> observeAuthState() {
+  Stream<DataState<AuthState>> observeAuthState() {
     return _localDatasource.observeAuth().map((auth) {
-      if (auth == null) return State.success(AuthState.Unauthenticated);
+      if (auth == null) return DataState.success(AuthState.Unauthenticated);
 
       switch (auth.state) {
         case LocalState.loading:
-          return State.loading();
+          return DataState.loading();
         case LocalState.success:
-          return State.success(AuthState.Authenticated);
+          return DataState.success(AuthState.Authenticated);
         case LocalState.failed:
-          return State.error(Exception("Error in getting auth state"));
+          return DataState.error(Exception("Error in getting auth data_state"));
       }
     });
   }

@@ -9,7 +9,7 @@ abstract class AuthRepository {
 
   Future<bool> saveAuthToken(AuthInfo authToken);
 
-  Stream<State<AuthState>> observeAuthState();
+  Stream<DataState<AuthState>> observeAuthState();
 
   Future<bool> login(String email, String password);
 

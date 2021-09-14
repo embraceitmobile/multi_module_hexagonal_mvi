@@ -12,7 +12,7 @@ class AuthRemoteDatasource implements IAuthRemoteDatasource {
   final IRemoteApiClient<BaseResponse> _apiClient;
 
   // injecting api client instance
-  AuthRemoteDatasource(this._apiClient);
+  const AuthRemoteDatasource(this._apiClient);
 
   Future<LoginResponse> login(LoginRequest request) async {
     try {

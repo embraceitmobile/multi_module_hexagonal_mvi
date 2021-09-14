@@ -12,7 +12,7 @@ class RemoteUserDatasource implements IRemoteUserDatasource {
   final IRemoteApiClient<BaseResponse> _apiClient;
 
   // injecting api client instance
-  RemoteUserDatasource(this._apiClient);
+  const RemoteUserDatasource(this._apiClient);
 
   Future<GetUserResponse> getUserById(GetUserRequest request) async {
     try {

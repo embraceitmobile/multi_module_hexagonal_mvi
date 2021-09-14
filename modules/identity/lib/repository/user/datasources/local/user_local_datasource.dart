@@ -36,6 +36,8 @@ class UserLocalDatasource extends LocalDataSource<UserModel>
   Future<bool> removeUser(int userId) async =>
       await deleteById(userId.toString()) > 0;
 
+  Future<List<UserModel>> get users async => await find();
+
   Future<bool> clearUsers() async => await clear() > 0;
 
   Stream<UserModel?> observeActiveUser() {

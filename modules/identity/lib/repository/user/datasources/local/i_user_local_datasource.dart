@@ -11,6 +11,8 @@ abstract class IUserLocalDatasource {
 
   Future<bool> removeUser(int userId);
 
+  Future<List<UserModel>> get users;
+
   Future<bool> clearUsers();
 
   Stream<UserModel?> observeActiveUser();
