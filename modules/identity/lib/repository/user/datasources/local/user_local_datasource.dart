@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 
 import 'models/user_model.dart';
 
+@Environment("repo")
 @Singleton(as: IUserLocalDatasource)
 class UserLocalDatasource extends LocalDataSource<UserModel>
     implements IUserLocalDatasource {

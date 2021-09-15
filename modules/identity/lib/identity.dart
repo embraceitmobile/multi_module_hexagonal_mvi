@@ -1,6 +1,5 @@
 library identity;
 
-export 'di/identity_injection.dart';
 export 'hexagon/entities/auth_state.dart';
 export 'hexagon/entities/user.dart';
 export 'hexagon/interfaces/auth_repo.dart';

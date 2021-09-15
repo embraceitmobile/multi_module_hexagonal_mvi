@@ -1,18 +1,18 @@
-import 'package:core/clients/remote_api_client/base/i_remote_api_client.dart';
 import 'package:core/core.dart';
 import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 import 'package:identity/repository/user/datasources/remote/apis/update_profile_api.dart';
 import 'package:identity/repository/user/datasources/remote/i_user_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 
-@Singleton(as: IRemoteUserDatasource)
-class RemoteUserDatasource implements IRemoteUserDatasource {
+@Environment("repo")
+@Singleton(as: IUserRemoteDatasource)
+class UserRemoteDatasource implements IUserRemoteDatasource {
   static const String TAG = "RemoteUserDatasource";
 
   final IRemoteApiClient<BaseResponse> _apiClient;
 
   // injecting api client instance
-  const RemoteUserDatasource(this._apiClient);
+  const UserRemoteDatasource(this._apiClient);
 
   Future<GetUserResponse> getUserById(GetUserRequest request) async {
     try {

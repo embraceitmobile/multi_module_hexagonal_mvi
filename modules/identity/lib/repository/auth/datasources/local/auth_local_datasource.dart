@@ -5,6 +5,7 @@ import 'package:identity/repository/auth/datasources/local/i_auth_local_datasour
 import 'package:identity/repository/auth/datasources/local/models/auth_model.dart';
 import 'package:injectable/injectable.dart';
 
+@Environment("repo")
 @Singleton(as: IAuthLocalDatasource)
 class AuthLocalDatasource extends LocalDataSource<AuthModel>
     implements IAuthLocalDatasource {

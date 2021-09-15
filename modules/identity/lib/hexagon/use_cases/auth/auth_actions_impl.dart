@@ -2,7 +2,7 @@ import 'package:identity/hexagon/interfaces/auth_repo.dart';
 import 'package:identity/hexagon/use_cases/auth/auth_use_cases.dart';
 import 'package:injectable/injectable.dart';
 
-@Singleton(as: AuthActions, dependsOn: [AuthRepository])
+@Singleton(as: AuthActions)
 class AuthActionsImpl implements AuthActions {
   final AuthRepository _repository;
 

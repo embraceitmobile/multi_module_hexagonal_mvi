@@ -9,12 +9,13 @@ import 'package:injectable/injectable.dart';
 
 import 'datasources/remote/apis/login_api.dart';
 
+@Environment("repo")
 @Singleton(as: AuthRepository)
-class AuthRepoImpl implements AuthRepository {
+class AuthRepositoryImpl implements AuthRepository {
   final IAuthLocalDatasource _localDatasource;
   final IAuthRemoteDatasource _remoteDatasource;
 
-  const AuthRepoImpl(this._localDatasource, this._remoteDatasource);
+  const AuthRepositoryImpl(this._localDatasource, this._remoteDatasource);
 
   Future<AuthInfo?> get authInfo async {
     final authModel = await _localDatasource.auth;

@@ -8,13 +8,14 @@ import 'package:identity/repository/user/datasources/remote/apis/get_user_api.da
 import 'package:identity/repository/user/datasources/remote/i_user_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 
-@Singleton(as: UserRepository, dependsOn: [AuthRepository])
-class UserRepoImpl implements UserRepository {
+@Environment("repo")
+@Singleton(as: UserRepository)
+class UserRepositoryImpl implements UserRepository {
   final IUserLocalDatasource _localDatasource;
-  final IRemoteUserDatasource _remoteDatasource;
+  final IUserRemoteDatasource _remoteDatasource;
   final AuthRepository _authRepository;
 
-  const UserRepoImpl(
+  const UserRepositoryImpl(
       this._localDatasource, this._remoteDatasource, this._authRepository);
 
   Future<User?> get activeUser async {
