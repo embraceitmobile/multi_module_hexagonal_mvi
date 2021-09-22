@@ -36,6 +36,6 @@ abstract class _LoginStore with Store {
   }
 
   void dispose() {
-    getIt.unregister<LoginStore>(instance: this);
+    getIt.resetLazySingleton<LoginStore>(instance: this);
   }
 }

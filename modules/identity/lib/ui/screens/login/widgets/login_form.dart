@@ -30,6 +30,7 @@ class _LoginFormState extends State<LoginForm> {
     _userNameController.dispose();
     _passwordController.dispose();
 
+    _loginFormStore.dispose();
     super.dispose();
   }
 
