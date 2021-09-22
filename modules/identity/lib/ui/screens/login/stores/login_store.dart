@@ -27,7 +27,7 @@ abstract class _LoginStore with Store {
       _authState.value ?? DataState.nullOrEmpty();
 
   @action
-  Future<bool?> login({required String email, required String password}) async {
+  Future<bool?> login(String email, String password) async {
     try {
       return _authActions.login(email: email, password: password);
     } on Exception catch (e) {

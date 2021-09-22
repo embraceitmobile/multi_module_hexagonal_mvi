@@ -83,8 +83,8 @@ class _LoginFormState extends State<LoginForm> {
           onFieldSubmitted: (value) {
             if (_loginFormStore.canLogin)
               _loginStore.login(
-                email: _loginFormStore.userId,
-                password: _loginFormStore.password,
+                _loginFormStore.userId,
+                _loginFormStore.password,
               );
           },
         ),
@@ -109,8 +109,8 @@ class _LoginFormState extends State<LoginForm> {
                     DeviceUtils.hideKeyboard(context);
                     if (_loginFormStore.canLogin) {
                       _loginStore.login(
-                        email: _loginFormStore.userId,
-                        password: _loginFormStore.password,
+                        _loginFormStore.userId,
+                        _loginFormStore.password,
                       );
                     } else {
                       SnackBarUtils.createErrorMessage(
