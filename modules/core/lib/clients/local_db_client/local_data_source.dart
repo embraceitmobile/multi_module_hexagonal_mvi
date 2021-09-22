@@ -197,6 +197,19 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
     return query.onSnapshots(_dbClient.database).map((snapshots) =>
         snapshots.map((snapshot) => mapper(snapshot.value)).toList());
   }
+
+  /// Listen to the changes in the db using the provided query given in [filter]
+  /// returns a [Stream] of [T] as [Stream<T?>] that can be null.
+  /// In order to observe the changes emitted in the [Stream], you need to listen
+  /// to the stream using [Stream.listen], which returns [StreamSubscription].
+  /// All the stream subscriptions need to be cancelled when they are no longer
+  /// needs using [StreamSubscription.cancel]
+  Stream<T?> observeChange({Filter? filter}) {
+    final query = store.query(finder: Finder(filter: filter));
+    return query
+        .onSnapshot(_dbClient.database)
+        .map((snapshot) => snapshot == null ? null : mapper(snapshot.value));
+  }
 }
 
 extension IterableUtils on Iterable {

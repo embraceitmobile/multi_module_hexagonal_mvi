@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 
 import 'i_auth_remote_datasource.dart';
 
-@Environment("repo")
 @Singleton(as: IAuthRemoteDatasource)
 class AuthRemoteDatasource implements IAuthRemoteDatasource {
   static const String TAG = "UserApiImplementation";

@@ -21,7 +21,9 @@ GetIt configureIdentityRepositoryInjection() {
   gh.singleton<IAuthRemoteDatasource>(
       AuthRemoteDatasource(getIt<IRemoteApiClient<BaseResponse>>()));
   gh.singleton<AuthRepository>(AuthRepositoryImpl(
-      getIt<IAuthLocalDatasource>(), getIt<IAuthRemoteDatasource>()));
+    getIt<IAuthLocalDatasource>(),
+    getIt<IAuthRemoteDatasource>(),
+  ));
 
   gh.singleton<IUserLocalDatasource>(
       UserLocalDatasource(getIt<ILocalDbClient>()));

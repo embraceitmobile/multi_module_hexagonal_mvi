@@ -15,8 +15,10 @@ import 'package:injectable/injectable.dart';
 /// the correct order.
 GetIt configureIdentityInjection() {
   final gh = GetItHelper(getIt);
+
   configureIdentityRepositoryInjection();
   configureIdentityHexagonInjection();
   configureIdentityUiInjection();
+
   return getIt;
 }

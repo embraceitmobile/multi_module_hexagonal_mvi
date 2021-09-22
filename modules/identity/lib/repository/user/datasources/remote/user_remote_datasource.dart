@@ -4,7 +4,6 @@ import 'package:identity/repository/user/datasources/remote/apis/update_profile_
 import 'package:identity/repository/user/datasources/remote/i_user_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 
-@Environment("repo")
 @Singleton(as: IUserRemoteDatasource)
 class UserRemoteDatasource implements IUserRemoteDatasource {
   static const String TAG = "RemoteUserDatasource";

@@ -5,7 +5,6 @@ import 'package:identity/repository/auth/datasources/local/i_auth_local_datasour
 import 'package:identity/repository/auth/datasources/local/models/auth_model.dart';
 import 'package:injectable/injectable.dart';
 
-@Environment("repo")
 @Singleton(as: IAuthLocalDatasource)
 class AuthLocalDatasource extends LocalDataSource<AuthModel>
     implements IAuthLocalDatasource {
@@ -35,6 +34,5 @@ class AuthLocalDatasource extends LocalDataSource<AuthModel>
 
   Future<bool> removeAuth() async => await clear() > 0;
 
-  Stream<AuthModel?> observeAuth() => observeChanges()
-      .map((authList) => authList.isEmpty ? null : authList.first);
+  Stream<AuthModel?> observeAuth() => observeChange();
 }

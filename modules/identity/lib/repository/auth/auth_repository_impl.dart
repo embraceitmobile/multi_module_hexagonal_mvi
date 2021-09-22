@@ -9,7 +9,6 @@ import 'package:injectable/injectable.dart';
 
 import 'datasources/remote/apis/login_api.dart';
 
-@Environment("repo")
 @Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final IAuthLocalDatasource _localDatasource;

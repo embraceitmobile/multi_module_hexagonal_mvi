@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 
 import 'models/user_model.dart';
 
-@Environment("repo")
 @Singleton(as: IUserLocalDatasource)
 class UserLocalDatasource extends LocalDataSource<UserModel>
     implements IUserLocalDatasource {
@@ -41,8 +40,6 @@ class UserLocalDatasource extends LocalDataSource<UserModel>
 
   Future<bool> clearUsers() async => await clear() > 0;
 
-  Stream<UserModel?> observeActiveUser() {
-    return observeChanges(filter: Filter.equals("isActive", true))
-        .map((users) => users.firstOrNull());
-  }
+  Stream<UserModel?> observeActiveUser() =>
+      observeChange(filter: Filter.equals("isActive", true));
 }
