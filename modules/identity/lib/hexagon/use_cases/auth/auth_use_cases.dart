@@ -13,7 +13,7 @@ abstract class AuthListener {
 }
 
 abstract class AuthActions {
-  Future<bool> login(String email, String password);
+  Future<bool> login({required String email, required String password});
 
   Future<bool> logoutActiveUser({bool isForceLogout = false});
 

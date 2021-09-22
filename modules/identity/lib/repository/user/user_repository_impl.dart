@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/user.dart';
 import 'package:identity/hexagon/interfaces/auth_repo.dart';
@@ -8,7 +10,6 @@ import 'package:identity/repository/user/datasources/remote/apis/get_user_api.da
 import 'package:identity/repository/user/datasources/remote/i_user_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 
-@Environment("repo")
 @Singleton(as: UserRepository)
 class UserRepositoryImpl implements UserRepository {
   final IUserLocalDatasource _localDatasource;

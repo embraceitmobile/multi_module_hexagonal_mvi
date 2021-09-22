@@ -1,5 +1,6 @@
 library core;
 
+export 'package:cubivue_utils/basic_utils.dart' show SnackBarUtils;
 export 'package:dio/dio.dart';
 export 'package:sembast/sembast.dart';
 

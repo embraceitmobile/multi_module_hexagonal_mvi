@@ -8,7 +8,7 @@ class AuthActionsImpl implements AuthActions {
 
   const AuthActionsImpl(this._repository);
 
-  Future<bool> login(String email, String password) async {
+  Future<bool> login({required String email, required String password}) async {
     try {
       return await _repository.login(email, password);
     } on Exception {
