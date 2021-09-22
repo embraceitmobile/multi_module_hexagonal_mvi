@@ -34,4 +34,8 @@ abstract class _LoginStore with Store {
       print("[$TAG][login] error: $e");
     }
   }
+
+  void dispose() {
+    getIt.unregister<LoginStore>(instance: this);
+  }
 }
