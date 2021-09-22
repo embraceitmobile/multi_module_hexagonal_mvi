@@ -29,7 +29,7 @@ abstract class _LoginStore with Store {
   @action
   Future<bool?> login(String email, String password) async {
     try {
-      return _authActions.login(email: email, password: password);
+      return _authActions.login(email, password);
     } on Exception catch (e) {
       print("[$TAG][login] error: $e");
     }
