@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef RouteBuilder = Widget Function(BuildContext context, Object? args);
 
-mixin Router {
+mixin IRouter {
   Map<String, RouteBuilder> get routes;
 
   Widget? to({
@@ -14,8 +13,8 @@ mixin Router {
 }
 
 class RouteHandler {
-  final List<Router> routers;
-  late final Map<String, Router> _routersMap;
+  final List<IRouter> routers;
+  late final Map<String, IRouter> _routersMap;
 
   RouteHandler(this.routers) {
     for (final router in routers) {
