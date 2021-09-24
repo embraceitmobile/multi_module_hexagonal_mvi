@@ -8,7 +8,7 @@ import 'i_auth_remote_datasource.dart';
 
 @Singleton(as: IAuthRemoteDatasource)
 class AuthRemoteDatasource implements IAuthRemoteDatasource {
-  static const String TAG = "UserApiImplementation";
+  static const String TAG = "AuthApiImplementation";
   final IRemoteApiClient<BaseResponse> _apiClient;
 
   // injecting api client instance
