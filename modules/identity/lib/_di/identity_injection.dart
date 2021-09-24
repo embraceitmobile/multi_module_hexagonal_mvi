@@ -11,7 +11,7 @@ import 'package:injectable/injectable.dart';
 //   $initGetIt(getIt);
 // }
 
-/// use manual dependency if [Injectable] does not generate the dependencies in
+/// use manual dependency injection if [Injectable] does not generate the dependencies in
 /// the correct order.
 GetIt configureIdentityInjection() {
   final gh = GetItHelper(getIt);

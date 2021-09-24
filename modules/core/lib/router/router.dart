@@ -18,6 +18,30 @@ mixin IRouter {
   }
 }
 
+class NamedNavigator<T extends Object?> {
+  final String route;
+
+  const NamedNavigator(this.route);
+
+  Future<T?> push(BuildContext context, {T? args}) {
+    return Navigator.of(context).pushNamed(route, arguments: args);
+  }
+
+  Future<T?> pushReplacement(BuildContext context, {T? args}) {
+    return Navigator.of(context).pushReplacementNamed(route, arguments: args);
+  }
+
+  Future<T?> popAndPush(BuildContext context, {T? args}) {
+    return Navigator.of(context).popAndPushNamed(route, arguments: args);
+  }
+
+  Future<T?> pushAndRemoveUntil(BuildContext context, RoutePredicate predicate,
+      {T? args}) {
+    return Navigator.of(context)
+        .pushNamedAndRemoveUntil(route, predicate, arguments: args);
+  }
+}
+
 /// Class to aggregate the routes from different modules and handle the routes
 /// from a single source.
 class RouteHandler {

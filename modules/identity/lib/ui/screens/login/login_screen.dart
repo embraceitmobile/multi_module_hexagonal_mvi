@@ -8,6 +8,10 @@ import 'package:identity/ui/shared_widgets/centered_progress_indicator.dart';
 import 'package:mobx/mobx.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const navigator = NamedNavigator<void>("login/");
+
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _LoginScreenState();
 }
