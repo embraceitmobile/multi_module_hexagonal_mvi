@@ -43,16 +43,16 @@ class RouteHandler {
     return MaterialPageRoute(
       settings: settings,
       builder: (context) {
-        final routedWidget = _routersMap[settings.name!]?.buildRoute(
+        final page = _routersMap[settings.name!]?.buildRoute(
           context: context,
           route: settings.name!,
           args: settings.arguments,
         );
 
-        if (routedWidget == null)
+        if (page == null)
           throw Exception("Unable to handle the route: ${settings.name}");
 
-        return routedWidget;
+        return page;
       },
     );
   }
