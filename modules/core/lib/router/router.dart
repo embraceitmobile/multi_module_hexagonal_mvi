@@ -11,8 +11,6 @@ mixin Router {
     required String route,
     Object? args,
   });
-
-  List<String> get registeredPaths => routes.keys.toList();
 }
 
 class RouteHandler {
@@ -21,7 +19,7 @@ class RouteHandler {
 
   RouteHandler(this.routers) {
     for (final router in routers) {
-      for (final route in router.registeredPaths) {
+      for (final route in router.routes.keys) {
         _routersMap.putIfAbsent(route, () => router);
       }
     }
