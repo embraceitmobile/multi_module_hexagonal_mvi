@@ -18,6 +18,9 @@ mixin IRouter {
   }
 }
 
+/// A helper class for Named Navigation using route names. Each navigable screen
+/// should contain a static [NamedNavigator] implementation that specifies the
+/// type [T] of the args that the screen accepts.
 class NamedNavigator<T extends Object?> {
   final String route;
 

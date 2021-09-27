@@ -2,13 +2,14 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:identity/hexagon/entities/auth_state.dart';
+import 'package:identity/ui/routes/identity_router.dart';
 import 'package:identity/ui/screens/login/stores/login_store.dart';
 import 'package:identity/ui/screens/login/widgets/login_form.dart';
 import 'package:identity/ui/shared_widgets/centered_progress_indicator.dart';
 import 'package:mobx/mobx.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const navigator = NamedNavigator<void>("login/");
+  static const navigator = NamedNavigator<void>("/login");
 
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -48,8 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigate() {
-    Future.microtask(() =>
-        Navigator.of(context).pushNamedAndRemoveUntil("/home", (_) => false));
+    getIt<IdentityRouter>().onLoginEvent();
   }
 
   @override
