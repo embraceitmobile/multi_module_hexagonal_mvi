@@ -1,4 +1,5 @@
-import 'package:cubivue_utils/basic_utils.dart';
+import 'package:core/core.dart';
+import 'package:core/models/network/base_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -43,7 +44,7 @@ class RefreshTokenInterceptor extends Interceptor {
     dio.interceptors.responseLock.lock();
     dio.interceptors.errorLock.lock();
     await Dio()
-        .post(refreshTokenApi(await baseUrl), data: {
+        .post(refreshTokenApi(baseUrl), data: {
           "accessToken": await accessToken,
           "refreshToken": await refreshToken
         })
@@ -53,13 +54,12 @@ class RefreshTokenInterceptor extends Interceptor {
           if (onNewAccessToken != null) onNewAccessToken!(response.accessToken);
           if (onNewRefreshToken != null)
             onNewRefreshToken!(response.refreshToken);
-          options.headers[AppHeaders.AUTHORIZATION] =
-              'Bearer ${response.accessToken}';
+          options.headers["Authorization"] = 'Bearer ${response.accessToken}';
           return true;
         })
         .catchError((error) {
-          LogUtils.logError(
-              TAG, "_refreshToken", "token refresh failed", error);
+          print("[$TAG][refreshToken] token refresh failed, error: $error");
+
           return false;
         })
         .whenComplete(() {
@@ -78,5 +78,31 @@ class RefreshTokenInterceptor extends Interceptor {
         });
     handler.next(err);
     return;
+  }
+}
+
+class AuthResponse {
+  String accessToken;
+  String refreshToken;
+
+  AuthResponse({
+    required this.accessToken,
+    required this.refreshToken,
+  });
+
+  factory AuthResponse.fromMap(Map<String, dynamic> map) {
+    if (map["accessToken"] == null && map["refreshToken"] == null) {
+      throw InvalidDataException("Invalid response received from server");
+    }
+
+    return AuthResponse(
+      accessToken: map["accessToken"],
+      refreshToken: map["refreshToken"],
+    );
+  }
+
+  @override
+  String toString() {
+    return 'AuthResponse{accessToken: $accessToken, refreshToken: $refreshToken,}';
   }
 }
