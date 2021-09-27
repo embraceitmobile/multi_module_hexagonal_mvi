@@ -12,10 +12,12 @@ Future<void> configureInjection() async {
   await gh.singletonAsync<ILocalDbClient>(
       () => localModule.provideLocalDbClient(),
       preResolve: true);
-  gh.singleton<IRemoteApiClient<BaseResponse>>(
-      networkModule.provideNetworkApiClient);
+  gh.singleton<IRemoteApiClient<BaseResponse>>(networkModule.remoteApiClient);
 
   configureIdentityInjection();
+
+  networkModule.addInterceptors(
+      getIt<AuthInterceptor>(), getIt<RetryInterceptor>());
 }
 
 class _LocalModule extends LocalModule {}
