@@ -51,13 +51,27 @@ class RouteHandler {
   /// Add all the [IRouter]s from different modules here.
   final List<IRouter> routers;
 
+  /// The screen to be returned on "/" root path.
+  final Widget? root;
+
+  /// The screen to be returned when the route cannot be matched in the provided
+  /// [routers]
+  final Widget? onPageNotFound;
+
   /// The index of all the routes that are recognized by the passed [routers].
   final Map<String, IRouter> _routersMap;
 
-  RouteHandler(this.routers) : _routersMap = _indexRoutes(routers);
+  RouteHandler(
+    this.routers, {
+    this.root,
+    this.onPageNotFound,
+  }) : _routersMap = _indexRoutes(routers, root);
 
-  static Map<String, IRouter> _indexRoutes(List<IRouter> routers) {
+  static Map<String, IRouter> _indexRoutes(
+      List<IRouter> routers, Widget? root) {
     final Map<String, IRouter> routersMap = {};
+
+    routers.add(RootRouter(root));
 
     for (final router in routers) {
       for (final route in router.routes.keys) {
@@ -82,10 +96,33 @@ class RouteHandler {
         );
 
         if (page == null)
-          throw Exception("Unable to handle the route: ${settings.name}");
+          print(
+              "Unable to handle the route: ${settings.name}, returning default route");
 
-        return page;
+        return page ?? onPageNotFound ?? PageNotFound();
       },
     );
   }
+}
+
+class PageNotFound extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Center(
+        child: Text("404\nPage Not Found"),
+      ),
+    );
+  }
+}
+
+class RootRouter with IRouter {
+  final Widget? rootScreen;
+
+  final Map<String, RouteBuilder> routes;
+
+  RootRouter(this.rootScreen)
+      : this.routes = {
+          "/": (context, args) => rootScreen ?? Container(),
+        };
 }

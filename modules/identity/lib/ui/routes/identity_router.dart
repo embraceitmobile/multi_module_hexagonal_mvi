@@ -15,7 +15,8 @@ class IdentityRouter with IRouter {
   /// The implementing app will define which screen to navigate to when the
   /// user is successfully loggedIn.
   /// A navigation event has been defined here, as the screen to navigate
-  /// might be outside of this [identity] module.
+  /// might be outside of this [identity] module. If the navigation screen is
+  /// known then there is no need to define a navigation event.
   ///
   /// @params: [BuildContext] context, and [Object]? args
   final RouteGetter<void> onLoginEvent;
