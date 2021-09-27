@@ -17,9 +17,9 @@ class DioClient {
   final DioConfigs dioConfigs;
   final Dio _dio;
 
-  DioClient({required String baseUrl, this.dioConfigs = const DioConfigs()})
+  DioClient({String? baseUrl, this.dioConfigs = const DioConfigs()})
       : _dio = Dio()
-          ..options.baseUrl = baseUrl
+          ..options.baseUrl = baseUrl ?? ""
           ..options.connectTimeout = dioConfigs.connectionTimeout
           ..options.receiveTimeout = dioConfigs.receiveTimeout;
 
