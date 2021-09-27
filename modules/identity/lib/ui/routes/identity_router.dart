@@ -7,8 +7,9 @@ import 'package:injectable/injectable.dart';
 typedef RouteGetter<T> = Future<T> Function(BuildContext context,
     {Object? args});
 
-/// The router for the [identity] module
 @Singleton()
+
+/// The router for the [identity] module
 class IdentityRouter with IRouter {
   IdentityRouter({required this.onLoginEvent});
 

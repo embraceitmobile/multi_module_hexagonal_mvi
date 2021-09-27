@@ -8,9 +8,11 @@ class RetryInterceptor extends Interceptor {
   final RetryOptions options;
   final bool shouldLog;
 
-  RetryInterceptor(
-      {required this.dio, RetryOptions? options, this.shouldLog = true})
-      : this.options = options ?? const RetryOptions();
+  RetryInterceptor({
+    required this.dio,
+    RetryOptions? options,
+    this.shouldLog = true,
+  }) : this.options = options ?? const RetryOptions();
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {

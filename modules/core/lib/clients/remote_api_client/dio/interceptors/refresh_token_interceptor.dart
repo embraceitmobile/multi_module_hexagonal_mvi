@@ -6,7 +6,7 @@ class RefreshTokenInterceptor extends Interceptor {
   static const TAG = "RefreshTokenInterceptor";
 
   final Dio dio;
-  final Future<String> baseUrl;
+  final String baseUrl;
   final Future<String?> accessToken;
   final Future<String?> refreshToken;
   final ValueSetter<String>? onNewAccessToken;
@@ -44,38 +44,38 @@ class RefreshTokenInterceptor extends Interceptor {
     dio.interceptors.errorLock.lock();
     await Dio()
         .post(refreshTokenApi(await baseUrl), data: {
-      "accessToken": await accessToken,
-      "refreshToken": await refreshToken
-    })
+          "accessToken": await accessToken,
+          "refreshToken": await refreshToken
+        })
         .then((res) => BaseResponse.fromMap(res.data))
         .then((response) => AuthResponse.fromMap(response.result))
         .then((response) async {
-      if (onNewAccessToken != null) onNewAccessToken!(response.accessToken);
-      if (onNewRefreshToken != null)
-        onNewRefreshToken!(response.refreshToken);
-      options.headers[AppHeaders.AUTHORIZATION] =
-      'Bearer ${response.accessToken}';
-      return true;
-    })
+          if (onNewAccessToken != null) onNewAccessToken!(response.accessToken);
+          if (onNewRefreshToken != null)
+            onNewRefreshToken!(response.refreshToken);
+          options.headers[AppHeaders.AUTHORIZATION] =
+              'Bearer ${response.accessToken}';
+          return true;
+        })
         .catchError((error) {
-      LogUtils.logError(
-          TAG, "_refreshToken", "token refresh failed", error);
-      return false;
-    })
+          LogUtils.logError(
+              TAG, "_refreshToken", "token refresh failed", error);
+          return false;
+        })
         .whenComplete(() {
-      dio.unlock();
-      dio.interceptors.responseLock.unlock();
-      dio.interceptors.errorLock.unlock();
-    })
+          dio.unlock();
+          dio.interceptors.responseLock.unlock();
+          dio.interceptors.errorLock.unlock();
+        })
         .then((e) {
-      //repeat
-      dio.fetch(options).then(
+          //repeat
+          dio.fetch(options).then(
             (r) => handler.resolve(r),
-        onError: (e) {
-          handler.reject(e);
-        },
-      );
-    });
+            onError: (e) {
+              handler.reject(e);
+            },
+          );
+        });
     handler.next(err);
     return;
   }
