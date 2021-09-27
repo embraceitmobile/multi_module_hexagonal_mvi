@@ -52,14 +52,19 @@ class RouteHandler {
   final List<IRouter> routers;
 
   /// The index of all the routes that are recognized by the passed [routers].
-  late final Map<String, IRouter> _routersMap;
+  final Map<String, IRouter> _routersMap;
 
-  RouteHandler(this.routers) {
+  RouteHandler(this.routers) : _routersMap = _indexRoutes(routers);
+
+  static Map<String, IRouter> _indexRoutes(List<IRouter> routers) {
+    final Map<String, IRouter> routersMap = {};
+
     for (final router in routers) {
       for (final route in router.routes.keys) {
-        _routersMap.putIfAbsent(route, () => router);
+        routersMap.putIfAbsent(route, () => router);
       }
     }
+    return routersMap;
   }
 
   /// Pass this method to the [onGenerateRoute] method of [MaterialApp] to

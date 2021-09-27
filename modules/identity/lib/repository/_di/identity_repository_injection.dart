@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:identity/hexagon/interfaces/auth_repo.dart';
+import 'package:identity/identity.dart';
 import 'package:identity/repository/auth/auth_repository_impl.dart';
 import 'package:identity/repository/auth/datasources/local/auth_local_datasource.dart';
 import 'package:identity/repository/auth/datasources/local/i_auth_local_datasource.dart';
@@ -29,7 +30,7 @@ GetIt configureIdentityRepositoryInjection() {
       UserLocalDatasource(getIt<ILocalDbClient>()));
   gh.singleton<IUserRemoteDatasource>(
       UserRemoteDatasource(getIt<IRemoteApiClient<BaseResponse>>()));
-  gh.singleton(UserRepositoryImpl(
+  gh.singleton<UserRepository>(UserRepositoryImpl(
     getIt<IUserLocalDatasource>(),
     getIt<IUserRemoteDatasource>(),
     getIt<AuthRepository>(),

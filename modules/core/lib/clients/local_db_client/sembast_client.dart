@@ -11,7 +11,7 @@ import 'base/i_local_db_client.dart';
 class SembastDbClient implements ILocalDbClient {
   final Database database;
 
-  SembastDbClient(this.database);
+  SembastDbClient._(this.database);
 
   static Future<SembastDbClient> constructAsync() async {
     {
@@ -36,7 +36,7 @@ class SembastDbClient implements ILocalDbClient {
       }
 
       // Return database instance
-      return SembastDbClient(database);
+      return SembastDbClient._(database);
     }
   }
 }

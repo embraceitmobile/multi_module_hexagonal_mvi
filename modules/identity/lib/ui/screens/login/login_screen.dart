@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigate() {
-    getIt<IdentityRouter>().onLoginEvent();
+    getIt<IdentityRouter>().onLoginEvent(context);
   }
 
   @override
@@ -61,22 +61,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          "User Login",
-          style: Theme.of(context).textTheme.headline1,
-        ),
-        LoginForm(),
-        Observer(
-          builder: (_) => _loginStore.authState.maybeWhen(
-            loading: () => CenteredProgressIndicator(),
-            orElse: () => SizedBox.shrink(),
+    return Material(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            "User Login",
+            style: Theme.of(context).textTheme.headline1,
           ),
-        ),
-      ],
+          LoginForm(),
+          Observer(
+            builder: (_) => _loginStore.authState.maybeWhen(
+              loading: () => CenteredProgressIndicator(),
+              orElse: () => SizedBox.shrink(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
