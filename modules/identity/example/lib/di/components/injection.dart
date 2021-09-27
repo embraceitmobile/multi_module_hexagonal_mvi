@@ -15,6 +15,8 @@ Future<void> configureInjection() async {
   gh.singleton<IRemoteApiClient<BaseResponse>>(networkModule.remoteApiClient);
 
   configureIdentityInjection();
+  gh.lazySingleton<AuthInterceptor>(() => networkModule.authInterceptor);
+  gh.lazySingleton<RetryInterceptor>(() => networkModule.retryInterceptor);
 
   networkModule.addInterceptors(
       getIt<AuthInterceptor>(), getIt<RetryInterceptor>());
