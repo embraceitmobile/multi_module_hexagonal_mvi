@@ -12,7 +12,7 @@ abstract class NetworkModule {
   DioClient get dioClient => DioClient();
 
   @singleton
-  IRemoteApiClient<BaseResponse> get remoteApiClient =>
+  IRemoteApiClient<dynamic> get remoteApiClient =>
       RemoteApiClient(getIt<DioClient>().dio);
 
   @lazySingleton

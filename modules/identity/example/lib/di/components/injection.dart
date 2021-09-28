@@ -15,7 +15,7 @@ Future<void> configureInjection() async {
   await gh.singletonAsync<ILocalDbClient>(
       () => localModule.provideLocalDbClient(),
       preResolve: true);
-  gh.singleton<IRemoteApiClient<BaseResponse>>(networkModule.remoteApiClient);
+  gh.singleton<IRemoteApiClient<dynamic>>(networkModule.remoteApiClient);
 
   configureIdentityInjection();
 

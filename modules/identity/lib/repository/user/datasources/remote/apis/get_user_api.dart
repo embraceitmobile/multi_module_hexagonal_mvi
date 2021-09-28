@@ -27,15 +27,15 @@ class GetUserResponse {
 
   const GetUserResponse({
     required this.id,
-    required this.name,
-    required this.surname,
-    required this.userName,
-    required this.emailAddress,
-    required this.address,
-    required this.phoneNumber,
-    required this.imagePath,
-    required this.isFirstLogin,
-    required this.isActive,
+    this.name,
+    this.surname,
+    this.userName,
+    this.emailAddress,
+    this.address,
+    this.phoneNumber,
+    this.imagePath,
+    this.isFirstLogin,
+    this.isActive,
   });
 
   factory GetUserResponse.fromMap(Map<String, dynamic> map) {

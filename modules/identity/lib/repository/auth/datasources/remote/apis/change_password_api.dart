@@ -1,5 +1,3 @@
-import 'package:core/models/network/base_response.dart';
-
 const changePasswordEndpoint = "api/TokenAuth/ChangePassword";
 
 class ChangePasswordRequest {
@@ -17,7 +15,6 @@ class ChangePasswordResponse {
 
   ChangePasswordResponse(this.success);
 
-  factory ChangePasswordResponse.fromBaseResponse(BaseResponse response) =>
-      ChangePasswordResponse(
-          response.success == true || response.result == true);
+  factory ChangePasswordResponse.response(dynamic response) =>
+      ChangePasswordResponse(response == true);
 }

@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 class UserRemoteDatasource implements IUserRemoteDatasource {
   static const String TAG = "RemoteUserDatasource";
 
-  final IRemoteApiClient<BaseResponse> _apiClient;
+  final IRemoteApiClient<dynamic> _apiClient;
 
   // injecting api client instance
   const UserRemoteDatasource(this._apiClient);
@@ -21,7 +21,7 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
       if (response == null)
         throw InvalidDataException("Invalid response received from server");
 
-      return GetUserResponse.fromMap(response.result);
+      return GetUserResponse.fromMap(response);
     } on InvalidDataException {
       rethrow;
     } on NetworkException {
@@ -38,7 +38,7 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
       if (response == null)
         throw InvalidDataException("Invalid response received from server");
 
-      return GetUserResponse.fromMap(response.result);
+      return GetUserResponse.fromMap(response);
     } on InvalidDataException {
       rethrow;
     } on NetworkException {

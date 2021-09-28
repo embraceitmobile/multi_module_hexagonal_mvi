@@ -9,7 +9,7 @@ import 'i_auth_remote_datasource.dart';
 @Singleton(as: IAuthRemoteDatasource)
 class AuthRemoteDatasource implements IAuthRemoteDatasource {
   static const String TAG = "AuthApiImplementation";
-  final IRemoteApiClient<BaseResponse> _apiClient;
+  final IRemoteApiClient<dynamic> _apiClient;
 
   // injecting api client instance
   const AuthRemoteDatasource(this._apiClient);
@@ -24,7 +24,7 @@ class AuthRemoteDatasource implements IAuthRemoteDatasource {
       if (response == null)
         throw InvalidDataException("Invalid response received from server");
 
-      return LoginResponse.fromMap(response.result);
+      return LoginResponse.fromMap(response);
     } on InvalidDataException {
       rethrow;
     } on NetworkException {
@@ -63,7 +63,7 @@ class AuthRemoteDatasource implements IAuthRemoteDatasource {
       if (response == null)
         throw InvalidDataException("Invalid response received from server");
 
-      return ChangePasswordResponse.fromBaseResponse(response);
+      return ChangePasswordResponse.response(response);
     } on InvalidDataException {
       rethrow;
     } on NetworkException {
