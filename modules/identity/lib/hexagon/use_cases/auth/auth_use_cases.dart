@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
+import 'package:identity/hexagon/entities/auth_state.dart';
 
 abstract class AuthReader {
   Future<bool> get isAuthenticated;
@@ -8,7 +9,7 @@ abstract class AuthReader {
 }
 
 abstract class AuthListener {
-  Stream<DataState<AuthInfo>> observeAuthState();
+  Stream<DataState<AuthState>> observeAuthState();
 }
 
 abstract class AuthActions {
