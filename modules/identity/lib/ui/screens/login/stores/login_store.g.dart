@@ -9,26 +9,26 @@ part of 'login_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginStore on _LoginStore, Store {
-  Computed<DataState<AuthState>>? _$authStateComputed;
+  Computed<DataState<AuthInfo>>? _$authStateComputed;
 
   @override
-  DataState<AuthState> get authState => (_$authStateComputed ??=
-          Computed<DataState<AuthState>>(() => super.authState,
+  DataState<AuthInfo> get authInfo => (_$authStateComputed ??=
+          Computed<DataState<AuthInfo>>(() => super.authInfo,
               name: '_LoginStore.authState'))
       .value;
 
   final _$_authStateAtom = Atom(name: '_LoginStore._authState');
 
   @override
-  ObservableStream<DataState<AuthState>> get _authState {
+  ObservableStream<DataState<AuthInfo>> get _authInfo {
     _$_authStateAtom.reportRead();
-    return super._authState;
+    return super._authInfo;
   }
 
   @override
-  set _authState(ObservableStream<DataState<AuthState>> value) {
-    _$_authStateAtom.reportWrite(value, super._authState, () {
-      super._authState = value;
+  set _authInfo(ObservableStream<DataState<AuthInfo>> value) {
+    _$_authStateAtom.reportWrite(value, super._authInfo, () {
+      super._authInfo = value;
     });
   }
 
@@ -42,7 +42,7 @@ mixin _$LoginStore on _LoginStore, Store {
   @override
   String toString() {
     return '''
-authState: ${authState}
+authState: ${authInfo}
     ''';
   }
 }

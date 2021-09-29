@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:identity/hexagon/entities/auth_state.dart';
 import 'package:identity/ui/routes/identity_router.dart';
 import 'package:identity/ui/screens/login/stores/login_store.dart';
 import 'package:identity/ui/screens/login/widgets/login_form.dart';
@@ -26,14 +25,14 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     _disposers = [
       reaction<Exception?>(
-          (_) => _loginStore.authState.maybeWhen(
+          (_) => _loginStore.authInfo.maybeWhen(
                 error: (exception) => exception,
                 orElse: () => null,
               ),
           _handleErrorMessage),
       when(
-          (_) => _loginStore.authState.maybeWhen(
-                success: (authState) => authState == AuthState.Authenticated,
+          (_) => _loginStore.authInfo.maybeWhen(
+                success: (authInfo) => authInfo != null,
                 orElse: () => false,
               ),
           _navigate),
@@ -80,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Observer(
-            builder: (_) => _loginStore.authState.maybeWhen(
+            builder: (_) => _loginStore.authInfo.maybeWhen(
               loading: () => CenteredProgressIndicator(),
               orElse: () => SizedBox.shrink(),
             ),

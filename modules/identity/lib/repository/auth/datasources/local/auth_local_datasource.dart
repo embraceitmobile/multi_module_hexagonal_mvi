@@ -2,11 +2,11 @@ import 'package:core/clients/local_db_client/base/i_local_db_client.dart';
 import 'package:core/clients/local_db_client/local_data_source.dart';
 import 'package:core/core.dart';
 import 'package:identity/repository/auth/datasources/local/i_auth_local_datasource.dart';
-import 'package:identity/repository/auth/datasources/local/models/auth_model.dart';
+import 'package:identity/repository/auth/datasources/local/models/auth_info_dto.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: IAuthLocalDatasource)
-class AuthLocalDatasource extends LocalDataSource<AuthModel>
+class AuthLocalDatasource extends LocalDataSource<AuthInfoDto>
     implements IAuthLocalDatasource {
   static const TAG = "AuthLocalDatasource";
   static const String AUTH_STORE_NAME = 'auth_store';
@@ -15,24 +15,21 @@ class AuthLocalDatasource extends LocalDataSource<AuthModel>
       : super(
           dbClient: dbClient,
           storeName: AUTH_STORE_NAME,
-          mapper: (map) => AuthModel.fromEntityMap(map),
+          mapper: (map) => AuthInfoDto.fromDtoMap(map),
         );
 
-  Future<AuthModel?> get auth async {
+  Future<AuthInfoDto?> get auth async {
     final result = await find();
     return result.firstOrNull();
   }
 
-  Future<bool> hasAuth() async {
-    final authModel = await auth;
-    return authModel != null && authModel.state == LocalState.success;
-  }
+  Future<bool> hasAuth() async => await auth != null;
 
-  Future<int> saveAuth(AuthModel auth) async => await insertOrUpdate(auth);
+  Future<int> saveAuth(AuthInfoDto auth) async => await insertOrUpdate(auth);
 
-  Future<bool> updateAuth(AuthModel auth) async => await update(auth) > 0;
+  Future<bool> updateAuth(AuthInfoDto auth) async => await update(auth) > 0;
 
   Future<bool> removeAuth() async => await clear() > 0;
 
-  Stream<AuthModel?> observeAuth() => observeChange();
+  Stream<AuthInfoDto?> observeAuth() => observeChange();
 }

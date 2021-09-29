@@ -4,7 +4,7 @@ export 'package:cubivue_utils/basic_utils.dart' show SnackBarUtils;
 export 'package:dio/dio.dart';
 export 'package:sembast/sembast.dart';
 
-export 'clients/local_db_client/base/entity.dart';
+export 'clients/local_db_client/base/dto.dart';
 export 'clients/local_db_client/base/i_local_db_client.dart';
 export 'clients/local_db_client/base/i_local_db_client.dart';
 export 'clients/local_db_client/base/models.dart';
@@ -15,6 +15,7 @@ export 'clients/remote_api_client/dio/interceptors/refresh_token_interceptor.dar
 export 'clients/remote_api_client/dio/interceptors/retry_interceptor.dart';
 export 'clients/remote_api_client/remote_api_client.dart';
 export 'di/get_it_instance.dart';
+export 'helpers/multi_stream_controller.dart';
 export 'models/data_state/data_state.dart';
 export 'models/exceptions/entity_not_found_exception.dart';
 export 'models/exceptions/invalid_data_exception.dart';

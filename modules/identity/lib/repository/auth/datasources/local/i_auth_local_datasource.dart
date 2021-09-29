@@ -1,15 +1,15 @@
-import 'package:identity/repository/auth/datasources/local/models/auth_model.dart';
+import 'package:identity/repository/auth/datasources/local/models/auth_info_dto.dart';
 
 abstract class IAuthLocalDatasource {
-  Future<AuthModel?> get auth;
+  Future<AuthInfoDto?> get auth;
 
   Future<bool> hasAuth();
 
-  Future<int> saveAuth(AuthModel auth);
+  Future<int> saveAuth(AuthInfoDto auth);
 
   Future<bool> removeAuth();
 
-  Future<bool> updateAuth(AuthModel auth);
+  Future<bool> updateAuth(AuthInfoDto auth);
 
-  Stream<AuthModel?> observeAuth();
+  Stream<AuthInfoDto?> observeAuth();
 }

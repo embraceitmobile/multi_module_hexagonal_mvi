@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
-import 'package:identity/hexagon/entities/auth_state.dart';
 
 abstract class AuthRepository {
   Future<bool> get isAuthenticated;
@@ -9,7 +8,7 @@ abstract class AuthRepository {
 
   Future<bool> saveAuthToken(AuthInfo authToken);
 
-  Stream<DataState<AuthState>> observeAuthState();
+  Stream<DataState<AuthInfo>> observeAuthInfo();
 
   Future<bool> login(String email, String password);
 

@@ -1,13 +1,13 @@
 import 'package:sembast/sembast.dart';
 
-import 'entity.dart';
+import 'dto.dart';
 
 class DbFilters {
   static Filter byUniqueId(String uniqueId) =>
-      Filter.equals(Entity.unique_key, uniqueId);
+      Filter.equals(Dto.unique_key, uniqueId);
 
   static Filter byUniqueIds(List<String> uniqueIds) =>
-      Filter.inList(Entity.unique_key, uniqueIds);
+      Filter.inList(Dto.unique_key, uniqueIds);
 }
 
 abstract class ISyncable {

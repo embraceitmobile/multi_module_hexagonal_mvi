@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:identity/hexagon/entities/auth_state.dart';
+import 'package:identity/hexagon/entities/auth_info.dart';
 import 'package:identity/hexagon/interfaces/auth_repo.dart';
 import 'package:identity/hexagon/use_cases/auth/auth_use_cases.dart';
 import 'package:injectable/injectable.dart';
@@ -10,6 +10,6 @@ class AuthListenerImpl implements AuthListener {
 
   const AuthListenerImpl(this._repository);
 
-  Stream<DataState<AuthState>> observeAuthState() =>
-      _repository.observeAuthState();
+  Stream<DataState<AuthInfo>> observeAuthState() =>
+      _repository.observeAuthInfo();
 }

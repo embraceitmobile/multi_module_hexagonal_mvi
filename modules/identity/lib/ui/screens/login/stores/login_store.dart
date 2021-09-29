@@ -1,5 +1,5 @@
 import 'package:core/core.dart';
-import 'package:identity/hexagon/entities/auth_state.dart';
+import 'package:identity/hexagon/entities/auth_info.dart';
 import 'package:identity/hexagon/use_cases/auth/auth_use_cases.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -19,13 +19,13 @@ abstract class _LoginStore with Store {
   _LoginStore(this._authListener, this._authActions);
 
   @observable
-  late ObservableStream<DataState<AuthState>> _authState =
+  late ObservableStream<DataState<AuthInfo>> _authInfo =
       ObservableStream(_authListener.observeAuthState());
 
   @computed
-  DataState<AuthState> get authState {
-    print("[$TAG][authState] state update: ${_authState.value}");
-    return _authState.value ?? DataState.nullOrEmpty();
+  DataState<AuthInfo> get authInfo {
+    print("[$TAG][authState] state update: ${_authInfo.value}");
+    return _authInfo.value ?? DataState.nullOrEmpty();
   }
 
   @action

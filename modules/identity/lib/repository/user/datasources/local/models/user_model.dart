@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/user.dart';
 import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 
-class UserModel implements StateEntity {
+class UserModel implements StateDto {
   final int id;
   final String? name;
   final String? surname;
@@ -75,7 +75,7 @@ class UserModel implements StateEntity {
       );
 
   @override
-  Map<String, dynamic> toEntityMap() => {
+  Map<String, dynamic> toDtoMap() => {
         "id": id,
         "name": name,
         "surname": surname,
@@ -85,7 +85,7 @@ class UserModel implements StateEntity {
         "phoneNumber": phoneNumber,
         "imagePath": imagePath,
         "data_state": state.toInt,
-        Entity.unique_key: uniqueKey,
+        Dto.unique_key: uniqueKey,
       };
 
   User get toUser => User(

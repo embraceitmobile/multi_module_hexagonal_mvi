@@ -4,7 +4,7 @@ import 'package:core/clients/local_db_client/sembast_client.dart';
 import 'package:cubivue_utils/basic_utils.dart';
 import 'package:sembast/sembast.dart';
 
-import 'base/entity.dart';
+import 'base/dto.dart';
 import 'base/i_local_datasource.dart';
 import 'base/i_local_db_client.dart';
 import 'base/models.dart';
@@ -35,53 +35,53 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
 
   /// Insert a single [item] into database
   /// returns count of items inserted
-  Future<int> insert(Entity item) async => _insert(item);
+  Future<int> insert(Dto item) async => _insert(item);
 
-  Future<int> _insert(Entity item, {bool log = true}) async {
+  Future<int> _insert(Dto item, {bool log = true}) async {
     if (log) LogUtils.logInfo(tag, "insert", "insert item: ${item.uniqueKey}");
-    return await store.add(_dbClient.database, item.toEntityMap()) as int;
+    return await store.add(_dbClient.database, item.toDtoMap()) as int;
   }
 
   /// Insert a single [item] with key into database
-  Future<int> insertWithKey(Entity item) async => _insertWithKey(item);
+  Future<int> insertWithKey(Dto item) async => _insertWithKey(item);
 
-  Future<int> _insertWithKey(Entity item, {bool log = true}) async {
+  Future<int> _insertWithKey(Dto item, {bool log = true}) async {
     if (log)
       LogUtils.logInfo(
           tag, "insert", "insert with key item: ${item.uniqueKey}");
     return await store
         .record(int.parse(item.uniqueKey))
-        .add(_dbClient.database, item.toEntityMap()) as int;
+        .add(_dbClient.database, item.toDtoMap()) as int;
   }
 
   /// Update a single [item] with key into database
-  Future<int> updateWithKey(Entity item) async => _updateWithKey(item);
+  Future<int> updateWithKey(Dto item) async => _updateWithKey(item);
 
-  Future<int> _updateWithKey(Entity item, {bool log = true}) async {
+  Future<int> _updateWithKey(Dto item, {bool log = true}) async {
     if (log)
       LogUtils.logInfo(
           tag, "update", "update with key item: ${item.uniqueKey}");
-    return await store.update(_dbClient.database, item.toEntityMap(),
+    return await store.update(_dbClient.database, item.toDtoMap(),
         finder: Finder(filter: Filter.byKey(int.parse(item.uniqueKey))));
   }
 
   /// Updates the [item] if it exists in the database
   /// returns the count of the [itemsWithQuantity] updated
-  Future<int> update(Entity item) async => _update(item);
+  Future<int> update(Dto item) async => _update(item);
 
-  Future<int> _update(Entity item, {bool log = true}) async {
+  Future<int> _update(Dto item, {bool log = true}) async {
     if (log)
       LogUtils.logInfo(tag, "update", "updating item to db, ${item.uniqueKey}");
 
-    return await store.update(_dbClient.database, item.toEntityMap(),
+    return await store.update(_dbClient.database, item.toDtoMap(),
         finder: Finder(filter: DbFilters.byUniqueId(item.uniqueKey)));
   }
 
   /// Insert an [item] if it does not exist in database, otherwise update the [item]
   /// returns count of items inserted or updated
-  Future<int> insertOrUpdate(Entity item) async => _insertOrUpdate(item);
+  Future<int> insertOrUpdate(Dto item) async => _insertOrUpdate(item);
 
-  Future<int> _insertOrUpdate(Entity item, {bool log = true}) async {
+  Future<int> _insertOrUpdate(Dto item, {bool log = true}) async {
     if (log)
       LogUtils.logInfo(tag, "insertOrUpdate",
           "insertOrUpdate item to db, ${item.uniqueKey}");
@@ -92,18 +92,18 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
 
   /// Insert multiple [items] into database
   /// returns count of items inserted
-  Future<List<int>> insertMany(List<Entity> items) async {
+  Future<List<int>> insertMany(List<Dto> items) async {
     LogUtils.logInfo(
         tag, "insertMany", "inserting ${items.length} items in db");
 
-    return store.addAll(_dbClient.database,
-            items.map((item) => item.toEntityMap()).toList())
+    return store.addAll(
+            _dbClient.database, items.map((item) => item.toDtoMap()).toList())
         as FutureOr<List<int>>;
   }
 
   /// Insert or Update multiple [items] in the database
   /// returns true if all operations are completed successfully.
-  Future<bool> insertOrUpdateMany(List<Entity> items) async {
+  Future<bool> insertOrUpdateMany(List<Dto> items) async {
     LogUtils.logInfo(
         tag, "insertMany", "insertOrUpdateMany ${items.length} items in db");
     return await Future.forEach(items,
@@ -162,7 +162,7 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
   /// Remove an item from the database matching the given [uniqueId].
   /// returns true if all operations are completed successfully.
   Future<int> deleteById(String uniqueId) async {
-    final finder = Finder(filter: Filter.equals(Entity.unique_key, uniqueId));
+    final finder = Finder(filter: Filter.equals(Dto.unique_key, uniqueId));
     return await store.delete(_dbClient.database, finder: finder);
   }
 

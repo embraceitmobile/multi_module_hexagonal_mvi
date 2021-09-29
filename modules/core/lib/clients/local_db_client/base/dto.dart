@@ -1,15 +1,15 @@
-abstract class Entity {
+abstract class Dto {
   static const unique_key = 'unique_key';
 
   /// DbMap should not contain any sub-lists
-  Map<String, dynamic> toEntityMap();
+  Map<String, dynamic> toDtoMap();
 
-  external factory Entity.fromEntityMap(Map<String, dynamic> map);
+  external factory Dto.fromDtoMap(Map<String, dynamic> map);
 
   String get uniqueKey;
 }
 
-abstract class StateEntity implements Entity {
+abstract class StateDto implements Dto {
   LocalState get state;
 }
 

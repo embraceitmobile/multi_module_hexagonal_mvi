@@ -1,30 +1,30 @@
-import 'package:core/clients/local_db_client/base/entity.dart';
+import 'package:core/clients/local_db_client/base/dto.dart';
 import 'package:sembast/sembast.dart';
 
 abstract class ILocalDataSource<T> {
   /// Insert a single [item] into database
   /// returns count of items inserted
-  Future<int> insert(Entity object);
+  Future<int> insert(Dto object);
 
   /// Updates the [item] if it exists in the database
   /// returns the count of the [itemsWithQuantity] updated
-  Future<int> update(Entity object);
+  Future<int> update(Dto object);
 
   /// Insert an [item] if it does not exist in database, otherwise update the [item]
   /// returns count of items inserted or updated
-  Future<int> insertOrUpdate(Entity object);
+  Future<int> insertOrUpdate(Dto object);
 
   /// Insert multiple [items] into database
   /// returns count of items inserted
-  Future<List<int>> insertMany(List<Entity> list);
+  Future<List<int>> insertMany(List<Dto> list);
 
   /// Insert or Update multiple [items] in the database
   /// returns true if all operations are completed successfully.
-  Future<bool> insertOrUpdateMany(List<Entity> list);
+  Future<bool> insertOrUpdateMany(List<Dto> list);
 
-  Future<int> insertWithKey(Entity object);
+  Future<int> insertWithKey(Dto object);
 
-  Future<int> updateWithKey(Entity object);
+  Future<int> updateWithKey(Dto object);
 
   /// Returns the items matching the [uniqueIds]
   /// returns a list of items of the type [T]
