@@ -43,7 +43,7 @@ const _loginResponse = r"""
 {
     "accessToken": "x4fsTh47ciPWlypxc0ekKYB6eryReeeQfwblLyKuy1r_vCk6URY_4-1UPtVHD3XDChd3Tr2LyIjc17F-4-NevzzmkX7yciybk49VlRuTkm2Z2aTJOko-LNcYMXk1lGXGaLEZYW_sjhQXg8ySdqeT7O-E4uCipzq8i8lx84JXDC-n_M8XK6YHhY0JJ_HfhiAEVqMFaizaRM95kUoqTQmZjxCzFv4eFknJKST1oQ3zSkoGqisNEO760PXbj5Ah6WQspTlNI77uhgDqq0SItTJMV8Nxk9iIK7deH3uYK_qmikdNBKDnY4QBFI98qdp_lVDgj6gqGjaC2R9hOWSXDnZHkSF9ECESlsFcGvkKTmHbh0ryitfeEbqcxMR0DY_ztifbpEOJy5ovBtpzMfMCC0XzkGgvhkKHqA4mw-tEVAquomQmvb9sc7HDRJVxcsPPAKlpvgVl6ZQb27m3R8BRteZH7c9pyU6jJRSa3jMAFn47q5Z3nYA9pMXF7KTEO-cNyrLPPuqzmmGxMVpAPwZ0N0T-UaBdvJ8mL1YEsD3y5PATPPmnpSSIMTp6XecHLhzg6rxlAJ3jp1JNruxM4ItMwenOY6yfpDDGYbHc2svnhzrRwb2NEg2TeQRginTJ8hC2__dyspW9WbobuA-1qN5N0osMbg",
     "tokenType": "bearer",
-    "expiresIn": 28799,
+    "expireInSeconds": 28799,
     "refreshToken": "120c65e2-f40a-42f4-a2b4-68170fbc49c4",
     "userId": 121
 }

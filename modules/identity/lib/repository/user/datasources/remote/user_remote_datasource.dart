@@ -56,7 +56,7 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
       if (response == null)
         throw InvalidDataException("Invalid response received from server");
 
-      return UpdateUserProfileResponse.fromBaseResponse(response);
+      return UpdateUserProfileResponse.response(response);
     } on InvalidDataException {
       rethrow;
     } on NetworkException {

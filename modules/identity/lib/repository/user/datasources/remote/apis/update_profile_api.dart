@@ -50,7 +50,6 @@ class UpdateUserProfileResponse {
 
   const UpdateUserProfileResponse(this.success);
 
-  factory UpdateUserProfileResponse.fromBaseResponse(BaseResponse response) =>
-      UpdateUserProfileResponse(
-          response.success == true || response.result == true);
+  factory UpdateUserProfileResponse.response(dynamic response) =>
+      UpdateUserProfileResponse(response == true);
 }

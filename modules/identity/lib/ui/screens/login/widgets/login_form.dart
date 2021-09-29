@@ -37,6 +37,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -91,35 +92,32 @@ class _LoginFormState extends State<LoginForm> {
         ),
       );
 
-  Widget get loginButton => Padding(
-        padding: const EdgeInsets.only(bottom: 4.0, left: 16.0, right: 16.0),
-        child: Observer(
-          builder: (context) => MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(3.0),
-              ),
+  Widget get loginButton => Observer(
+        builder: (context) => MaterialButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(3.0),
             ),
-            disabledColor: Theme.of(context).primaryColor.withOpacity(0.5),
-            child: Text('LOGIN'),
-            color: Theme.of(context).primaryColor,
-            textColor: Theme.of(context).primaryColor.byLuminance(),
-            onPressed: !_loginFormStore.canLogin
-                ? null
-                : () {
-                    DeviceUtils.hideKeyboard(context);
-                    if (_loginFormStore.canLogin) {
-                      _loginStore.login(
-                        _loginFormStore.userId,
-                        _loginFormStore.password,
-                      );
-                    } else {
-                      SnackBarUtils.createErrorMessage(
-                          message: 'Please fill in all fields', title: 'Error')
-                        ..show(context);
-                    }
-                  },
           ),
+          disabledColor: Theme.of(context).primaryColor.withOpacity(0.5),
+          child: Text('LOGIN'),
+          color: Theme.of(context).primaryColor,
+          textColor: Theme.of(context).primaryColor.byLuminance(),
+          onPressed: !_loginFormStore.canLogin
+              ? null
+              : () {
+                  DeviceUtils.hideKeyboard(context);
+                  if (_loginFormStore.canLogin) {
+                    _loginStore.login(
+                      _loginFormStore.userId,
+                      _loginFormStore.password,
+                    );
+                  } else {
+                    SnackBarUtils.createErrorMessage(
+                        message: 'Please fill in all fields', title: 'Error')
+                      ..show(context);
+                  }
+                },
         ),
       );
 }

@@ -34,7 +34,7 @@ GetIt configureIdentityRepositoryInjection() {
 
   ///replace [UserMockRemoteDatasource] with [UserRemoteDatasource] for actual data
   gh.singleton<IUserRemoteDatasource>(
-      UserMockRemoteDatasource(getIt<IRemoteApiClient<BaseResponse>>()));
+      UserMockRemoteDatasource(getIt<IRemoteApiClient<dynamic>>()));
 
   gh.singleton<UserRepository>(UserRepositoryImpl(
     getIt<IUserLocalDatasource>(),

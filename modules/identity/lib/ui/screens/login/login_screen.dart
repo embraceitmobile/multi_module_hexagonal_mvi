@@ -62,15 +62,23 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          Text(
-            "User Login",
-            style: Theme.of(context).textTheme.headline1,
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "User Login",
+                  style: Theme.of(context).textTheme.headline3,
+                  textAlign: TextAlign.center,
+                ),
+                LoginForm(),
+              ],
+            ),
           ),
-          LoginForm(),
           Observer(
             builder: (_) => _loginStore.authState.maybeWhen(
               loading: () => CenteredProgressIndicator(),

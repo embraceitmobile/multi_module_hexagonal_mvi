@@ -44,7 +44,7 @@ class AuthRepositoryImpl implements AuthRepository {
       ));
 
       return true;
-    } on Exception catch (_) {
+    } on Exception {
       await _localDatasource.saveAuth(AuthModel.failed());
       rethrow;
     }

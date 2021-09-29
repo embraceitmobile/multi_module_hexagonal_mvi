@@ -23,13 +23,15 @@ abstract class _LoginStore with Store {
       ObservableStream(_authListener.observeAuthState());
 
   @computed
-  DataState<AuthState> get authState =>
-      _authState.value ?? DataState.nullOrEmpty();
+  DataState<AuthState> get authState {
+    print("[$TAG][authState] state update: ${_authState.value}");
+    return _authState.value ?? DataState.nullOrEmpty();
+  }
 
   @action
   Future<bool?> login(String email, String password) async {
     try {
-      return _authActions.login(email, password);
+      return await _authActions.login(email, password);
     } on Exception catch (e) {
       print("[$TAG][login] error: $e");
     }

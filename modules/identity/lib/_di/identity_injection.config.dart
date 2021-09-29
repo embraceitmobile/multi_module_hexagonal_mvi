@@ -40,10 +40,10 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       _i4.AuthLocalDatasource(get<_i5.ILocalDbClient>()),
       registerFor: {_repo});
   gh.singleton<_i6.IAuthRemoteDatasource>(
-      _i7.AuthRemoteDatasource(get<_i5.IRemoteApiClient<_i5.BaseResponse>>()),
+      _i7.AuthRemoteDatasource(get<_i5.IRemoteApiClient<dynamic>>()),
       registerFor: {_repo});
   gh.singleton<_i8.IUserRemoteDatasource>(
-      _i9.UserRemoteDatasource(get<_i5.IRemoteApiClient<_i5.BaseResponse>>()),
+      _i9.UserRemoteDatasource(get<_i5.IRemoteApiClient<dynamic>>()),
       registerFor: {_repo});
   gh.singleton<_i10.IUserLocalDatasource>(
       _i11.UserLocalDatasource(get<_i5.ILocalDbClient>()),
