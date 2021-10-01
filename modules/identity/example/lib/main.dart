@@ -14,13 +14,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
-  final _routeHandler = RouteHandler([
-    IdentityRouter(
-      onLoginEvent: (context, {args}) =>
-          ProfileScreen.navigator.pushReplacement(context, args: args),
-    )
-  ]);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      onGenerateRoute: _routeHandler.onGenerateRoute,
+      onGenerateRoute: getIt<RouteHandler>().onGenerateRoute,
       initialRoute: LoginScreen.navigator.route,
     );
   }

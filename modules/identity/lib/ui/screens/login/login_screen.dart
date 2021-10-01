@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:identity/hexagon/entities/auth_state.dart';
-import 'package:identity/ui/routes/identity_router.dart';
+import 'package:identity/identity.dart';
 import 'package:identity/ui/screens/login/stores/login_store.dart';
 import 'package:identity/ui/screens/login/widgets/login_form.dart';
 import 'package:identity/ui/shared_widgets/centered_progress_indicator.dart';
@@ -48,8 +48,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ..show(context);
   }
 
-  void _navigate() {
-    getIt<IdentityRouter>().onLoginEvent(context);
+  Future<void> _navigate() async {
+    await getIt<IdentityRouter>().onLoginEvent(context);
   }
 
   @override

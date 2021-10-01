@@ -6,7 +6,7 @@ abstract class AuthRepository {
 
   Future<AuthInfo?> get authInfo;
 
-  Future<bool> saveAuthToken(AuthInfo authToken);
+  Future<bool> saveAuthInfo(AuthInfo authToken);
 
   Stream<DataState<AuthInfo>> observeAuthInfo();
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
 import 'package:identity/identity.dart';
@@ -13,10 +15,11 @@ import 'datasources/remote/apis/login_api.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final IAuthLocalDatasource _localDatasource;
   final IAuthRemoteDatasource _remoteDatasource;
-  final MultiStreamController<DataState<AuthInfo>> _authInfoStreamController;
+  final StreamController<DataState<AuthInfo>> _authInfoStreamController;
 
   AuthRepositoryImpl(this._localDatasource, this._remoteDatasource)
-      : _authInfoStreamController = MultiStreamController();
+      : _authInfoStreamController =
+            StreamController<DataState<AuthInfo>>.broadcast();
 
   Future<AuthInfo?> get authInfo async => await _localDatasource.auth;
 
@@ -24,19 +27,22 @@ class AuthRepositoryImpl implements AuthRepository {
 
   Future<bool> login(String email, String password) async {
     try {
-      _authInfoStreamController.emit(DataState.loading());
+      _authInfoStreamController.sink.add(DataState.loading());
       final response = await _remoteDatasource.login(
           LoginRequest(userNameOrEmailAddress: email, password: password));
 
-      await saveAuthToken(AuthInfo(
+      final authInfo = AuthInfo(
         accessToken: response.accessToken,
         refreshToken: response.refreshToken,
         userId: response.userId,
-      ));
+      );
 
+      await saveAuthInfo(authInfo);
+
+      _authInfoStreamController.sink.add(DataState.success(authInfo));
       return true;
     } on Exception catch (error) {
-      _authInfoStreamController.emit(DataState.error(error));
+      _authInfoStreamController.sink.add(DataState.error(error));
       rethrow;
     }
   }
@@ -49,10 +55,10 @@ class AuthRepositoryImpl implements AuthRepository {
         try {
           if (auth == null)
             throw InvalidDataException("No active user found to logout");
-          _authInfoStreamController.emit(DataState.loading());
+          _authInfoStreamController.sink.add(DataState.loading());
           await _remoteDatasource.logout();
         } on Exception catch (error) {
-          _authInfoStreamController.emit(DataState.error(error));
+          _authInfoStreamController.sink.add(DataState.error(error));
           rethrow;
         }
       }
@@ -63,10 +69,10 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  Future<bool> saveAuthToken(AuthInfo authToken) async {
+  Future<bool> saveAuthInfo(AuthInfo authInfo) async {
     try {
       final result =
-          await _localDatasource.saveAuth(AuthInfoDto.fromAuthInfo(authToken));
+          await _localDatasource.saveAuth(AuthInfoDto.fromAuthInfo(authInfo));
       return result > 0;
     } on Exception {
       rethrow;
@@ -84,15 +90,6 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  Stream<DataState<AuthInfo>> observeAuthInfo() {
-    _authInfoStreamController.addStream(
-      _localDatasource.observeAuth().map(
-            (authInfo) => authInfo == null
-                ? DataState.nullOrEmpty()
-                : DataState.success(authInfo),
-          ),
-    );
-
-    return _authInfoStreamController.stream;
-  }
+  Stream<DataState<AuthInfo>> observeAuthInfo() =>
+      _authInfoStreamController.stream;
 }

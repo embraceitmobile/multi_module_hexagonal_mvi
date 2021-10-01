@@ -4,9 +4,7 @@ class MultiStreamController<T> {
   MultiStreamController(
       {List<Stream<T>> additionalStreams = const [],
       this.onListen,
-      this.onCancel}) {
-    if (additionalStreams.isNotEmpty) addStreams(additionalStreams);
-  }
+      this.onCancel});
 
   final Function()? onListen;
   final Function()? onCancel;
@@ -24,17 +22,7 @@ class MultiStreamController<T> {
   Stream<T> get stream => _streamController.stream;
 
   void emit(T event) {
-    if (_streamController.hasListener) _streamController.add(event);
-  }
-
-  void addStream(Stream<T> source) {
-    _streamController.addStream(source);
-  }
-
-  void addStreams(List<Stream<T>> sources) {
-    for (final source in sources) {
-      _streamController.addStream(source);
-    }
+    if (_streamController.hasListener) _streamController.sink.add(event);
   }
 
   Future<void> close() async {

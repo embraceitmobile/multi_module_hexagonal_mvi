@@ -1,5 +1,6 @@
 import 'package:core/clients/remote_api_client/dio/dio_client.dart';
 import 'package:core/core.dart';
+import 'package:example/di/route_module.dart';
 import 'package:identity/identity.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,6 +11,7 @@ Future<void> configureInjection() async {
   final gh = GetItHelper(getIt);
   final localModule = _LocalModule();
   final networkModule = _NetworkModule();
+  final routeModule = _RouteModule();
 
   gh.singleton<DioClient>(networkModule.dioClient);
   await gh.singletonAsync<ILocalDbClient>(
@@ -26,8 +28,13 @@ Future<void> configureInjection() async {
     getIt<AuthInterceptor>(),
     getIt<RetryInterceptor>(),
   );
+
+  gh.singleton<IdentityRouter>(routeModule.identityRouter);
+  gh.singleton<RouteHandler>(routeModule.routeHandler);
 }
 
 class _LocalModule extends LocalModule {}
 
 class _NetworkModule extends NetworkModule {}
+
+class _RouteModule extends RouteModule {}
