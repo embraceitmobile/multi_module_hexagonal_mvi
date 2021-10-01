@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  async: ^2.8.1
+
   mobx: ^2.0.1
   flutter_mobx: ^2.0.0
   mobx_codegen: ^2.0.3

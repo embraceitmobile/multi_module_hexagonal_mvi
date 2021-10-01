@@ -1,4 +1,5 @@
 import 'package:core/models/exceptions/invalid_data_exception.dart';
+import 'package:identity/hexagon/entities/auth_info.dart';
 
 const loginEndpoint = "api/TokenAuth/Login";
 
@@ -48,6 +49,12 @@ class LoginResponse {
       userId: map["userId"],
     );
   }
+
+  AuthInfo get toAuthInfo => AuthInfo(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        userId: userId,
+      );
 
   @override
   String toString() {
