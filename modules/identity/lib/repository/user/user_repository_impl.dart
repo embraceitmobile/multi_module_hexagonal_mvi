@@ -25,25 +25,23 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final user = await _localDatasource.activeUser;
 
-      if (user == null) {
-        final authInfo = await _authRepository.authInfo;
+      if (user != null) return user.toUser;
 
-        if (authInfo == null) {
-          throw Exception("No auth info found in auth repository");
-        }
+      final authInfo = await _authRepository.authInfo;
 
-        await _localDatasource.saveUser(UserModel.loading(authInfo.userId));
+      if (authInfo == null) {
+        throw Exception("No auth info found in auth repository");
+      }
 
-        try {
-          final response = await _remoteDatasource.getActiveUser();
-          await _localDatasource.saveUser(UserModel.fromUserResponse(response));
-          return (await _localDatasource.activeUser)!.toUser;
-        } on Exception {
-          await _localDatasource.saveUser(UserModel.failed(authInfo.userId));
-          return null;
-        }
-      } else {
-        return user.toUser;
+      await _localDatasource.saveUser(UserModel.loading(authInfo.userId));
+
+      try {
+        final response = await _remoteDatasource.getActiveUser();
+        await _localDatasource.saveUser(UserModel.fromUserResponse(response));
+        return (await _localDatasource.activeUser)!.toUser;
+      } on Exception {
+        await _localDatasource.saveUser(UserModel.failed(authInfo.userId));
+        return null;
       }
     } on Exception {
       rethrow;
@@ -53,18 +51,15 @@ class UserRepositoryImpl implements UserRepository {
   Future<User?> getUserById(int userId) async {
     try {
       final user = await _localDatasource.getUserById(userId);
-      if (user == null) {
-        try {
-          final response =
-              await _remoteDatasource.getUserById(GetUserRequest(userId));
-          await _localDatasource.saveUser(UserModel.fromUserResponse(response));
-          return (await _localDatasource.getUserById(userId))!.toUser;
-        } on Exception {
-          await _localDatasource.saveUser(UserModel.failed(userId));
-          return null;
-        }
-      } else {
-        return user.toUser;
+      if (user != null) return user.toUser;
+      try {
+        final response =
+            await _remoteDatasource.getUserById(GetUserRequest(userId));
+        await _localDatasource.saveUser(UserModel.fromUserResponse(response));
+        return (await _localDatasource.getUserById(userId))!.toUser;
+      } on Exception {
+        await _localDatasource.saveUser(UserModel.failed(userId));
+        return null;
       }
     } on Exception {
       rethrow;

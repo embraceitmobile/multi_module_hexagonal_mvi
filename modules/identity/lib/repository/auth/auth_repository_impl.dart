@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:async/async.dart';
 import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
 import 'package:identity/identity.dart';
@@ -17,21 +16,12 @@ class AuthRepositoryImpl implements AuthRepository {
   final IAuthLocalDatasource _localDatasource;
   final IAuthRemoteDatasource _remoteDatasource;
 
-  final StreamController<DataState<AuthInfo>> _authInfoRemoteStreamController;
-  late Stream<DataState<AuthInfo>> _groupedAuthStateStream;
+  late MergedStreamController<DataState<AuthInfo>>
+      _authInfoRemoteStreamController;
 
-  AuthRepositoryImpl(this._localDatasource, this._remoteDatasource)
-      : _authInfoRemoteStreamController =
-            StreamController<DataState<AuthInfo>>.broadcast() {
-    final localAuthInfoStream = _localDatasource.observeAuth().map((authInfo) =>
-        authInfo == null
-            ? DataState<AuthInfo>.nullOrEmpty()
-            : DataState<AuthInfo>.success(authInfo));
-
-    _groupedAuthStateStream = StreamGroup.mergeBroadcast([
-      localAuthInfoStream,
-      _authInfoRemoteStreamController.stream,
-    ]);
+  AuthRepositoryImpl(this._localDatasource, this._remoteDatasource) {
+    _authInfoRemoteStreamController = MergedStreamController.broadcast(
+        streamsToMerge: [_localDatasource.observeAuth().toAuthInfoState]);
   }
 
   Future<AuthInfo?> get authInfo async => await _localDatasource.auth;
@@ -40,13 +30,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
   Future<bool> login(String email, String password) async {
     try {
-      _authInfoRemoteStreamController.sink.add(DataState.loading());
+      _authInfoRemoteStreamController.emit(DataState.loading());
       final response = await _remoteDatasource.login(
           LoginRequest(userNameOrEmailAddress: email, password: password));
 
       return await saveAuthInfo(response.toAuthInfo);
     } on Exception catch (error) {
-      _authInfoRemoteStreamController.sink.add(DataState.error(error));
+      _authInfoRemoteStreamController.emit(DataState.error(error));
       rethrow;
     }
   }
@@ -59,10 +49,10 @@ class AuthRepositoryImpl implements AuthRepository {
         try {
           if (auth == null)
             throw InvalidDataException("No active user found to logout");
-          _authInfoRemoteStreamController.sink.add(DataState.loading());
+          _authInfoRemoteStreamController.emit(DataState.loading());
           await _remoteDatasource.logout();
         } on Exception catch (error) {
-          _authInfoRemoteStreamController.sink.add(DataState.error(error));
+          _authInfoRemoteStreamController.emit(DataState.error(error));
           rethrow;
         }
       }
@@ -94,5 +84,13 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  Stream<DataState<AuthInfo>> observeAuthInfo() => _groupedAuthStateStream;
+  Stream<DataState<AuthInfo>> observeAuthInfo() =>
+      _authInfoRemoteStreamController.stream;
+}
+
+extension on Stream<AuthInfoDto?> {
+  Stream<DataState<AuthInfo>> get toAuthInfoState =>
+      this.map((authInfo) => authInfo == null
+          ? DataState<AuthInfo>.nullOrEmpty()
+          : DataState<AuthInfo>.success(authInfo));
 }
