@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'data_state.dart';
 
@@ -13,8 +14,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$StateTearOff {
-  const _$StateTearOff();
+class _$DataStateTearOff {
+  const _$DataStateTearOff();
 
   Data<T> success<T>(T data) {
     return Data<T>(
@@ -22,40 +23,52 @@ class _$StateTearOff {
     );
   }
 
-  Loading<T> loading<T>() {
-    return Loading<T>();
-  }
-
-  Error<T> error<T>(Exception error) {
-    return Error<T>(
-      error,
+  Loading<T> loading<T>({int progress = -1, T? data}) {
+    return Loading<T>(
+      progress: progress,
+      data: data,
     );
   }
 
-  NullOrEmpty<T> nullOrEmpty<T>() {
-    return NullOrEmpty<T>();
+  Error<T> error<T>(Exception error, {T? data}) {
+    return Error<T>(
+      error,
+      data: data,
+    );
+  }
+
+  IdleOrNoData<T> idleOrNoData<T>() {
+    return IdleOrNoData<T>();
   }
 }
 
 /// @nodoc
-const $State = _$StateTearOff();
+const $DataState = _$DataStateTearOff();
 
 /// @nodoc
-mixin _$State<T> {
+mixin _$DataState<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(T data) success,
-    required TResult Function() loading,
-    required TResult Function(Exception error) error,
-    required TResult Function() nullOrEmpty,
+    required TResult Function(int progress, T? data) loading,
+    required TResult Function(Exception error, T? data) error,
+    required TResult Function() idleOrNoData,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(T data)? success,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(T data)? success,
-    TResult Function()? loading,
-    TResult Function(Exception error)? error,
-    TResult Function()? nullOrEmpty,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -64,7 +77,15 @@ mixin _$State<T> {
     required TResult Function(Data<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(NullOrEmpty<T> value) nullOrEmpty,
+    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Data<T> value)? success,
+    TResult Function(Loading<T> value)? loading,
+    TResult Function(Error<T> value)? error,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,21 +93,22 @@ mixin _$State<T> {
     TResult Function(Data<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(NullOrEmpty<T> value)? nullOrEmpty,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StateCopyWith<T, $Res> {
-  factory $StateCopyWith(DataState<T> value, $Res Function(DataState<T>) then) =
-      _$StateCopyWithImpl<T, $Res>;
+abstract class $DataStateCopyWith<T, $Res> {
+  factory $DataStateCopyWith(
+          DataState<T> value, $Res Function(DataState<T>) then) =
+      _$DataStateCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class _$StateCopyWithImpl<T, $Res> implements $StateCopyWith<T, $Res> {
-  _$StateCopyWithImpl(this._value, this._then);
+class _$DataStateCopyWithImpl<T, $Res> implements $DataStateCopyWith<T, $Res> {
+  _$DataStateCopyWithImpl(this._value, this._then);
 
   final DataState<T> _value;
   // ignore: unused_field
@@ -101,7 +123,7 @@ abstract class $DataCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class _$DataCopyWithImpl<T, $Res> extends _$StateCopyWithImpl<T, $Res>
+class _$DataCopyWithImpl<T, $Res> extends _$DataStateCopyWithImpl<T, $Res>
     implements $DataCopyWith<T, $Res> {
   _$DataCopyWithImpl(Data<T> _value, $Res Function(Data<T>) _then)
       : super(_value, (v) => _then(v as Data<T>));
@@ -132,7 +154,7 @@ class _$Data<T> implements Data<T> {
 
   @override
   String toString() {
-    return 'State<$T>.success(data: $data)';
+    return 'DataState<$T>.success(data: $data)';
   }
 
   @override
@@ -156,20 +178,31 @@ class _$Data<T> implements Data<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(T data) success,
-    required TResult Function() loading,
-    required TResult Function(Exception error) error,
-    required TResult Function() nullOrEmpty,
+    required TResult Function(int progress, T? data) loading,
+    required TResult Function(Exception error, T? data) error,
+    required TResult Function() idleOrNoData,
   }) {
     return success(data);
   }
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(T data)? success,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
+  }) {
+    return success?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(T data)? success,
-    TResult Function()? loading,
-    TResult Function(Exception error)? error,
-    TResult Function()? nullOrEmpty,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -184,9 +217,20 @@ class _$Data<T> implements Data<T> {
     required TResult Function(Data<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(NullOrEmpty<T> value) nullOrEmpty,
+    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
   }) {
     return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Data<T> value)? success,
+    TResult Function(Loading<T> value)? loading,
+    TResult Function(Error<T> value)? error,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+  }) {
+    return success?.call(this);
   }
 
   @override
@@ -195,7 +239,7 @@ class _$Data<T> implements Data<T> {
     TResult Function(Data<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(NullOrEmpty<T> value)? nullOrEmpty,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -217,58 +261,107 @@ abstract class Data<T> implements DataState<T> {
 abstract class $LoadingCopyWith<T, $Res> {
   factory $LoadingCopyWith(Loading<T> value, $Res Function(Loading<T>) then) =
       _$LoadingCopyWithImpl<T, $Res>;
+  $Res call({int progress, T? data});
 }
 
 /// @nodoc
-class _$LoadingCopyWithImpl<T, $Res> extends _$StateCopyWithImpl<T, $Res>
+class _$LoadingCopyWithImpl<T, $Res> extends _$DataStateCopyWithImpl<T, $Res>
     implements $LoadingCopyWith<T, $Res> {
   _$LoadingCopyWithImpl(Loading<T> _value, $Res Function(Loading<T>) _then)
       : super(_value, (v) => _then(v as Loading<T>));
 
   @override
   Loading<T> get _value => super._value as Loading<T>;
+
+  @override
+  $Res call({
+    Object? progress = freezed,
+    Object? data = freezed,
+  }) {
+    return _then(Loading<T>(
+      progress: progress == freezed
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as int,
+      data: data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$Loading<T> implements Loading<T> {
-  const _$Loading();
+  const _$Loading({this.progress = -1, this.data});
+
+  @JsonKey(defaultValue: -1)
+  @override
+  final int progress;
+  @override
+  final T? data;
 
   @override
   String toString() {
-    return 'State<$T>.loading()';
+    return 'DataState<$T>.loading(progress: $progress, data: $data)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is Loading<T>);
+    return identical(this, other) ||
+        (other is Loading<T> &&
+            (identical(other.progress, progress) ||
+                const DeepCollectionEquality()
+                    .equals(other.progress, progress)) &&
+            (identical(other.data, data) ||
+                const DeepCollectionEquality().equals(other.data, data)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(progress) ^
+      const DeepCollectionEquality().hash(data);
+
+  @JsonKey(ignore: true)
+  @override
+  $LoadingCopyWith<T, Loading<T>> get copyWith =>
+      _$LoadingCopyWithImpl<T, Loading<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(T data) success,
-    required TResult Function() loading,
-    required TResult Function(Exception error) error,
-    required TResult Function() nullOrEmpty,
+    required TResult Function(int progress, T? data) loading,
+    required TResult Function(Exception error, T? data) error,
+    required TResult Function() idleOrNoData,
   }) {
-    return loading();
+    return loading(progress, data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(T data)? success,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
+  }) {
+    return loading?.call(progress, data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(T data)? success,
-    TResult Function()? loading,
-    TResult Function(Exception error)? error,
-    TResult Function()? nullOrEmpty,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(progress, data);
     }
     return orElse();
   }
@@ -279,9 +372,20 @@ class _$Loading<T> implements Loading<T> {
     required TResult Function(Data<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(NullOrEmpty<T> value) nullOrEmpty,
+    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Data<T> value)? success,
+    TResult Function(Loading<T> value)? loading,
+    TResult Function(Error<T> value)? error,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -290,7 +394,7 @@ class _$Loading<T> implements Loading<T> {
     TResult Function(Data<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(NullOrEmpty<T> value)? nullOrEmpty,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -301,18 +405,24 @@ class _$Loading<T> implements Loading<T> {
 }
 
 abstract class Loading<T> implements DataState<T> {
-  const factory Loading() = _$Loading<T>;
+  const factory Loading({int progress, T? data}) = _$Loading<T>;
+
+  int get progress => throw _privateConstructorUsedError;
+  T? get data => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LoadingCopyWith<T, Loading<T>> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $ErrorCopyWith<T, $Res> {
   factory $ErrorCopyWith(Error<T> value, $Res Function(Error<T>) then) =
       _$ErrorCopyWithImpl<T, $Res>;
-  $Res call({Exception error});
+  $Res call({Exception error, T? data});
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<T, $Res> extends _$StateCopyWithImpl<T, $Res>
+class _$ErrorCopyWithImpl<T, $Res> extends _$DataStateCopyWithImpl<T, $Res>
     implements $ErrorCopyWith<T, $Res> {
   _$ErrorCopyWithImpl(Error<T> _value, $Res Function(Error<T>) _then)
       : super(_value, (v) => _then(v as Error<T>));
@@ -323,12 +433,17 @@ class _$ErrorCopyWithImpl<T, $Res> extends _$StateCopyWithImpl<T, $Res>
   @override
   $Res call({
     Object? error = freezed,
+    Object? data = freezed,
   }) {
     return _then(Error<T>(
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as Exception,
+      data: data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as T?,
     ));
   }
 }
@@ -336,14 +451,16 @@ class _$ErrorCopyWithImpl<T, $Res> extends _$StateCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$Error<T> implements Error<T> {
-  const _$Error(this.error);
+  const _$Error(this.error, {this.data});
 
   @override
   final Exception error;
+  @override
+  final T? data;
 
   @override
   String toString() {
-    return 'State<$T>.error(error: $error)';
+    return 'DataState<$T>.error(error: $error, data: $data)';
   }
 
   @override
@@ -351,12 +468,16 @@ class _$Error<T> implements Error<T> {
     return identical(this, other) ||
         (other is Error<T> &&
             (identical(other.error, error) ||
-                const DeepCollectionEquality().equals(other.error, error)));
+                const DeepCollectionEquality().equals(other.error, error)) &&
+            (identical(other.data, data) ||
+                const DeepCollectionEquality().equals(other.data, data)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(error) ^
+      const DeepCollectionEquality().hash(data);
 
   @JsonKey(ignore: true)
   @override
@@ -367,24 +488,35 @@ class _$Error<T> implements Error<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(T data) success,
-    required TResult Function() loading,
-    required TResult Function(Exception error) error,
-    required TResult Function() nullOrEmpty,
+    required TResult Function(int progress, T? data) loading,
+    required TResult Function(Exception error, T? data) error,
+    required TResult Function() idleOrNoData,
   }) {
-    return error(this.error);
+    return error(this.error, data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(T data)? success,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
+  }) {
+    return error?.call(this.error, data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(T data)? success,
-    TResult Function()? loading,
-    TResult Function(Exception error)? error,
-    TResult Function()? nullOrEmpty,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error);
+      return error(this.error, data);
     }
     return orElse();
   }
@@ -395,9 +527,20 @@ class _$Error<T> implements Error<T> {
     required TResult Function(Data<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(NullOrEmpty<T> value) nullOrEmpty,
+    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
   }) {
     return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Data<T> value)? success,
+    TResult Function(Loading<T> value)? loading,
+    TResult Function(Error<T> value)? error,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+  }) {
+    return error?.call(this);
   }
 
   @override
@@ -406,7 +549,7 @@ class _$Error<T> implements Error<T> {
     TResult Function(Data<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(NullOrEmpty<T> value)? nullOrEmpty,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -417,45 +560,47 @@ class _$Error<T> implements Error<T> {
 }
 
 abstract class Error<T> implements DataState<T> {
-  const factory Error(Exception error) = _$Error<T>;
+  const factory Error(Exception error, {T? data}) = _$Error<T>;
 
   Exception get error => throw _privateConstructorUsedError;
+  T? get data => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ErrorCopyWith<T, Error<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NullOrEmptyCopyWith<T, $Res> {
-  factory $NullOrEmptyCopyWith(
-          NullOrEmpty<T> value, $Res Function(NullOrEmpty<T>) then) =
-      _$NullOrEmptyCopyWithImpl<T, $Res>;
+abstract class $IdleOrNoDataCopyWith<T, $Res> {
+  factory $IdleOrNoDataCopyWith(
+          IdleOrNoData<T> value, $Res Function(IdleOrNoData<T>) then) =
+      _$IdleOrNoDataCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class _$NullOrEmptyCopyWithImpl<T, $Res> extends _$StateCopyWithImpl<T, $Res>
-    implements $NullOrEmptyCopyWith<T, $Res> {
-  _$NullOrEmptyCopyWithImpl(
-      NullOrEmpty<T> _value, $Res Function(NullOrEmpty<T>) _then)
-      : super(_value, (v) => _then(v as NullOrEmpty<T>));
+class _$IdleOrNoDataCopyWithImpl<T, $Res>
+    extends _$DataStateCopyWithImpl<T, $Res>
+    implements $IdleOrNoDataCopyWith<T, $Res> {
+  _$IdleOrNoDataCopyWithImpl(
+      IdleOrNoData<T> _value, $Res Function(IdleOrNoData<T>) _then)
+      : super(_value, (v) => _then(v as IdleOrNoData<T>));
 
   @override
-  NullOrEmpty<T> get _value => super._value as NullOrEmpty<T>;
+  IdleOrNoData<T> get _value => super._value as IdleOrNoData<T>;
 }
 
 /// @nodoc
 
-class _$NullOrEmpty<T> implements NullOrEmpty<T> {
-  const _$NullOrEmpty();
+class _$IdleOrNoData<T> implements IdleOrNoData<T> {
+  const _$IdleOrNoData();
 
   @override
   String toString() {
-    return 'State<$T>.nullOrEmpty()';
+    return 'DataState<$T>.idleOrNoData()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is NullOrEmpty<T>);
+    return identical(this, other) || (other is IdleOrNoData<T>);
   }
 
   @override
@@ -465,24 +610,35 @@ class _$NullOrEmpty<T> implements NullOrEmpty<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(T data) success,
-    required TResult Function() loading,
-    required TResult Function(Exception error) error,
-    required TResult Function() nullOrEmpty,
+    required TResult Function(int progress, T? data) loading,
+    required TResult Function(Exception error, T? data) error,
+    required TResult Function() idleOrNoData,
   }) {
-    return nullOrEmpty();
+    return idleOrNoData();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(T data)? success,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
+  }) {
+    return idleOrNoData?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(T data)? success,
-    TResult Function()? loading,
-    TResult Function(Exception error)? error,
-    TResult Function()? nullOrEmpty,
+    TResult Function(int progress, T? data)? loading,
+    TResult Function(Exception error, T? data)? error,
+    TResult Function()? idleOrNoData,
     required TResult orElse(),
   }) {
-    if (nullOrEmpty != null) {
-      return nullOrEmpty();
+    if (idleOrNoData != null) {
+      return idleOrNoData();
     }
     return orElse();
   }
@@ -493,9 +649,20 @@ class _$NullOrEmpty<T> implements NullOrEmpty<T> {
     required TResult Function(Data<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(NullOrEmpty<T> value) nullOrEmpty,
+    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
   }) {
-    return nullOrEmpty(this);
+    return idleOrNoData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Data<T> value)? success,
+    TResult Function(Loading<T> value)? loading,
+    TResult Function(Error<T> value)? error,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+  }) {
+    return idleOrNoData?.call(this);
   }
 
   @override
@@ -504,16 +671,16 @@ class _$NullOrEmpty<T> implements NullOrEmpty<T> {
     TResult Function(Data<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(NullOrEmpty<T> value)? nullOrEmpty,
+    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
     required TResult orElse(),
   }) {
-    if (nullOrEmpty != null) {
-      return nullOrEmpty(this);
+    if (idleOrNoData != null) {
+      return idleOrNoData(this);
     }
     return orElse();
   }
 }
 
-abstract class NullOrEmpty<T> implements DataState<T> {
-  const factory NullOrEmpty() = _$NullOrEmpty<T>;
+abstract class IdleOrNoData<T> implements DataState<T> {
+  const factory IdleOrNoData() = _$IdleOrNoData<T>;
 }

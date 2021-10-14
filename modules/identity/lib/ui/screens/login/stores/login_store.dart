@@ -24,7 +24,7 @@ abstract class _LoginStore with Store {
 
   @computed
   DataState<AuthState> get authState =>
-      _authState.value ?? DataState.nullOrEmpty();
+      _authState.value ?? DataState.idleOrNoData();
 
   @action
   Future<bool?> login(String email, String password) async {

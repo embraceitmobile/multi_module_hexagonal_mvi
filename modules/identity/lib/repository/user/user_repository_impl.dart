@@ -109,7 +109,7 @@ class UserRepositoryImpl implements UserRepository {
 
   Stream<DataState<User>> observeActiveUser() {
     return _localDatasource.observeActiveUser().map((user) {
-      if (user == null) return DataState.nullOrEmpty();
+      if (user == null) return DataState.idleOrNoData();
 
       switch (user.state) {
         case LocalState.success:

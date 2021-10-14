@@ -91,6 +91,6 @@ class AuthRepositoryImpl implements AuthRepository {
 extension on Stream<AuthInfoDto?> {
   Stream<DataState<AuthInfo>> get toAuthInfoState =>
       this.map((authInfo) => authInfo == null
-          ? DataState<AuthInfo>.nullOrEmpty()
+          ? DataState<AuthInfo>.idleOrNoData()
           : DataState<AuthInfo>.success(authInfo));
 }
