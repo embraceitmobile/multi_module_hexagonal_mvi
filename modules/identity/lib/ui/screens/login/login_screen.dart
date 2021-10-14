@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _disposers = [
       reaction<Exception?>(
           (_) => _loginStore.authState.maybeWhen(
-                error: (exception, data) => exception,
+                error: (exception) => exception,
                 orElse: () => null,
               ),
           _handleErrorMessage),
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Observer(
             builder: (_) => _loginStore.authState.maybeWhen(
-              loading: (progress, data) => CenteredProgressIndicator(),
+              loading: (progress) => CenteredProgressIndicator(),
               orElse: () => SizedBox.shrink(),
             ),
           ),

@@ -15,8 +15,8 @@ class AuthListenerImpl implements AuthListener {
             (authInfoState) => authInfoState.when(
               success: (authInfo) => DataState.success(AuthState.Authenticated),
               idleOrNoData: () => DataState.success(AuthState.Unauthenticated),
-              loading: (progress, data) => DataState.loading(),
-              error: (exception, data) => DataState.error(exception),
+              loading: (progress) => DataState.loading(),
+              error: (exception) => DataState.error(exception),
             ),
           );
 }
