@@ -1,8 +1,7 @@
 import 'package:core/core.dart';
+import 'package:example/di/components/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:identity/identity.dart';
-
-import 'di/components/injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

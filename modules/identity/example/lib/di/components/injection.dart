@@ -25,12 +25,14 @@ Future<void> configureInjection() async {
   gh.lazySingleton<RetryInterceptor>(() => networkModule.retryInterceptor);
 
   networkModule.addInterceptors(
+    getIt<DioClient>(),
     getIt<AuthInterceptor>(),
     getIt<RetryInterceptor>(),
   );
 
   gh.singleton<IdentityRouter>(routeModule.identityRouter);
-  gh.singleton<RouteHandler>(routeModule.routeHandler);
+  gh.singleton<RouteHandler>(
+      routeModule.provideRouteHandler(getIt<IdentityRouter>()));
 }
 
 class _LocalModule extends LocalModule {}

@@ -14,7 +14,6 @@ abstract class RouteModule {
       );
 
   @singleton
-  RouteHandler get routeHandler => RouteHandler([
-        getIt<IdentityRouter>(),
-      ]);
+  RouteHandler provideRouteHandler(IdentityRouter identityRouter) =>
+      RouteHandler([identityRouter]);
 }

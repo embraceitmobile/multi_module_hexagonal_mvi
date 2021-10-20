@@ -23,9 +23,11 @@ abstract class NetworkModule {
   RetryInterceptor get retryInterceptor =>
       RetryInterceptor(dio: getIt<DioClient>().dio);
 
-  @injectable
-  void addInterceptors(
+  @singleton
+  Interceptors addInterceptors(DioClient dioClient,
       AuthInterceptor authInterceptor, RetryInterceptor retryInterceptor) {
     dioClient.dio.interceptors.addAll([authInterceptor, retryInterceptor]);
+
+    return dioClient.dio.interceptors;
   }
 }
