@@ -11,6 +11,8 @@ abstract class UserReader {
 
 abstract class UserListener {
   Stream<DataState<User>> observeActiveUser();
+
+  Stream<DataState<User>> observeUserById(int userId);
 }
 
 abstract class UserEditor extends UserReader {

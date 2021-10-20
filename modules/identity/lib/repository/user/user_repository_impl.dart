@@ -16,32 +16,37 @@ class UserRepositoryImpl implements UserRepository {
   final IUserRemoteDatasource _remoteDatasource;
   final AuthRepository _authRepository;
 
-  const UserRepositoryImpl(
-      this._localDatasource, this._remoteDatasource, this._authRepository);
+  late MergedStreamController<DataState<User>>
+      _activeUserRemoteStreamController;
+
+  UserRepositoryImpl(
+    this._localDatasource,
+    this._remoteDatasource,
+    this._authRepository,
+  ) {
+    _activeUserRemoteStreamController = MergedStreamController.broadcast(
+        streamsToMerge: [_localDatasource.observeActiveUser().toUser]);
+  }
 
   Future<User?> get activeUser async {
-    if (!(await _authRepository.isAuthenticated)) return null;
-
     try {
       final user = await _localDatasource.activeUser;
-
       if (user != null) return user.toUser;
 
       final authInfo = await _authRepository.authInfo;
-
       if (authInfo == null) {
-        throw Exception("No auth info found in auth repository");
+        throw Exception("The user is not authenticated");
       }
 
-      await _localDatasource.saveUser(UserModel.loading(authInfo.userId));
-
       try {
+        _activeUserRemoteStreamController.emit(DataState.loading());
         final response = await _remoteDatasource.getActiveUser();
-        await _localDatasource.saveUser(UserModel.fromUserResponse(response));
-        return (await _localDatasource.activeUser)!.toUser;
-      } on Exception {
-        await _localDatasource.saveUser(UserModel.failed(authInfo.userId));
-        return null;
+        final userModel = UserModel.fromUserResponse(response);
+        await _localDatasource.saveUser(userModel);
+        return userModel.toUser;
+      } on Exception catch (error) {
+        _activeUserRemoteStreamController.emit(DataState.error(error));
+        rethrow;
       }
     } on Exception {
       rethrow;
@@ -55,11 +60,11 @@ class UserRepositoryImpl implements UserRepository {
       try {
         final response =
             await _remoteDatasource.getUserById(GetUserRequest(userId));
-        await _localDatasource.saveUser(UserModel.fromUserResponse(response));
-        return (await _localDatasource.getUserById(userId))!.toUser;
+        final userModel = UserModel.fromUserResponse(response);
+        await _localDatasource.saveUser(userModel);
+        return userModel.toUser;
       } on Exception {
-        await _localDatasource.saveUser(UserModel.failed(userId));
-        return null;
+        rethrow;
       }
     } on Exception {
       rethrow;
@@ -107,18 +112,12 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-  Stream<DataState<User>> observeActiveUser() {
-    return _localDatasource.observeActiveUser().map((user) {
-      if (user == null) return DataState.idleOrNoData();
+  Stream<DataState<User>> observeActiveUser() =>
+      _activeUserRemoteStreamController.stream;
+}
 
-      switch (user.state) {
-        case LocalState.success:
-          return DataState.success(user.toUser);
-        case LocalState.loading:
-          return DataState.loading();
-        case LocalState.failed:
-          return DataState.error(Exception());
-      }
-    });
-  }
+extension on Stream<UserModel?> {
+  Stream<DataState<User>> get toUser => this.map((user) => user == null
+      ? DataState<User>.idleOrNoData()
+      : DataState<User>.success(user.toUser));
 }
