@@ -65,9 +65,9 @@ class RouteHandler {
     this.routers, {
     this.root,
     this.onPageNotFound,
-  }) : _routersMap = _indexRoutes(routers, root);
+  }) : _routersMap = _indexedRoutes(routers, root);
 
-  static Map<String, IRouter> _indexRoutes(
+  static Map<String, IRouter> _indexedRoutes(
       List<IRouter> routers, Widget? root) {
     final Map<String, IRouter> routersMap = {};
 

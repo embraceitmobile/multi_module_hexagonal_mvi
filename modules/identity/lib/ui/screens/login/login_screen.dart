@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:identity/hexagon/entities/auth_state.dart';
 import 'package:identity/identity.dart';
 import 'package:identity/ui/screens/login/stores/login_store.dart';
 import 'package:identity/ui/screens/login/widgets/login_form.dart';

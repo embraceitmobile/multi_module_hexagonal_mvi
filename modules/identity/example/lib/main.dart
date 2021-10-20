@@ -12,16 +12,23 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Identity Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return FutureBuilder<bool>(
+      future: getIt<AuthReader>().isAuthenticated,
+      initialData: null,
+      builder: (context, authSnapshot) => MaterialApp(
+        title: 'Identity Example',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        onGenerateRoute: getIt<RouteHandler>().onGenerateRoute,
+        initialRoute: RootScreen.navigator.route,
+        home: _home(authSnapshot.data),
       ),
-      onGenerateRoute: getIt<RouteHandler>().onGenerateRoute,
-      initialRoute: LoginScreen.navigator.route,
     );
+  }
+
+  Widget _home(bool? isAuthenticated) {
+    if (isAuthenticated == null) return RootScreen();
+    return isAuthenticated ? ProfileScreen() : LoginScreen();
   }
 }

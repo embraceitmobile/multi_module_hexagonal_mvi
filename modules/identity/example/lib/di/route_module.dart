@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:identity/identity.dart';
 import 'package:identity/ui/routes/identity_router.dart';
 import 'package:identity/ui/screens/profile/profile_screen.dart';
 import 'package:injectable/injectable.dart';
@@ -15,5 +16,5 @@ abstract class RouteModule {
 
   @singleton
   RouteHandler provideRouteHandler(IdentityRouter identityRouter) =>
-      RouteHandler([identityRouter]);
+      RouteHandler([identityRouter], root: RootScreen());
 }
