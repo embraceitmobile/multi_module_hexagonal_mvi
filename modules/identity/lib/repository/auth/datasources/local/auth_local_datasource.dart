@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/clients/local_db_client/base/i_local_db_client.dart';
 import 'package:core/clients/local_db_client/local_data_source.dart';
 import 'package:core/core.dart';
@@ -20,7 +21,7 @@ class AuthLocalDatasource extends LocalDataSource<AuthInfoDto>
 
   Future<AuthInfoDto?> get auth async {
     final result = await find();
-    return result.firstOrNull();
+    return result.firstOrNull;
   }
 
   Future<bool> hasAuth() async => await auth != null;

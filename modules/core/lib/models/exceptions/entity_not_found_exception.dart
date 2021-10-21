@@ -6,6 +6,5 @@ class EntityNotFoundException implements Exception {
 
   EntityNotFoundException({required this.entityId, required this.storeName});
 
-  @override
   String toString() => message;
 }

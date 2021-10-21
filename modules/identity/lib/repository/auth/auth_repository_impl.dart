@@ -31,8 +31,8 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> login(String email, String password) async {
     try {
       _authInfoRemoteStreamController.emit(DataState.loading());
-      final response = await _remoteDatasource.login(
-          LoginRequest(userNameOrEmailAddress: email, password: password));
+      final response = await _remoteDatasource
+          .login(LoginRequest(username: email, password: password));
 
       return await saveAuthInfo(response.toAuthInfo);
     } on Exception catch (error) {

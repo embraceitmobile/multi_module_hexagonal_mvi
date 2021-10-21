@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/clients/local_db_client/base/i_local_db_client.dart';
 import 'package:core/clients/local_db_client/local_data_source.dart';
 import 'package:core/core.dart';
@@ -21,12 +22,12 @@ class UserLocalDatasource extends LocalDataSource<UserModel>
 
   Future<UserModel?> get activeUser async {
     final result = await find(filter: Filter.equals("isActive", true));
-    return result.firstOrNull();
+    return result.firstOrNull;
   }
 
   Future<UserModel?> getUserById(int userId) async {
     final result = await find(filter: Filter.equals("userId", userId));
-    return result.firstOrNull();
+    return result.firstOrNull;
   }
 
   Future<bool> saveUser(UserModel user) async => await insertOrUpdate(user) > 0;

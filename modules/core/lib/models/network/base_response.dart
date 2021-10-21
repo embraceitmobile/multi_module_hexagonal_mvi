@@ -63,6 +63,11 @@ class ErrorResponse {
             : List<ValidationError>.from(json["validationErrors"]
                 .map((x) => ValidationError.fromMap(x))),
       );
+
+  @override
+  String toString() {
+    return 'ErrorResponse{statusCode: $statusCode, message: $message, validationErrors: $validationErrors, details: $details}';
+  }
 }
 
 class ValidationError {

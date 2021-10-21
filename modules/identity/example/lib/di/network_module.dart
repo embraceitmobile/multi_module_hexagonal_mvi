@@ -9,7 +9,7 @@ abstract class NetworkModule {
 
   // DI Providers:--------------------------------------------------------------
   @singleton
-  DioClient get dioClient => DioClient();
+  DioClient get dioClient => DioClient(baseUrl: baseUrl);
 
   @singleton
   IRemoteApiClient<dynamic> get remoteApiClient =>

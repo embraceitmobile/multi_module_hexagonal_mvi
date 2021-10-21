@@ -1,24 +1,16 @@
 import 'package:core/models/exceptions/invalid_data_exception.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
 
-const loginEndpoint = "api/TokenAuth/Login";
+const loginEndpoint = "/users";
 
 class LoginRequest {
-  final String userNameOrEmailAddress;
+  final String username;
   final String password;
-  final bool rememberClient;
 
   LoginRequest({
-    required this.userNameOrEmailAddress,
+    required this.username,
     required this.password,
-    this.rememberClient = true,
   });
-
-  Map<String, dynamic> toMap() => {
-        'userNameOrEmailAddress': userNameOrEmailAddress,
-        'password': password,
-        'rememberClient': rememberClient,
-      };
 }
 
 class LoginResponse {

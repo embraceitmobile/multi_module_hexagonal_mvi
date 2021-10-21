@@ -56,4 +56,7 @@ class NetworkException implements Exception {
         return defaultError;
     }
   }
+
+  @override
+  String toString() => error.message;
 }
