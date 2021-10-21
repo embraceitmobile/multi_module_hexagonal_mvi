@@ -19,6 +19,9 @@ class UserRepositoryImpl implements UserRepository {
   late MergedStreamController<DataState<User>>
       _activeUserRemoteStreamController;
 
+  final Map<int, MergedStreamController<DataState<User>>> _userByIdStreamMap =
+      {};
+
   UserRepositoryImpl(
     this._localDatasource,
     this._remoteDatasource,
@@ -57,13 +60,16 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final user = await _localDatasource.getUserById(userId);
       if (user != null) return user.toUser;
+
       try {
+        _userByIdStreamMap[userId]?.emit(DataState.loading());
         final response =
             await _remoteDatasource.getUserById(GetUserRequest(userId));
         final userModel = UserModel.fromUserResponse(response);
         await _localDatasource.saveUser(userModel);
         return userModel.toUser;
-      } on Exception {
+      } on Exception catch (error) {
+        _userByIdStreamMap[userId]?.emit(DataState.error(error));
         rethrow;
       }
     } on Exception {
@@ -114,6 +120,19 @@ class UserRepositoryImpl implements UserRepository {
 
   Stream<DataState<User>> observeActiveUser() =>
       _activeUserRemoteStreamController.stream;
+
+  Stream<DataState<User>> observeUserById(int userId) {
+    if (_userByIdStreamMap[userId] != null) {
+      return _userByIdStreamMap[userId]!.stream;
+    }
+
+    final mergedStream = MergedStreamController.broadcast(
+        streamsToMerge: [_localDatasource.observeUserById(userId).toUser],
+        onCancel: () => _userByIdStreamMap.remove(userId));
+
+    _userByIdStreamMap[userId] = mergedStream;
+    return mergedStream.stream;
+  }
 }
 
 extension on Stream<UserModel?> {

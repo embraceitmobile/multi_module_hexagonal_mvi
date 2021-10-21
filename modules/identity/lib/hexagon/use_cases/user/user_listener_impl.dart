@@ -14,9 +14,7 @@ class UserListenerImpl implements UserListener {
     return _repository.observeActiveUser();
   }
 
-  @override
   Stream<DataState<User>> observeUserById(int userId) {
-    // TODO: implement observeUserById
-    throw UnimplementedError();
+    return _repository.observeUserById(userId);
   }
 }

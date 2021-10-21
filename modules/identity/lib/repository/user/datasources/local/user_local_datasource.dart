@@ -42,4 +42,7 @@ class UserLocalDatasource extends LocalDataSource<UserModel>
 
   Stream<UserModel?> observeActiveUser() =>
       observeChange(filter: Filter.equals("isActive", true));
+
+  Stream<UserModel?> observeUserById(int userId) =>
+      observeChange(filter: Filter.equals("id", userId));
 }
