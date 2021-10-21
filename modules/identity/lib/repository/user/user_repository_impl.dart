@@ -34,7 +34,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<User?> get activeUser async {
     try {
       final user = await _localDatasource.activeUser;
-      if (user != null) return user.toUser;
+      if (user != null) return user;
 
       final authInfo = await _authRepository.authInfo;
       if (authInfo == null) {
@@ -46,7 +46,7 @@ class UserRepositoryImpl implements UserRepository {
         final response = await _remoteDatasource.getActiveUser();
         final userModel = UserModel.fromUserResponse(response);
         await _localDatasource.saveUser(userModel);
-        return userModel.toUser;
+        return userModel;
       } on Exception catch (error) {
         _activeUserRemoteStreamController.emit(DataState.error(error));
         rethrow;
@@ -59,7 +59,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<User?> getUserById(int userId) async {
     try {
       final user = await _localDatasource.getUserById(userId);
-      if (user != null) return user.toUser;
+      if (user != null) return user;
 
       try {
         _userByIdStreamMap[userId]?.emit(DataState.loading());
@@ -67,7 +67,7 @@ class UserRepositoryImpl implements UserRepository {
             await _remoteDatasource.getUserById(GetUserRequest(userId));
         final userModel = UserModel.fromUserResponse(response);
         await _localDatasource.saveUser(userModel);
-        return userModel.toUser;
+        return userModel;
       } on Exception catch (error) {
         _userByIdStreamMap[userId]?.emit(DataState.error(error));
         rethrow;
@@ -103,8 +103,7 @@ class UserRepositoryImpl implements UserRepository {
 
   Future<List<User>> get users async {
     try {
-      final result = await _localDatasource.users;
-      return result.map((user) => user.toUser).toList();
+      return await _localDatasource.users;
     } on Exception {
       rethrow;
     }
@@ -138,5 +137,5 @@ class UserRepositoryImpl implements UserRepository {
 extension on Stream<UserModel?> {
   Stream<DataState<User>> get toUser => this.map((user) => user == null
       ? DataState<User>.idleOrNoData()
-      : DataState<User>.success(user.toUser));
+      : DataState<User>.success(user));
 }

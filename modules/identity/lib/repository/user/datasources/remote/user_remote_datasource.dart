@@ -1,8 +1,9 @@
 import 'package:core/core.dart';
-import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 import 'package:identity/repository/user/datasources/remote/apis/update_profile_api.dart';
 import 'package:identity/repository/user/datasources/remote/i_user_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
+
+import 'apis/get_user_api.dart';
 
 @Singleton(as: IUserRemoteDatasource)
 class UserRemoteDatasource implements IUserRemoteDatasource {
@@ -13,7 +14,7 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
   // injecting api client instance
   const UserRemoteDatasource(this._apiClient);
 
-  Future<GetUserResponse> getUserById(GetUserRequest request) async {
+  Future<UserResponse> getUserById(GetUserRequest request) async {
     try {
       final response =
           await _apiClient.post(getUserByIdEndpoint, data: request.toMap);
@@ -21,7 +22,7 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
       if (response == null)
         throw InvalidDataException("Invalid response received from server");
 
-      return GetUserResponse.fromMap(response);
+      return UserResponse.fromMap(response);
     } on InvalidDataException {
       rethrow;
     } on NetworkException {
@@ -31,14 +32,14 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
     }
   }
 
-  Future<GetUserResponse> getActiveUser() async {
+  Future<UserResponse> getActiveUser() async {
     try {
       final response = await _apiClient.get(getUserEndpoint);
 
       if (response == null)
         throw InvalidDataException("Invalid response received from server");
 
-      return GetUserResponse.fromMap(response);
+      return UserResponse.fromMap(response);
     } on InvalidDataException {
       rethrow;
     } on NetworkException {

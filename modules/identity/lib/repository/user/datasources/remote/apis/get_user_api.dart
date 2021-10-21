@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:core/models/exceptions/invalid_data_exception.dart';
+import 'package:identity/identity.dart';
 
 const getUserEndpoint = "api/ServiceWorker/GetProfile";
 const getUserByIdEndpoint = "api/ServiceWorker/GetProfile";
@@ -13,56 +14,107 @@ class GetUserRequest {
   Map<String, dynamic> get toMap => {"userId": userId};
 }
 
-class GetUserResponse {
-  final int id;
-  final String? name;
-  final String? surname;
-  final String? userName;
-  final String? emailAddress;
-  final bool? isFirstLogin;
-  final String? address;
-  final String? phoneNumber;
-  final String? imagePath;
-  final bool? isActive;
+class UserResponse extends User {
+  const UserResponse({
+    required int id,
+    required String name,
+    required username,
+    required email,
+    AddressResponse? address,
+    String? phone,
+    String? website,
+    CompanyResponse? company,
+  }) : super(
+          id: id,
+          name: name,
+          username: username,
+          email: email,
+          address: address,
+          phone: phone,
+          website: website,
+          company: company,
+        );
 
-  const GetUserResponse({
-    required this.id,
-    this.name,
-    this.surname,
-    this.userName,
-    this.emailAddress,
-    this.address,
-    this.phoneNumber,
-    this.imagePath,
-    this.isFirstLogin,
-    this.isActive,
-  });
-
-  factory GetUserResponse.fromMap(Map<String, dynamic> map) {
+  factory UserResponse.fromMap(Map<String, dynamic> map) {
     final userMap = map["user"];
     if (userMap == null || userMap["id"] == null)
       throw InvalidDataException(
           "Invalid response received from server for GetUserResponse");
 
-    return GetUserResponse(
-      id: userMap["id"],
-      name: userMap["name"],
-      surname: userMap["surname"],
-      userName: userMap["userName"],
-      emailAddress: userMap["emailAddress"],
-      address: userMap["address"],
-      phoneNumber: userMap["phoneNumber"],
-      imagePath: userMap["imagePath"],
-      isFirstLogin: userMap["isFirstLogin"],
-      isActive: userMap["isActive"],
+    return UserResponse(
+      id: map["id"],
+      name: map["name"],
+      username: map["username"],
+      email: map["email"],
+      address: map["address"] == null
+          ? null
+          : AddressResponse.fromMap(map["address"]),
+      phone: map["phone"],
+      website: map["website"],
+      company: map["company"] == null
+          ? null
+          : CompanyResponse.fromMap(map["company"]),
     );
   }
 
-  factory GetUserResponse.fromJson(String? str) {
+  factory UserResponse.fromJson(String? str) {
     if (str == null || str.isEmpty)
       throw InvalidDataException(
           "Invalid response received from server for GetUserResponse");
 
-    return GetUserResponse.fromMap(json.decode(str));
+    return UserResponse.fromMap(json.decode(str));
   }
+}
+
+class AddressResponse extends Address {
+  AddressResponse({
+    this.street,
+    this.suite,
+    this.city,
+    this.zipcode,
+    this.geo,
+  });
+
+  final String? street;
+  final String? suite;
+  final String? city;
+  final String? zipcode;
+  final GeoResponse? geo;
+
+  factory AddressResponse.fromMap(Map<String, dynamic> json) => AddressResponse(
+        street: json["street"],
+        suite: json["suite"],
+        city: json["city"],
+        zipcode: json["zipcode"],
+        geo: GeoResponse.fromMap(json["geo"]),
+      );
+}
+
+class GeoResponse extends GeoCodes {
+  GeoResponse({
+    required this.lat,
+    required this.lng,
+  }) : super(lat: lat, lng: lng);
+
+  final String lat;
+  final String lng;
+
+  factory GeoResponse.fromMap(Map<String, dynamic> json) => GeoResponse(
+        lat: json["lat"],
+        lng: json["lng"],
+      );
+}
+
+class CompanyResponse extends Company {
+  CompanyResponse({
+    required String name,
+    String? catchPhrase,
+    String? bs,
+  }) : super(name: name, catchPhrase: catchPhrase, bs: bs);
+
+  factory CompanyResponse.fromMap(Map<String, dynamic> json) => CompanyResponse(
+        name: json["name"],
+        catchPhrase: json["catchPhrase"],
+        bs: json["bs"],
+      );
 }

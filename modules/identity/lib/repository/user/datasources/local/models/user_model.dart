@@ -2,123 +2,167 @@ import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/user.dart';
 import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 
-class UserModel implements StateDto {
-  final int id;
-  final String? name;
-  final String? surname;
-  final String? userName;
-  final String? emailAddress;
-  final String? address;
-  final String? phoneNumber;
-  final String? imagePath;
+class UserModel extends User implements Dto {
   final bool? isActive;
-
-  final LocalState state;
   final String uniqueKey;
+  final AddressModel? address;
 
   const UserModel({
-    required this.id,
-    this.name,
-    this.surname,
-    this.userName,
-    this.emailAddress,
+    required int id,
+    required String name,
+    required String username,
+    required String email,
     this.address,
-    this.phoneNumber,
-    this.imagePath,
+    String? phone,
+    Company? company,
+    String? website,
     this.isActive,
-    required this.state,
-  }) : uniqueKey = '$id';
+  })  : uniqueKey = '$id',
+        super(
+          id: id,
+          name: name,
+          username: username,
+          email: email,
+          address: address,
+          phone: phone,
+          company: company,
+          website: website,
+        );
 
   factory UserModel.fromEntityMap(Map<String, dynamic> map) => UserModel(
         id: map["id"],
         name: map["name"],
-        surname: map["surname"],
-        emailAddress: map["emailAddress"],
-        userName: map["userName"],
-        address: map["address"],
-        phoneNumber: map["phoneNumber"],
-        imagePath: map["imagePath"],
+        username: map["username"],
+        email: map["email"],
+        address: map["address"] == null
+            ? null
+            : AddressModel.fromMap(map["address"]),
+        phone: map["phone"],
+        website: map["website"],
+        company: map["company"],
         isActive: map["isActive"],
-        state: (map["data_state"] as int).toState,
       );
-
-  factory UserModel.loading(int userId) =>
-      UserModel(id: userId, state: LocalState.loading);
-
-  factory UserModel.failed(int userId) =>
-      UserModel(id: userId, state: LocalState.failed);
 
   factory UserModel.fromUser(User user) => UserModel(
         id: user.id,
         name: user.name,
-        surname: user.surname,
-        userName: user.userName,
-        emailAddress: user.emailAddress,
-        address: user.address,
-        phoneNumber: user.phoneNumber,
-        imagePath: user.imagePath,
+        username: user.username,
+        email: user.email,
+        address: user.address == null
+            ? null
+            : AddressModel.fromAddress(user.address!),
+        phone: user.phone,
+        company: user.company,
+        website: user.website,
         isActive: true,
-        state: LocalState.success,
       );
 
-  factory UserModel.fromUserResponse(GetUserResponse user) => UserModel(
+  factory UserModel.fromUserResponse(UserResponse user) => UserModel(
         id: user.id,
         name: user.name,
-        surname: user.surname,
-        userName: user.userName,
-        emailAddress: user.emailAddress,
-        address: user.address,
-        phoneNumber: user.phoneNumber,
-        imagePath: user.imagePath,
+        username: user.username,
+        email: user.email,
+        address: user.address == null
+            ? null
+            : AddressModel.fromAddress(user.address!),
+        phone: user.phone,
+        company: user.company,
+        website: user.website,
         isActive: true,
-        state: LocalState.success,
       );
 
   @override
   Map<String, dynamic> toDtoMap() => {
         "id": id,
         "name": name,
-        "surname": surname,
-        "userName": userName,
-        "emailAddress": emailAddress,
+        "username": username,
+        "email": email,
         "address": address,
-        "phoneNumber": phoneNumber,
-        "imagePath": imagePath,
-        "data_state": state.toInt,
+        "phone": phone,
         Dto.unique_key: uniqueKey,
       };
+}
 
-  User get toUser => User(
-        id: id,
-        name: name ?? "",
-        userName: userName ?? "",
-        surname: surname ?? "",
-        emailAddress: emailAddress ?? "",
-        address: address ?? "",
-        phoneNumber: phoneNumber ?? "",
-        imagePath: imagePath ?? "",
+class AddressModel extends Address {
+  final GeoCodesModel? geo;
+
+  const AddressModel({
+    String? street,
+    String? suite,
+    String? city,
+    String? zipcode,
+    this.geo,
+  }) : super(
+          street: street,
+          suite: suite,
+          city: city,
+          zipcode: zipcode,
+          geo: geo,
+        );
+
+  factory AddressModel.fromMap(Map<String, dynamic> json) => AddressModel(
+        street: json["street"],
+        suite: json["suite"],
+        city: json["city"],
+        zipcode: json["zipcode"],
+        geo: GeoCodesModel.fromMap(json["geo"]),
       );
 
-  UserModel copyWith(
-          {String? name,
-          String? surname,
-          String? userName,
-          String? emailAddress,
-          String? address,
-          String? phoneNumber,
-          String? imagePath,
-          bool? isActive,
-          LocalState? state}) =>
-      UserModel(
-        id: id,
-        name: name ?? this.name,
-        surname: surname ?? this.surname,
-        userName: userName ?? this.userName,
-        emailAddress: emailAddress ?? this.emailAddress,
-        address: address ?? this.address,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        imagePath: imagePath ?? this.imagePath,
-        isActive: isActive ?? this.isActive,
-        state: state ?? this.state,
+  factory AddressModel.fromAddress(Address address) => AddressModel(
+        street: address.street,
+        suite: address.suite,
+        city: address.city,
+        zipcode: address.zipcode,
+        geo: address.geo == null
+            ? null
+            : GeoCodesModel.fromGeoCodes(address.geo!),
       );
+
+  Map<String, dynamic> toMap() => {
+        "street": street,
+        "suite": suite,
+        "city": city,
+        "zipcode": zipcode,
+        "geo": geo?.toMap(),
+      };
+}
+
+class GeoCodesModel extends GeoCodes {
+  GeoCodesModel({required String lat, required String lng})
+      : super(lat: lat, lng: lng);
+
+  factory GeoCodesModel.fromMap(Map<String, dynamic> json) => GeoCodesModel(
+        lat: json["lat"],
+        lng: json["lng"],
+      );
+
+  factory GeoCodesModel.fromGeoCodes(GeoCodes geoCodes) => GeoCodesModel(
+        lat: geoCodes.lat,
+        lng: geoCodes.lng,
+      );
+
+  Map<String, dynamic> toMap() => {
+        "lat": lat,
+        "lng": lng,
+      };
+}
+
+class CompanyModel extends Company {
+  const CompanyModel({
+    required String name,
+    String? catchPhrase,
+    String? bs,
+  }) : super(name: name, catchPhrase: catchPhrase, bs: bs);
+
+  factory CompanyModel.fromMap(Map<String, dynamic> json) => CompanyModel(
+        name: json["name"],
+        catchPhrase: json["catchPhrase"],
+        bs: json["bs"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "name": name,
+        "catchPhrase": catchPhrase,
+        "bs": bs,
+      };
 }

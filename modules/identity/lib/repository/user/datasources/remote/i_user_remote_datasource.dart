@@ -1,10 +1,11 @@
-import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 import 'package:identity/repository/user/datasources/remote/apis/update_profile_api.dart';
 
-abstract class IUserRemoteDatasource {
-  Future<GetUserResponse> getUserById(GetUserRequest request);
+import 'apis/get_user_api.dart';
 
-  Future<GetUserResponse> getActiveUser();
+abstract class IUserRemoteDatasource {
+  Future<UserResponse> getUserById(GetUserRequest request);
+
+  Future<UserResponse> getActiveUser();
 
   Future<UpdateUserProfileResponse> updateUserProfile(
       UpdateUserProfileRequest request);

@@ -1,9 +1,9 @@
 import 'package:core/clients/remote_api_client/base/i_remote_api_client.dart';
 import 'package:core/core.dart';
-import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 import 'package:identity/repository/user/datasources/remote/apis/update_profile_api.dart';
 import 'package:injectable/injectable.dart';
 
+import 'apis/get_user_api.dart';
 import 'i_user_remote_datasource.dart';
 
 @Singleton(as: IUserRemoteDatasource)
@@ -12,23 +12,25 @@ class UserMockRemoteDatasource implements IUserRemoteDatasource {
 
   const UserMockRemoteDatasource(IRemoteApiClient<dynamic> _apiClient);
 
-  Future<GetUserResponse> getActiveUser() async {
+  Future<UserResponse> getActiveUser() async {
     await Future.delayed(Duration(milliseconds: 500));
-    return GetUserResponse(
+    return UserResponse(
       id: 121,
       name: "User",
-      emailAddress: "user@domain.com",
+      username: "User123",
+      email: "user@domain.com",
     );
   }
 
   /// Only works with userId = 121
-  Future<GetUserResponse> getUserById(GetUserRequest request) async {
+  Future<UserResponse> getUserById(GetUserRequest request) async {
     await Future.delayed(Duration(milliseconds: 500));
     if (request.userId == 121)
-      return GetUserResponse(
+      return UserResponse(
         id: 121,
         name: "User",
-        emailAddress: "user@domain.com",
+        username: "User123",
+        email: "user@domain.com",
       );
     else
       throw NetworkException(

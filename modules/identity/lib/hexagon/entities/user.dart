@@ -1,44 +1,42 @@
 class User {
   final int id;
   final String name;
-  final String surname;
-  final String userName;
-  final String emailAddress;
-  final String address;
-  final String phoneNumber;
-  final String imagePath;
+  final String username;
+  final String email;
+  final Address? address;
+  final Company? company;
+  final String? phone;
+  final String? website;
 
   const User({
     required this.id,
     required this.name,
-    required this.surname,
-    required this.userName,
-    required this.emailAddress,
-    required this.address,
-    required this.phoneNumber,
-    required this.imagePath,
+    required this.username,
+    required this.email,
+    this.address,
+    this.phone,
+    this.company,
+    this.website,
   });
 
   User copyWith({
     String? name,
-    String? userName,
-    String? surName,
-    String? emailAddress,
-    String? address,
-    String? phoneNumber,
-    String? imagePath,
-    bool? isFirstLogin,
-    bool? isActive,
+    String? username,
+    String? email,
+    Address? address,
+    Company? company,
+    String? phone,
+    String? website,
   }) =>
       User(
         id: this.id,
         name: name ?? this.name,
-        surname: surName ?? this.surname,
-        userName: userName ?? this.userName,
-        emailAddress: emailAddress ?? this.emailAddress,
+        username: username ?? this.username,
+        email: email ?? this.email,
         address: address ?? this.address,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        imagePath: imagePath ?? this.imagePath,
+        phone: phone ?? this.phone,
+        company: company ?? this.company,
+        website: website ?? this.website,
       );
 
   @override
@@ -48,26 +46,67 @@ class User {
           runtimeType == other.runtimeType &&
           id == other.id &&
           name == other.name &&
-          surname == other.surname &&
-          userName == other.userName &&
-          emailAddress == other.emailAddress &&
+          username == other.username &&
+          email == other.email &&
           address == other.address &&
-          phoneNumber == other.phoneNumber &&
-          imagePath == other.imagePath;
+          company == other.company &&
+          phone == other.phone &&
+          website == other.website;
 
   @override
   int get hashCode =>
       id.hashCode ^
       name.hashCode ^
-      surname.hashCode ^
-      userName.hashCode ^
-      emailAddress.hashCode ^
+      username.hashCode ^
+      email.hashCode ^
       address.hashCode ^
-      phoneNumber.hashCode ^
-      imagePath.hashCode;
+      company.hashCode ^
+      phone.hashCode ^
+      website.hashCode;
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, surname: $surname, userName: $userName, emailAddress: $emailAddress, address: $address, phoneNumber: $phoneNumber, imagePath: $imagePath }';
+    return 'User{id: $id, name: $name, username: $username, email: $email, address: $address, company: $company, phone: $phone, website: $website}';
   }
+}
+
+class Address {
+  const Address({
+    this.street,
+    this.suite,
+    this.city,
+    this.zipcode,
+    this.geo,
+  });
+
+  final String? street;
+  final String? suite;
+  final String? city;
+  final String? zipcode;
+  final GeoCodes? geo;
+}
+
+class GeoCodes {
+  const GeoCodes({required this.lat, required this.lng});
+
+  final String lat;
+  final String lng;
+}
+
+class Company {
+  const Company({
+    required this.name,
+    this.catchPhrase,
+    this.bs,
+  });
+
+  final String name;
+  final String? catchPhrase;
+  final String? bs;
+
+  factory Company.fromMap(Map<String, dynamic> json) => Company(
+        name: json["name"],
+        catchPhrase: json["catchPhrase"],
+        bs: json["bs"],
+      );
 }
