@@ -4,10 +4,6 @@ import 'package:identity/hexagon/entities/user.dart';
 abstract class UserRepository {
   Future<User?> get activeUser;
 
-  Future<List<User>> get users;
-
-  Future<User?> getUserById(int userId);
-
   Future<bool> saveUser(User user);
 
   Future<bool> updateUser(User user);
@@ -17,6 +13,4 @@ abstract class UserRepository {
   Future<bool> clearUsers();
 
   Stream<DataState<User>> observeActiveUser();
-
-  Stream<DataState<User>> observeUserById(int userId);
 }

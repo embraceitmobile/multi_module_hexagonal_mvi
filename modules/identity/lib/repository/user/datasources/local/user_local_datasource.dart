@@ -25,11 +25,6 @@ class UserLocalDatasource extends LocalDataSource<UserModel>
     return result.firstOrNull;
   }
 
-  Future<UserModel?> getUserById(int userId) async {
-    final result = await find(filter: Filter.equals("userId", userId));
-    return result.firstOrNull;
-  }
-
   Future<bool> saveUser(UserModel user) async => await insertOrUpdate(user) > 0;
 
   Future<bool> updateUser(UserModel user) async => await update(user) > 0;
@@ -43,7 +38,4 @@ class UserLocalDatasource extends LocalDataSource<UserModel>
 
   Stream<UserModel?> observeActiveUser() =>
       observeChange(filter: Filter.equals("isActive", true));
-
-  Stream<UserModel?> observeUserById(int userId) =>
-      observeChange(filter: Filter.equals("id", userId));
 }

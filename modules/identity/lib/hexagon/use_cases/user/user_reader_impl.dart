@@ -16,20 +16,4 @@ class UserReaderImpl implements UserReader {
       rethrow;
     }
   }
-
-  Future<User?> getUserById(int id) async {
-    try {
-      return await _repository.getUserById(id);
-    } on Exception {
-      rethrow;
-    }
-  }
-
-  Future<List<User>> get users async {
-    try {
-      return await _repository.users;
-    } on Exception {
-      rethrow;
-    }
-  }
 }

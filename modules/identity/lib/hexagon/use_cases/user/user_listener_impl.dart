@@ -13,8 +13,4 @@ class UserListenerImpl implements UserListener {
   Stream<DataState<User>> observeActiveUser() {
     return _repository.observeActiveUser();
   }
-
-  Stream<DataState<User>> observeUserById(int userId) {
-    return _repository.observeUserById(userId);
-  }
 }

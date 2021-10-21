@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/core.dart';
 import 'package:identity/repository/user/datasources/remote/apis/update_profile_api.dart';
 import 'package:identity/repository/user/datasources/remote/i_user_remote_datasource.dart';
@@ -16,30 +17,22 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
 
   Future<UserResponse> getUserById(GetUserRequest request) async {
     try {
-      final response =
-          await _apiClient.post(getUserByIdEndpoint, data: request.toMap);
+      final response = await _apiClient.get(getUserByIdEndpoint);
 
       if (response == null)
         throw InvalidDataException("Invalid response received from server");
 
-      return UserResponse.fromMap(response);
-    } on InvalidDataException {
-      rethrow;
-    } on NetworkException {
-      rethrow;
-    } on Exception catch (ex) {
-      throw NetworkException.fromException(ex);
-    }
-  }
+      final users = response as List<dynamic>;
+      final user =
+          users.firstWhereOrNull((element) => element["id"] == request.userId);
 
-  Future<UserResponse> getActiveUser() async {
-    try {
-      final response = await _apiClient.get(getUserEndpoint);
+      if (user == null)
+        throw NetworkException(ErrorResponse(
+            statusCode: 400,
+            message:
+                "Unable to fund user details for userId: ${request.userId}"));
 
-      if (response == null)
-        throw InvalidDataException("Invalid response received from server");
-
-      return UserResponse.fromMap(response);
+      return UserResponse.fromMap(user);
     } on InvalidDataException {
       rethrow;
     } on NetworkException {
