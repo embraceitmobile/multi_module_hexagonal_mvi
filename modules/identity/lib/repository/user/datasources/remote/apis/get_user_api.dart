@@ -16,9 +16,9 @@ class GetUserRequest {
 class UserResponse extends User {
   const UserResponse({
     required int id,
-    required String name,
     required username,
     required email,
+    String? name,
     AddressResponse? address,
     String? phone,
     String? website,
@@ -35,7 +35,7 @@ class UserResponse extends User {
         );
 
   factory UserResponse.fromMap(Map<String, dynamic> map) {
-    if (map["id"] == null)
+    if (map["id"] == null || map["username"] == null || map["email"] == null)
       throw InvalidDataException(
           "Invalid response received from server for GetUserResponse");
 

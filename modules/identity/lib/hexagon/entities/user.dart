@@ -1,22 +1,24 @@
 class User {
   final int id;
-  final String name;
   final String username;
   final String email;
+  final String? name;
   final Address? address;
   final Company? company;
   final String? phone;
   final String? website;
+  final String? imageUrl;
 
   const User({
     required this.id,
-    required this.name,
     required this.username,
     required this.email,
+    this.name,
     this.address,
     this.phone,
     this.company,
     this.website,
+    this.imageUrl,
   });
 
   User copyWith({
@@ -27,6 +29,7 @@ class User {
     Company? company,
     String? phone,
     String? website,
+    String? imageUrl,
   }) =>
       User(
         id: this.id,
@@ -37,6 +40,7 @@ class User {
         phone: phone ?? this.phone,
         company: company ?? this.company,
         website: website ?? this.website,
+        imageUrl: imageUrl ?? this.imageUrl,
       );
 
   @override
@@ -51,7 +55,8 @@ class User {
           address == other.address &&
           company == other.company &&
           phone == other.phone &&
-          website == other.website;
+          website == other.website &&
+          imageUrl == other.imageUrl;
 
   @override
   int get hashCode =>
@@ -62,11 +67,12 @@ class User {
       address.hashCode ^
       company.hashCode ^
       phone.hashCode ^
+      imageUrl.hashCode ^
       website.hashCode;
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, username: $username, email: $email, address: $address, company: $company, phone: $phone, website: $website}';
+    return 'User{id: $id, name: $name, username: $username, email: $email, address: $address, company: $company, phone: $phone, website: $website, imageUrl: $imageUrl}';
   }
 }
 
@@ -109,4 +115,10 @@ class Company {
         catchPhrase: json["catchPhrase"],
         bs: json["bs"],
       );
+
+  Map<String, dynamic> toMap() => {
+        "name": name,
+        "catchPhrase": catchPhrase,
+        "bs": bs,
+      };
 }

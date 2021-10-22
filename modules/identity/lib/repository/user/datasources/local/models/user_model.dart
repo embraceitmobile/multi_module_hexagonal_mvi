@@ -9,13 +9,14 @@ class UserModel extends User implements Dto {
 
   const UserModel({
     required int id,
-    required String name,
     required String username,
     required String email,
     this.address,
+    String? name,
     String? phone,
     Company? company,
     String? website,
+    String? imageUrl,
     this.isActive,
   })  : uniqueKey = '$id',
         super(
@@ -27,6 +28,7 @@ class UserModel extends User implements Dto {
           phone: phone,
           company: company,
           website: website,
+          imageUrl: imageUrl,
         );
 
   factory UserModel.fromEntityMap(Map<String, dynamic> map) => UserModel(
@@ -41,6 +43,7 @@ class UserModel extends User implements Dto {
         website: map["website"],
         company: map["company"],
         isActive: map["isActive"],
+        imageUrl: map["imageUrl"],
       );
 
   factory UserModel.fromUser(User user) => UserModel(
@@ -54,6 +57,7 @@ class UserModel extends User implements Dto {
         phone: user.phone,
         company: user.company,
         website: user.website,
+        imageUrl: user.imageUrl,
         isActive: true,
       );
 
@@ -68,6 +72,7 @@ class UserModel extends User implements Dto {
         phone: user.phone,
         company: user.company,
         website: user.website,
+        imageUrl: user.imageUrl,
         isActive: true,
       );
 
@@ -77,8 +82,10 @@ class UserModel extends User implements Dto {
         "name": name,
         "username": username,
         "email": email,
-        "address": address,
+        "address": address?.toMap(),
         "phone": phone,
+        "company": company?.toMap(),
+        "imageUrl": imageUrl,
         Dto.unique_key: uniqueKey,
       };
 }
