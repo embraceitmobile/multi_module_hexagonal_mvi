@@ -22,8 +22,27 @@ abstract class _UserProfileStore with Store {
   late ObservableStream<DataState<User>> _userState =
       ObservableStream(_userListener.observeActiveUser());
 
+  @observable
+  String? _newImageUrl;
+
   @computed
-  DataState<User> get user => _userState.value ?? DataState.idleOrNoData();
+  DataState<User> get user =>
+      (_userState.value ?? DataState.idleOrNoData()).map(
+        success: (data) {
+          var user = data as User;
+          if (_newImageUrl != null)
+            user = user.copyWith(imageUrl: _newImageUrl);
+          return DataState.success(user);
+        },
+        loading: (progress) => DataState.loading(progress: progress as int),
+        error: (error) => DataState.error(error as Exception),
+        idleOrNoData: (_) => DataState.idleOrNoData(),
+      );
+
+  @action
+  void setNewImageUrl(String newImageUrl) {
+    _newImageUrl = newImageUrl;
+  }
 
   @action
   Future<bool?> updateUserProfile(User user) async {

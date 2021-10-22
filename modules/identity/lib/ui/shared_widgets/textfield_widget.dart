@@ -53,7 +53,7 @@ class TextFieldWidget extends StatelessWidget {
       child: TextField(
         enabled: enabled,
         onTap: onTap,
-        autocorrect: autocorrect ,
+        autocorrect: autocorrect,
         enableSuggestions: enableSuggestions,
         controller: textController,
         focusNode: focusNode,
@@ -78,7 +78,7 @@ class TextFieldWidget extends StatelessWidget {
                 borderRadius: const BorderRadius.all(
                   const Radius.circular(5.0),
                 ),
-                borderSide: new BorderSide(
+                borderSide: BorderSide(
                   color: Theme.of(context)
                       .textTheme
                       .headline6!

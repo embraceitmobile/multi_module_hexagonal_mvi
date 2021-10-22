@@ -29,6 +29,6 @@ class MyApp extends StatelessWidget {
 
   Widget _home(bool? isAuthenticated) {
     if (isAuthenticated == null) return RootScreen();
-    return isAuthenticated ? ProfileScreen() : LoginScreen();
+    return isAuthenticated ? UserProfileScreen() : LoginScreen();
   }
 }

@@ -32,6 +32,21 @@ mixin _$UserProfileStore on _UserProfileStore, Store {
     });
   }
 
+  final _$_newImageUrlAtom = Atom(name: '_UserProfileStore._newImageUrl');
+
+  @override
+  String? get _newImageUrl {
+    _$_newImageUrlAtom.reportRead();
+    return super._newImageUrl;
+  }
+
+  @override
+  set _newImageUrl(String? value) {
+    _$_newImageUrlAtom.reportWrite(value, super._newImageUrl, () {
+      super._newImageUrl = value;
+    });
+  }
+
   final _$updateUserProfileAsyncAction =
       AsyncAction('_UserProfileStore.updateUserProfile');
 
@@ -39,6 +54,20 @@ mixin _$UserProfileStore on _UserProfileStore, Store {
   Future<bool?> updateUserProfile(User user) {
     return _$updateUserProfileAsyncAction
         .run(() => super.updateUserProfile(user));
+  }
+
+  final _$_UserProfileStoreActionController =
+      ActionController(name: '_UserProfileStore');
+
+  @override
+  void setNewImageUrl(String newImageUrl) {
+    final _$actionInfo = _$_UserProfileStoreActionController.startAction(
+        name: '_UserProfileStore.setNewImageUrl');
+    try {
+      return super.setNewImageUrl(newImageUrl);
+    } finally {
+      _$_UserProfileStoreActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

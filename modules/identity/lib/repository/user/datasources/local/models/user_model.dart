@@ -10,7 +10,7 @@ class UserModel extends User implements Dto {
   const UserModel({
     required int id,
     required String username,
-    required String email,
+    String? email,
     this.address,
     String? name,
     String? phone,

@@ -16,8 +16,8 @@ class GetUserRequest {
 class UserResponse extends User {
   const UserResponse({
     required int id,
-    required username,
-    required email,
+    required String username,
+    String? email,
     String? name,
     AddressResponse? address,
     String? phone,
