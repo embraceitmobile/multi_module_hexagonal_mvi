@@ -21,14 +21,14 @@ class MyApp extends StatelessWidget {
         title: 'Identity Example',
         theme: ThemeData(primarySwatch: Colors.blue),
         onGenerateRoute: getIt<RouteHandler>().onGenerateRoute,
-        initialRoute: RootScreen.navigator.route,
+        initialRoute: getIt<RouteHandler>().defaultRoute,
         home: _home(authSnapshot.data),
       ),
     );
   }
 
   Widget _home(bool? isAuthenticated) {
-    if (isAuthenticated == null) return RootScreen();
+    if (isAuthenticated == null) return getIt<RouteHandler>().root;
     return isAuthenticated ? UserProfileScreen() : LoginScreen();
   }
 }

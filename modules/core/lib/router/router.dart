@@ -52,26 +52,25 @@ class RouteHandler {
   final List<IRouter> routers;
 
   /// The screen to be returned on "/" root path.
-  final Widget? root;
+  final Widget root;
 
   /// The screen to be returned when the route cannot be matched in the provided
   /// [routers]
-  final Widget? onPageNotFound;
+  final Widget onPageNotFound;
 
   /// The index of all the routes that are recognized by the passed [routers].
   final Map<String, IRouter> _routersMap;
 
+  final String defaultRoute = "/";
+
   RouteHandler(
     this.routers, {
-    this.root,
-    this.onPageNotFound,
-  }) : _routersMap = _indexedRoutes(routers, root);
+    this.root = const RootPage(),
+    this.onPageNotFound = const PageNotFound(),
+  }) : _routersMap = _indexedRoutes([RootRouter(root), ...routers]);
 
-  static Map<String, IRouter> _indexedRoutes(
-      List<IRouter> routers, Widget? root) {
+  static Map<String, IRouter> _indexedRoutes(List<IRouter> routers) {
     final Map<String, IRouter> routersMap = {};
-
-    routers.add(RootRouter(root));
 
     for (final router in routers) {
       for (final route in router.routes.keys) {
@@ -99,13 +98,15 @@ class RouteHandler {
           print(
               "Unable to handle the route: ${settings.name}, returning default route");
 
-        return page ?? onPageNotFound ?? PageNotFound();
+        return page ?? onPageNotFound;
       },
     );
   }
 }
 
 class PageNotFound extends StatelessWidget {
+  const PageNotFound({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -116,13 +117,20 @@ class PageNotFound extends StatelessWidget {
   }
 }
 
+class RootPage extends StatelessWidget {
+  const RootPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Container();
+}
+
 class RootRouter with IRouter {
-  final Widget? rootScreen;
+  final Widget rootPage;
 
   final Map<String, RouteBuilder> routes;
 
-  RootRouter(this.rootScreen)
+  RootRouter(this.rootPage)
       : this.routes = {
-          "/": (context, args) => rootScreen ?? Container(),
+          "/": (context, args) => rootPage,
         };
 }
