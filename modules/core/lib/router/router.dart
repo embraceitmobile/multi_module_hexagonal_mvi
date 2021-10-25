@@ -61,15 +61,15 @@ class RouteHandler {
   /// The index of all the routes that are recognized by the passed [routers].
   final Map<String, IRouter> _routersMap;
 
-  final String defaultRoute = "/";
+  String get defaultRoute => RootRouter.rootRoute;
 
   RouteHandler(
     this.routers, {
     this.root = const RootPage(),
     this.onPageNotFound = const PageNotFound(),
-  }) : _routersMap = _indexedRoutes([RootRouter(root), ...routers]);
+  }) : _routersMap = _indexAllRoutes([RootRouter(root), ...routers]);
 
-  static Map<String, IRouter> _indexedRoutes(List<IRouter> routers) {
+  static Map<String, IRouter> _indexAllRoutes(List<IRouter> routers) {
     final Map<String, IRouter> routersMap = {};
 
     for (final router in routers) {
@@ -127,10 +127,10 @@ class RootPage extends StatelessWidget {
 class RootRouter with IRouter {
   final Widget rootPage;
 
+  static const rootRoute = "/";
+
   final Map<String, RouteBuilder> routes;
 
   RootRouter(this.rootPage)
-      : this.routes = {
-          "/": (context, args) => rootPage,
-        };
+      : this.routes = {rootRoute: (context, args) => rootPage};
 }
