@@ -10,7 +10,7 @@ class UserProfileStore = _UserProfileStore with _$UserProfileStore;
 
 @lazySingleton
 abstract class _UserProfileStore with Store {
-  static const TAG = "ProfileStore";
+  static const TAG = "UserProfileStore";
 
   final UserEditor _userEditor;
   final UserListener _userListener;
@@ -27,16 +27,12 @@ abstract class _UserProfileStore with Store {
 
   @computed
   DataState<User> get user =>
-      (_userState.value ?? DataState.idleOrNoData()).map(
-        success: (data) {
-          var user = data as User;
+      (_userState.value ?? DataState.idleOrNoData()).transformOnly(
+        success: (user) {
           if (_newImageUrl != null)
             user = user.copyWith(imageUrl: _newImageUrl);
           return DataState.success(user);
         },
-        loading: (progress) => DataState.loading(progress: progress as int),
-        error: (error) => DataState.error(error as Exception),
-        idleOrNoData: (_) => DataState.idleOrNoData(),
       );
 
   @action

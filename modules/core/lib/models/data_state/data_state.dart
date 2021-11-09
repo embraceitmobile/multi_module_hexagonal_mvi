@@ -21,12 +21,15 @@ extension DataStateTransformations<T> on DataState<T> {
     DataState<T> Function()? idleOrNoData,
   }) =>
       this.map(
-        success: (data) =>
-            success == null ? data as DataState<T> : success(data as T),
-        loading: (data) =>
-            loading == null ? data as DataState<T> : loading(data as int),
-        error: (data) =>
-            error == null ? data as DataState<T> : error(data as Exception),
-        idleOrNoData: (data) => data as DataState<T>,
+        success: (dataState) => success == null
+            ? dataState as DataState<T>
+            : success(dataState as T),
+        loading: (dataState) => loading == null
+            ? dataState as DataState<T>
+            : loading(dataState as int),
+        error: (dataState) => error == null
+            ? dataState as DataState<T>
+            : error(dataState as Exception),
+        idleOrNoData: (dataState) => dataState as DataState<T>,
       );
 }

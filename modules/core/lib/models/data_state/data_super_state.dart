@@ -22,14 +22,15 @@ extension DataSuperStateTransformations<T> on DataSuperState<T> {
     DataSuperState<T> Function()? idleOrNoData,
   }) =>
       this.map(
-        success: (value) =>
-            success == null ? value as DataSuperState<T> : success(value as T),
-        loading: (value) => loading == null
-            ? value as DataSuperState<T>
-            : loading(value.progress, value.data as T),
-        error: (value) => error == null
-            ? value as DataSuperState<T>
-            : error(value.error, value.data as T),
-        idleOrNoData: (value) => value as DataSuperState<T>,
+        success: (dataState) => success == null
+            ? dataState as DataSuperState<T>
+            : success(dataState as T),
+        loading: (dataState) => loading == null
+            ? dataState as DataSuperState<T>
+            : loading(dataState.progress, dataState.data as T),
+        error: (dataState) => error == null
+            ? dataState as DataSuperState<T>
+            : error(dataState.error, dataState.data as T),
+        idleOrNoData: (dataState) => dataState as DataSuperState<T>,
       );
 }
