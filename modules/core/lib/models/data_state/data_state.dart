@@ -14,7 +14,7 @@ class DataState<T> with _$DataState {
 }
 
 extension DataStateTransformations<T> on DataState<T> {
-  DataState<T> transformOnlyWhen<TResult extends Object?>({
+  DataState<T> transformOnly<TResult extends Object?>({
     DataState<T> Function(T data)? success,
     DataState<T> Function(int progress)? loading,
     DataState<T> Function(Exception error)? error,
