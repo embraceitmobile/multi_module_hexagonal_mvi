@@ -1,25 +1,68 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-// import 'codegen_loader.g.dart';
-// /Users/alihaider/Desktop/Flutter/multi_module_hexagonal_mvi/modules/core/example/lib/generated/codegen_loader.g.dart
-
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 
 //  flutter pub run easy_localization:generate --source-dir ./assets/translations
 
 Future<void> main() async {
+  
   // runApp(const MyApp());
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  // For local localization 
+  const basePath = 'assets/translations'; // <-- change the path of the translation files 
+
+  // For network localization
+  // final basePath = await findBasePath();
+  // print('basepath is $basePath');
+  // await downloadTranslationContent(basePath);
+
   await EasyLocalization.ensureInitialized();
   
   runApp(
     EasyLocalization(
-      supportedLocales: [ Locale('en'), Locale('de') ],
-      path: 'assets/translations', // <-- change the path of the translation files 
+      supportedLocales: [ const Locale('en'), const Locale('de') ],
+      path: basePath,
       fallbackLocale: Locale('en'),
-      child:  MyApp()
+      child: const MyApp()
     ),
   );
+}
+
+Future<String> findBasePath() async {
+  final appDocDir = await getApplicationDocumentsDirectory();
+  return '${appDocDir.path}/langs';
+}
+
+Future downloadTranslationContent(final String basePath) async {
+
+  await Future.delayed(const Duration(seconds: 3), () async {
+    final file = File('$basePath/en.json');
+    // final translationContentResponse = await http.get(Uri.https('opensource.adobe.com', '/Spry/data/json/object-02.js'));
+    
+    final translationContentResponse = await json.encode({
+      "sadkmnalsdmn" : "This is Key from Local !!",
+      "title" : "my title",
+      "msg":"{} are written in the {} language",
+      "msg_named":"Easy localization are written in the {lang} language",
+      "msg_mixed":"{} are written in the {lang} language",
+      "gender":{
+        "male":"Hi man ;) {}",
+        "female":"Hello girl :) {}",
+        "other":"Hello {}"
+      }
+    });
+
+    await file.create(recursive: true);
+    await file.writeAsString(translationContentResponse, flush: true);
+
+  });
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -76,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(this.abc).tr(),
+            Text(abc).tr(),
             const Text(
               'You have pushed the button this many times:',
             ),
