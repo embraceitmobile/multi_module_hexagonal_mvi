@@ -27,7 +27,7 @@ abstract class _UserEditProfileStore with Store {
 
   @computed
   DataState<User> get user =>
-      (_userState.value ?? DataState.idleOrNoData()).transformOnly(
+      (_userState.value ?? DataState.nothing()).transformOnly(
         success: (user) {
           if (_newImageUrl != null)
             user = user.copyWith(imageUrl: _newImageUrl);

@@ -14,7 +14,7 @@ class AuthListenerImpl implements AuthListener {
       _repository.observeAuthInfo().map(
             (authInfoState) => authInfoState.when(
               success: (authInfo) => DataState.success(AuthState.Authenticated),
-              idleOrNoData: () => DataState.success(AuthState.Unauthenticated),
+              nothing: () => DataState.success(AuthState.Unauthenticated),
               loading: (progress) => DataState.loading(),
               error: (exception) => DataState.error(exception),
             ),

@@ -23,8 +23,7 @@ abstract class _LoginStore with Store {
       ObservableStream(_authListener.observeAuthState());
 
   @computed
-  DataState<AuthState> get authState =>
-      _authState.value ?? DataState.idleOrNoData();
+  DataState<AuthState> get authState => _authState.value ?? DataState.nothing();
 
   @action
   Future<bool?> login(String email, String password) async {

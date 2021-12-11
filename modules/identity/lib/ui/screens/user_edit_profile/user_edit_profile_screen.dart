@@ -53,7 +53,7 @@ class _UserEditProfileScreenState extends State<UserEditProfileScreen> {
               error: (error) => UserProfileErrorState(
                     errorMessage: error.toString(),
                   ),
-              idleOrNoData: () => UserProfileEmptyState()),
+              nothing: () => UserProfileEmptyState()),
         ),
       ),
     );

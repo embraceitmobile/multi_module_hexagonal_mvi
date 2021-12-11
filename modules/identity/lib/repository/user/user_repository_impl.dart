@@ -90,7 +90,6 @@ class UserRepositoryImpl implements UserRepository {
 }
 
 extension on Stream<UserModel?> {
-  Stream<DataState<User>> get toUserDataState => this.map((user) => user == null
-      ? DataState<User>.idleOrNoData()
-      : DataState<User>.success(user));
+  Stream<DataState<User>> get toUserDataState => this.map((user) =>
+      user == null ? DataState<User>.nothing() : DataState<User>.success(user));
 }
