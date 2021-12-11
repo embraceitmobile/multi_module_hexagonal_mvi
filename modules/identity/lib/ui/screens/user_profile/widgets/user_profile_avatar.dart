@@ -1,4 +1,3 @@
-import 'package:cubivue_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileAvatar extends StatelessWidget {
@@ -174,5 +173,12 @@ class _UserInitials extends StatelessWidget {
     }
 
     return userName![0];
+  }
+}
+
+extension ColorUtil on Color? {
+  Color byLuminance() {
+    if (this == null) return Colors.black87;
+    return this!.computeLuminance() > 0.4 ? Colors.black87 : Colors.white;
   }
 }
