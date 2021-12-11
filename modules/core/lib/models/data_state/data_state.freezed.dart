@@ -35,8 +35,8 @@ class _$DataStateTearOff {
     );
   }
 
-  IdleOrNoData<T> idleOrNoData<T>() {
-    return IdleOrNoData<T>();
+  Nothing<T> nothing<T>() {
+    return Nothing<T>();
   }
 }
 
@@ -50,7 +50,7 @@ mixin _$DataState<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress) loading,
     required TResult Function(Exception error) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,7 +58,7 @@ mixin _$DataState<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,7 +66,7 @@ mixin _$DataState<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -75,7 +75,7 @@ mixin _$DataState<T> {
     required TResult Function(Success<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(Nothing<T> value) nothing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -83,7 +83,7 @@ mixin _$DataState<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -91,7 +91,7 @@ mixin _$DataState<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -178,7 +178,7 @@ class _$Success<T> implements Success<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress) loading,
     required TResult Function(Exception error) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) {
     return success(data);
   }
@@ -189,7 +189,7 @@ class _$Success<T> implements Success<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) {
     return success?.call(data);
   }
@@ -200,7 +200,7 @@ class _$Success<T> implements Success<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -215,7 +215,7 @@ class _$Success<T> implements Success<T> {
     required TResult Function(Success<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(Nothing<T> value) nothing,
   }) {
     return success(this);
   }
@@ -226,7 +226,7 @@ class _$Success<T> implements Success<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
   }) {
     return success?.call(this);
   }
@@ -237,7 +237,7 @@ class _$Success<T> implements Success<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -323,7 +323,7 @@ class _$Loading<T> implements Loading<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress) loading,
     required TResult Function(Exception error) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) {
     return loading(progress);
   }
@@ -334,7 +334,7 @@ class _$Loading<T> implements Loading<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) {
     return loading?.call(progress);
   }
@@ -345,7 +345,7 @@ class _$Loading<T> implements Loading<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -360,7 +360,7 @@ class _$Loading<T> implements Loading<T> {
     required TResult Function(Success<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(Nothing<T> value) nothing,
   }) {
     return loading(this);
   }
@@ -371,7 +371,7 @@ class _$Loading<T> implements Loading<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
   }) {
     return loading?.call(this);
   }
@@ -382,7 +382,7 @@ class _$Loading<T> implements Loading<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -466,7 +466,7 @@ class _$Error<T> implements Error<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress) loading,
     required TResult Function(Exception error) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) {
     return error(this.error);
   }
@@ -477,7 +477,7 @@ class _$Error<T> implements Error<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) {
     return error?.call(this.error);
   }
@@ -488,7 +488,7 @@ class _$Error<T> implements Error<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -503,7 +503,7 @@ class _$Error<T> implements Error<T> {
     required TResult Function(Success<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(Nothing<T> value) nothing,
   }) {
     return error(this);
   }
@@ -514,7 +514,7 @@ class _$Error<T> implements Error<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
   }) {
     return error?.call(this);
   }
@@ -525,7 +525,7 @@ class _$Error<T> implements Error<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -545,37 +545,34 @@ abstract class Error<T> implements DataState<T> {
 }
 
 /// @nodoc
-abstract class $IdleOrNoDataCopyWith<T, $Res> {
-  factory $IdleOrNoDataCopyWith(
-          IdleOrNoData<T> value, $Res Function(IdleOrNoData<T>) then) =
-      _$IdleOrNoDataCopyWithImpl<T, $Res>;
+abstract class $NothingCopyWith<T, $Res> {
+  factory $NothingCopyWith(Nothing<T> value, $Res Function(Nothing<T>) then) =
+      _$NothingCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class _$IdleOrNoDataCopyWithImpl<T, $Res>
-    extends _$DataStateCopyWithImpl<T, $Res>
-    implements $IdleOrNoDataCopyWith<T, $Res> {
-  _$IdleOrNoDataCopyWithImpl(
-      IdleOrNoData<T> _value, $Res Function(IdleOrNoData<T>) _then)
-      : super(_value, (v) => _then(v as IdleOrNoData<T>));
+class _$NothingCopyWithImpl<T, $Res> extends _$DataStateCopyWithImpl<T, $Res>
+    implements $NothingCopyWith<T, $Res> {
+  _$NothingCopyWithImpl(Nothing<T> _value, $Res Function(Nothing<T>) _then)
+      : super(_value, (v) => _then(v as Nothing<T>));
 
   @override
-  IdleOrNoData<T> get _value => super._value as IdleOrNoData<T>;
+  Nothing<T> get _value => super._value as Nothing<T>;
 }
 
 /// @nodoc
 
-class _$IdleOrNoData<T> implements IdleOrNoData<T> {
-  const _$IdleOrNoData();
+class _$Nothing<T> implements Nothing<T> {
+  const _$Nothing();
 
   @override
   String toString() {
-    return 'DataState<$T>.idleOrNoData()';
+    return 'DataState<$T>.nothing()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is IdleOrNoData<T>);
+    return identical(this, other) || (other is Nothing<T>);
   }
 
   @override
@@ -587,9 +584,9 @@ class _$IdleOrNoData<T> implements IdleOrNoData<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress) loading,
     required TResult Function(Exception error) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) {
-    return idleOrNoData();
+    return nothing();
   }
 
   @override
@@ -598,9 +595,9 @@ class _$IdleOrNoData<T> implements IdleOrNoData<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) {
-    return idleOrNoData?.call();
+    return nothing?.call();
   }
 
   @override
@@ -609,11 +606,11 @@ class _$IdleOrNoData<T> implements IdleOrNoData<T> {
     TResult Function(T data)? success,
     TResult Function(int progress)? loading,
     TResult Function(Exception error)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) {
-    if (idleOrNoData != null) {
-      return idleOrNoData();
+    if (nothing != null) {
+      return nothing();
     }
     return orElse();
   }
@@ -624,9 +621,9 @@ class _$IdleOrNoData<T> implements IdleOrNoData<T> {
     required TResult Function(Success<T> value) success,
     required TResult Function(Loading<T> value) loading,
     required TResult Function(Error<T> value) error,
-    required TResult Function(IdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(Nothing<T> value) nothing,
   }) {
-    return idleOrNoData(this);
+    return nothing(this);
   }
 
   @override
@@ -635,9 +632,9 @@ class _$IdleOrNoData<T> implements IdleOrNoData<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
   }) {
-    return idleOrNoData?.call(this);
+    return nothing?.call(this);
   }
 
   @override
@@ -646,16 +643,16 @@ class _$IdleOrNoData<T> implements IdleOrNoData<T> {
     TResult Function(Success<T> value)? success,
     TResult Function(Loading<T> value)? loading,
     TResult Function(Error<T> value)? error,
-    TResult Function(IdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(Nothing<T> value)? nothing,
     required TResult orElse(),
   }) {
-    if (idleOrNoData != null) {
-      return idleOrNoData(this);
+    if (nothing != null) {
+      return nothing(this);
     }
     return orElse();
   }
 }
 
-abstract class IdleOrNoData<T> implements DataState<T> {
-  const factory IdleOrNoData() = _$IdleOrNoData<T>;
+abstract class Nothing<T> implements DataState<T> {
+  const factory Nothing() = _$Nothing<T>;
 }

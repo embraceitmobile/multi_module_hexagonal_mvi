@@ -10,7 +10,7 @@ class DataState<T> with _$DataState {
 
   const factory DataState.error(Exception error) = Error;
 
-  const factory DataState.idleOrNoData() = IdleOrNoData;
+  const factory DataState.nothing() = Nothing;
 }
 
 extension DataStateTransformations<T> on DataState<T> {
@@ -30,6 +30,6 @@ extension DataStateTransformations<T> on DataState<T> {
         error: (dataState) => error == null
             ? dataState as DataState<T>
             : error(dataState as Exception),
-        idleOrNoData: (dataState) => dataState as DataState<T>,
+        nothing: (dataState) => dataState as DataState<T>,
       );
 }
