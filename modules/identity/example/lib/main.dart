@@ -29,6 +29,6 @@ class MyApp extends StatelessWidget {
 
   Widget _home(bool? isAuthenticated) {
     if (isAuthenticated == null) return getIt<RouteHandler>().root;
-    return isAuthenticated ? UserProfileScreen() : LoginScreen();
+    return isAuthenticated ? UserEditProfileScreen() : LoginScreen();
   }
 }

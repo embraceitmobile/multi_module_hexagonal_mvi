@@ -6,17 +6,17 @@ import 'package:mobx/mobx.dart';
 
 part 'user_profile_store.g.dart';
 
-class UserProfileStore = _UserProfileStore with _$UserProfileStore;
+class UserEditProfileStore = _UserEditProfileStore with _$UserEditProfileStore;
 
 @lazySingleton
-abstract class _UserProfileStore with Store {
+abstract class _UserEditProfileStore with Store {
   static const TAG = "UserProfileStore";
 
   final UserEditor _userEditor;
   final UserListener _userListener;
 
   @factoryMethod
-  _UserProfileStore(this._userListener, this._userEditor);
+  _UserEditProfileStore(this._userListener, this._userEditor);
 
   @observable
   late ObservableStream<DataState<User>> _userState =
@@ -50,6 +50,6 @@ abstract class _UserProfileStore with Store {
   }
 
   void dispose() {
-    getIt.resetLazySingleton<UserProfileStore>(instance: this);
+    getIt.resetLazySingleton<UserEditProfileStore>(instance: this);
   }
 }

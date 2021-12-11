@@ -1,7 +1,7 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:identity/ui/screens/login/login_screen.dart';
-import 'package:identity/ui/screens/user_profile/user_profile_screen.dart';
+import 'package:identity/ui/screens/user_edit_profile/user_edit_profile_screen.dart';
 import 'package:injectable/injectable.dart';
 
 typedef RouteGetter<T> = Future<T> Function(BuildContext context,
@@ -25,7 +25,7 @@ class IdentityRouter with IRouter {
   /// Defining all the routes that are handled by the [identity] module here.
   final Map<String, RouteBuilder> routes = {
     LoginScreen.navigator.route: (context, args) => const LoginScreen(),
-    UserProfileScreen.navigator.route: (context, args) =>
-        const UserProfileScreen(),
+    UserEditProfileScreen.navigator.route: (context, args) =>
+        const UserEditProfileScreen(),
   };
 }

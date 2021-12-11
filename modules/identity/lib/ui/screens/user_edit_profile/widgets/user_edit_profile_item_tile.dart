@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class UserProfileItemTile extends StatelessWidget {
+class UserEditProfileItemTile extends StatelessWidget {
   final String? label;
   final TextEditingController? controller;
 
-  const UserProfileItemTile({
+  const UserEditProfileItemTile({
     Key? key,
     this.controller,
     this.label,
