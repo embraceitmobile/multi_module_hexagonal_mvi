@@ -37,7 +37,10 @@ class _UserProfileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        UserProfileAvatar(user: user),
+        UserProfileAvatar.medium(
+          imageUrl: user.imageUrl,
+          userName: user.username,
+        ),
       ],
     );
   }
