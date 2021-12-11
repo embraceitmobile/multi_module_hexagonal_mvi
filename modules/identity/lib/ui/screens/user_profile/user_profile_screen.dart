@@ -2,6 +2,16 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:identity/identity.dart';
 
+import 'states/user_profile_error.dart';
+import 'states/user_profile_loading.dart';
+import 'states/user_profile_nothing.dart';
+import 'states/user_profile_success.dart';
+
+export 'states/user_profile_error.dart';
+export 'states/user_profile_loading.dart';
+export 'states/user_profile_nothing.dart';
+export 'states/user_profile_success.dart';
+
 class UserProfileScreen extends StatelessWidget {
   static const navigator = NamedNavigator<void>("/user_profile");
 
@@ -9,52 +19,14 @@ class UserProfileScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return StreamBuilder<DataState<User>>(
-        stream: getIt<UserListener>().observeActiveUser(),
-        initialData: DataState.nothing(),
-        builder: (context, snapshot) => snapshot.requireData.when(
-            success: (user) => _UserProfileSuccess(user: user),
-            loading: (progress) => _UserProfileLoading(),
-            error: (error) => _UserProfileError(error: error),
-            nothing: () => _UserProfileNothing()));
-  }
-}
-
-class _UserProfileSuccess extends StatelessWidget {
-  final User user;
-
-  const _UserProfileSuccess({Key? key, required this.user}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class _UserProfileError extends StatelessWidget {
-  final Exception error;
-
-  const _UserProfileError({Key? key, required this.error}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class _UserProfileLoading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
-
-class _UserProfileNothing extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+      stream: getIt<UserListener>().observeActiveUser(),
+      initialData: DataState.nothing(),
+      builder: (context, snapshot) => snapshot.requireData.when(
+        success: (user) => UserProfileSuccess(user: user),
+        loading: (progress) => UserProfileLoading(),
+        error: (error) => UserProfileError(error: error),
+        nothing: () => UserProfileNothing(),
+      ),
+    );
   }
 }

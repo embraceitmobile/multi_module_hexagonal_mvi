@@ -10,3 +10,4 @@ export 'hexagon/use_cases/user/user_use_cases.dart';
 export 'ui/routes/identity_router.dart';
 export 'ui/screens/login/login_screen.dart';
 export 'ui/screens/user_edit_profile/user_edit_profile_screen.dart';
+export 'ui/screens/user_profile/user_profile_screen.dart';
