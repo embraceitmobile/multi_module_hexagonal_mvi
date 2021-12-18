@@ -40,7 +40,7 @@ class TestUserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'User Profile Screen Example',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
       home: UserProfileSuccess(user: mockUser),
     );
   }
