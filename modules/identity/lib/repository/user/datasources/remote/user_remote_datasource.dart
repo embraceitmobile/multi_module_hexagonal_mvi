@@ -30,7 +30,7 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
         throw NetworkException(ErrorResponse(
             statusCode: 400,
             message:
-                "Unable to fund user details for userId: ${request.userId}"));
+                "Unable to find user details for userId: ${request.userId}"));
 
       return UserResponse.fromMap(user);
     } on InvalidDataException {

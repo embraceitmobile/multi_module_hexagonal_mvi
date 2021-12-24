@@ -26,25 +26,25 @@ class ErrorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Image(
-                    image: AssetImage(
-                      assetPath,
-                      package: "identity",
-                    ),
-                    fit: BoxFit.cover,
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Image(
+                  image: AssetImage(
+                    assetPath,
+                    package: "identity",
                   ),
+                  fit: BoxFit.cover,
                 ),
-                Align(
+              ),
+              SafeArea(
+                child: Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
                     onPressed: () => Navigator.of(context).maybePop(),
@@ -55,43 +55,43 @@ class ErrorScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-              ],
-            ),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            SizedBox(height: 16),
-            Text(
-              body,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            SizedBox(height: 32),
-            if (button != null)
-              ElevatedButton(
-                onPressed: button!.onPress,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 48.0, vertical: 12),
-                  child: Text(
-                    button!.text,
-                    style: Theme.of(context)
-                        .textTheme
-                        .button
-                        ?.copyWith(color: Colors.white, fontSize: 18),
+              ),
+            ],
+          ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          SizedBox(height: 16),
+          Text(
+            body,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          SizedBox(height: 32),
+          if (button != null)
+            ElevatedButton(
+              onPressed: button!.onPress,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 48.0, vertical: 12),
+                child: Text(
+                  button!.text,
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      ?.copyWith(color: Colors.white, fontSize: 18),
+                ),
+              ),
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24.0),
+                    side: BorderSide(color: Theme.of(context).primaryColor),
                   ),
                 ),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24.0),
-                      side: BorderSide(color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              )
-          ],
-        ),
+              ),
+            )
+        ],
       ),
     );
   }

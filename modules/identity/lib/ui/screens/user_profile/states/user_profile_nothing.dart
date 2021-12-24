@@ -12,7 +12,13 @@ class UserProfileNothing extends StatelessWidget {
       body: "Unable to show user profile details. Please try again.",
       button: Button(
         text: "Refresh",
-        onPress: () => getIt<UserReader>().activeUser,
+        onPress: () async {
+          try {
+            await getIt<UserReader>().activeUser;
+          } catch (ex) {
+            print(ex);
+          }
+        },
       ),
     );
   }

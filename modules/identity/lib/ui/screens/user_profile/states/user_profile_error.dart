@@ -16,7 +16,13 @@ class UserProfileError extends StatelessWidget {
       body: "Something wrong with your connection, please try again.",
       button: Button(
         text: "Retry",
-        onPress: () => getIt<UserReader>().activeUser,
+        onPress: () async {
+          try {
+            await getIt<UserReader>().activeUser;
+          } catch (ex) {
+            print(ex);
+          }
+        },
       ),
     );
   }
