@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class UserProfileAvatar extends StatelessWidget {
   final String? imageUrl;
@@ -112,22 +114,25 @@ class UserProfileAvatar extends StatelessWidget {
         height: size,
         child: imageUrl == null
             ? _userInitials
-            : Image.network(imageUrl!,
-                fit: BoxFit.contain,
-                loadingBuilder: (context, child, progress) {
-                  if (progress == null) return child;
-                  return Center(
+            : CachedNetworkImage(
+                imageUrl: imageUrl!,
+                errorWidget: (context, url, error) => _userInitials,
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor:
+                      backgroundColor ?? Theme.of(context).primaryColorDark,
+                  highlightColor: Colors.white54,
+                  child: Center(
                     child: Container(
-                      width: size / 4,
-                      height: size / 4,
-                      child: CircularProgressIndicator(
+                      width: size,
+                      height: size,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
                         color: Colors.white,
-                        strokeWidth: size / 50,
                       ),
                     ),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) => _userInitials),
+                  ),
+                ),
+              ),
       ),
     );
   }

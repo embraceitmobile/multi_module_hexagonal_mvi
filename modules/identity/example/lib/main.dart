@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:example/di/components/injection.dart';
+import 'package:example/mocks/mock_user.dart';
 import 'package:flutter/material.dart';
 import 'package:identity/identity.dart';
 
@@ -40,7 +41,7 @@ class TestUserProfileScreen extends StatelessWidget {
     return MaterialApp(
       title: 'User Profile Screen Example',
       theme: ThemeData(primarySwatch: Colors.blueGrey),
-      home: UserProfileNothing(),
+      home: UserProfileSuccess(user: mockUser),
     );
   }
 }
