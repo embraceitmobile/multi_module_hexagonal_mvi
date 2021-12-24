@@ -25,7 +25,8 @@ class UserRepositoryImpl implements UserRepository {
     this._authRepository,
   ) {
     _activeUserRemoteStreamController = MergedStreamController.broadcast(
-        streamsToMerge: [_localDatasource.observeActiveUser().toUserDataState]);
+        streamsToMerge: [_localDatasource.observeActiveUser().toUserDataState],
+        onListen: () async => await activeUser);
   }
 
   Future<User?> get activeUser async {
