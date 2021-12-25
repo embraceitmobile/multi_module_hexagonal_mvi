@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:identity/identity.dart';
+import 'package:identity/ui/screens/user_edit_profile/user_edit_profile_screen.dart';
 import 'package:identity/ui/screens/user_profile/widgets/user_profile_avatar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,14 +16,12 @@ class UserProfileSuccess extends StatelessWidget {
       body: _UserProfileBody(user: user),
       appBar: AppBar(
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_rounded),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
+        automaticallyImplyLeading: true,
         actions: [
           IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () {},
+            onPressed: () async =>
+                await UserEditProfileScreen.navigator.push(context),
           )
         ],
       ),

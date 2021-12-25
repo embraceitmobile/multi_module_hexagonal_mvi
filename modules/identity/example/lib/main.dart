@@ -40,7 +40,7 @@ class TestUserProfileScreen extends StatelessWidget {
     return MaterialApp(
       title: 'User Profile Screen Example',
       theme: ThemeData(primarySwatch: Colors.blueGrey),
-      home: UserProfileNothing(),
+      home: UserProfileLoading(),
     );
   }
 }

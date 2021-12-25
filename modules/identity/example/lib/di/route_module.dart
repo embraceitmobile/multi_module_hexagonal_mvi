@@ -10,8 +10,8 @@ abstract class RouteModule {
 
   @singleton
   IdentityRouter get identityRouter => IdentityRouter(
-        onLoginEvent: (context, {args}) => UserEditProfileScreen.navigator
-            .pushReplacement(context, args: args),
+        onLoginEvent: (context, {args}) =>
+            UserProfileScreen.navigator.pushReplacement(context, args: args),
       );
 
   @singleton
