@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/user.dart';
 
 abstract class UserRepository {
-  Future<User?> get activeUser;
+  Future<User?> get user;
 
   Future<bool> saveUser(User user);
 

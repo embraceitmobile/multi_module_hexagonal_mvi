@@ -23,6 +23,7 @@ class UserResponse extends User {
     String? phone,
     String? website,
     CompanyResponse? company,
+    String? imageUrl,
   }) : super(
           id: id,
           name: name,
@@ -32,6 +33,7 @@ class UserResponse extends User {
           phone: phone,
           website: website,
           company: company,
+          imageUrl: imageUrl,
         );
 
   factory UserResponse.fromMap(Map<String, dynamic> map) {
@@ -52,6 +54,7 @@ class UserResponse extends User {
       company: map["company"] == null
           ? null
           : CompanyResponse.fromMap(map["company"]),
+      imageUrl: map["imageUrl"],
     );
   }
 

@@ -3,21 +3,20 @@ import 'package:identity/hexagon/entities/user.dart';
 import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 
 class UserModel extends User implements Dto {
-  final bool? isActive;
   final String uniqueKey;
   final AddressModel? address;
+  final CompanyModel? company;
 
   const UserModel({
     required int id,
     required String username,
     String? email,
     this.address,
+    this.company,
     String? name,
     String? phone,
-    Company? company,
     String? website,
     String? imageUrl,
-    this.isActive,
   })  : uniqueKey = '$id',
         super(
           id: id,
@@ -41,8 +40,9 @@ class UserModel extends User implements Dto {
             : AddressModel.fromMap(map["address"]),
         phone: map["phone"],
         website: map["website"],
-        company: map["company"],
-        isActive: map["isActive"],
+        company: map["company"] == null
+            ? null
+            : CompanyModel.fromMap(map["company"]),
         imageUrl: map["imageUrl"],
       );
 
@@ -55,10 +55,11 @@ class UserModel extends User implements Dto {
             ? null
             : AddressModel.fromAddress(user.address!),
         phone: user.phone,
-        company: user.company,
+        company: user.company == null
+            ? null
+            : CompanyModel.fromCompany(user.company!),
         website: user.website,
         imageUrl: user.imageUrl,
-        isActive: true,
       );
 
   factory UserModel.fromUserResponse(UserResponse user) => UserModel(
@@ -70,10 +71,11 @@ class UserModel extends User implements Dto {
             ? null
             : AddressModel.fromAddress(user.address!),
         phone: user.phone,
-        company: user.company,
+        company: user.company == null
+            ? null
+            : CompanyModel.fromCompany(user.company!),
         website: user.website,
         imageUrl: user.imageUrl,
-        isActive: true,
       );
 
   @override
@@ -107,12 +109,12 @@ class AddressModel extends Address {
           geo: geo,
         );
 
-  factory AddressModel.fromMap(Map<String, dynamic> json) => AddressModel(
-        street: json["street"],
-        suite: json["suite"],
-        city: json["city"],
-        zipcode: json["zipcode"],
-        geo: GeoCodesModel.fromMap(json["geo"]),
+  factory AddressModel.fromMap(Map<String, dynamic> map) => AddressModel(
+        street: map["street"],
+        suite: map["suite"],
+        city: map["city"],
+        zipcode: map["zipcode"],
+        geo: map["geo"] == null ? null : GeoCodesModel.fromMap(map["geo"]),
       );
 
   factory AddressModel.fromAddress(Address address) => AddressModel(
@@ -138,9 +140,9 @@ class GeoCodesModel extends GeoCodes {
   GeoCodesModel({required String lat, required String lng})
       : super(lat: lat, lng: lng);
 
-  factory GeoCodesModel.fromMap(Map<String, dynamic> json) => GeoCodesModel(
-        lat: json["lat"],
-        lng: json["lng"],
+  factory GeoCodesModel.fromMap(Map<String, dynamic> map) => GeoCodesModel(
+        lat: map["lat"],
+        lng: map["lng"],
       );
 
   factory GeoCodesModel.fromGeoCodes(GeoCodes geoCodes) => GeoCodesModel(
@@ -165,6 +167,12 @@ class CompanyModel extends Company {
         name: json["name"],
         catchPhrase: json["catchPhrase"],
         bs: json["bs"],
+      );
+
+  factory CompanyModel.fromCompany(Company company) => CompanyModel(
+        name: company.name,
+        catchPhrase: company.catchPhrase,
+        bs: company.bs,
       );
 
   Map<String, dynamic> toMap() => {

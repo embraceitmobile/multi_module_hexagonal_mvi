@@ -32,6 +32,9 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
             message:
                 "Unable to find user details for userId: ${request.userId}"));
 
+      user["imageUrl"] =
+          "https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png";
+
       return UserResponse.fromMap(user);
     } on InvalidDataException {
       rethrow;

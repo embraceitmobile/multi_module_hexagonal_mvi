@@ -72,7 +72,7 @@ class User {
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, username: $username, email: $email, address: $address, company: $company, phone: $phone, website: $website, imageUrl: $imageUrl}';
+    return 'User{id: $id, username: $username, email: $email, name: $name, address: $address, company: $company, phone: $phone, website: $website, imageUrl: $imageUrl}';
   }
 }
 
@@ -90,6 +90,11 @@ class Address {
   final String? city;
   final String? zipcode;
   final GeoCodes? geo;
+
+  @override
+  String toString() {
+    return 'Address{street: $street, suite: $suite, city: $city, zipcode: $zipcode, geo: $geo}';
+  }
 }
 
 class GeoCodes {
@@ -97,6 +102,11 @@ class GeoCodes {
 
   final String lat;
   final String lng;
+
+  @override
+  String toString() {
+    return 'GeoCodes{lat: $lat, lng: $lng}';
+  }
 }
 
 class Company {
@@ -121,4 +131,9 @@ class Company {
         "catchPhrase": catchPhrase,
         "bs": bs,
       };
+
+  @override
+  String toString() {
+    return 'Company{name: $name, catchPhrase: $catchPhrase, bs: $bs}';
+  }
 }

@@ -9,9 +9,9 @@ class UserReaderImpl implements UserReader {
 
   const UserReaderImpl(this._repository);
 
-  Future<User?> get activeUser async {
+  Future<User?> get user async {
     try {
-      return await _repository.activeUser;
+      return await _repository.user;
     } on Exception {
       rethrow;
     }

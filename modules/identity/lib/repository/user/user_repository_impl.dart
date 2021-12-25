@@ -25,13 +25,16 @@ class UserRepositoryImpl implements UserRepository {
     this._authRepository,
   ) {
     _activeUserRemoteStreamController = MergedStreamController.broadcast(
-        streamsToMerge: [_localDatasource.observeActiveUser().toUserDataState],
-        onListen: () async => await activeUser);
+      streamsToMerge: [_localDatasource.observeActiveUser().toUserDataState],
+      onListen: () => user.catchError((error) {
+        print(error);
+      }),
+    );
   }
 
-  Future<User?> get activeUser async {
+  Future<User?> get user async {
     try {
-      final user = await _localDatasource.activeUser;
+      final user = await _localDatasource.user;
       if (user != null) return user;
 
       final authInfo = await _authRepository.authInfo;
@@ -56,7 +59,8 @@ class UserRepositoryImpl implements UserRepository {
 
   Future<bool> saveUser(User user) async {
     try {
-      return await _localDatasource.saveUser(UserModel.fromUser(user));
+      final result = await _localDatasource.saveUser(UserModel.fromUser(user));
+      return result;
     } on Exception {
       rethrow;
     }

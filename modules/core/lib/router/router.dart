@@ -121,7 +121,7 @@ class RootPage extends StatelessWidget {
   const RootPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Container();
+  Widget build(BuildContext context) => Material(child: Container());
 }
 
 class RootRouter with IRouter {

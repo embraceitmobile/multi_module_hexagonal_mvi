@@ -20,9 +20,8 @@ class UserLocalDatasource extends LocalDataSource<UserModel>
           mapper: (map) => UserModel.fromEntityMap(map),
         );
 
-  Future<UserModel?> get activeUser async {
-    final result = await find(filter: Filter.equals("isActive", true));
-    return result.firstOrNull;
+  Future<UserModel?> get user async {
+    return (await find()).firstOrNull;
   }
 
   Future<bool> saveUser(UserModel user) async => await insertOrUpdate(user) > 0;
@@ -36,6 +35,5 @@ class UserLocalDatasource extends LocalDataSource<UserModel>
 
   Future<bool> clearUsers() async => await clear() > 0;
 
-  Stream<UserModel?> observeActiveUser() =>
-      observeChange(filter: Filter.equals("isActive", true));
+  Stream<UserModel?> observeActiveUser() => observeChange();
 }

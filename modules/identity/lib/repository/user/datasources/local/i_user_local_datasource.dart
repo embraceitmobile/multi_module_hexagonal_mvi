@@ -1,7 +1,7 @@
 import 'package:identity/repository/user/datasources/local/models/user_model.dart';
 
 abstract class IUserLocalDatasource {
-  Future<UserModel?> get activeUser;
+  Future<UserModel?> get user;
 
   Future<bool> saveUser(UserModel user);
 
