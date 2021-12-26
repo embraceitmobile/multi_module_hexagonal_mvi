@@ -1,10 +1,8 @@
-import 'package:core/core.dart';
-import 'package:injectable/injectable.dart';
+import 'package:core/di/get_it_instance.dart';
 import 'package:mobx/mobx.dart';
 
 part 'login_form_store.g.dart';
 
-@lazySingleton
 class LoginFormStore = _LoginFormStore with _$LoginFormStore;
 
 abstract class _LoginFormStore with Store {
@@ -92,8 +90,8 @@ abstract class _LoginFormStore with Store {
   }
 
   void dispose() {
-    _disposers.forEach((d) => d.call());
     getIt.resetLazySingleton<LoginFormStore>(instance: this);
+    _disposers.forEach((d) => d.call());
   }
 }
 

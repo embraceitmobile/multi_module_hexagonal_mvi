@@ -2,8 +2,8 @@ import 'package:core/core.dart';
 import 'package:cubivue_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:identity/identity.dart';
 import 'package:identity/ui/screens/login/stores/login_form_store.dart';
-import 'package:identity/ui/screens/login/stores/login_store.dart';
 import 'package:identity/ui/shared_widgets/textfield_widget.dart';
 
 class LoginForm extends StatefulWidget {
@@ -17,20 +17,20 @@ class _LoginFormState extends State<LoginForm> {
   static const TAG = "LoginForm";
 
   late final LoginFormStore _loginFormStore = getIt<LoginFormStore>();
-  late final LoginStore _loginStore = getIt<LoginStore>();
+  late final TextEditingController _userNameController;
+  late final TextEditingController _passwordController;
 
-  late final TextEditingController _userNameController =
-      TextEditingController();
-
-  late final TextEditingController _passwordController =
-      TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    _userNameController = TextEditingController(text: _loginFormStore.userId);
+    _passwordController = TextEditingController(text: _loginFormStore.password);
+  }
 
   @override
   void dispose() {
     _userNameController.dispose();
     _passwordController.dispose();
-
-    _loginFormStore.dispose();
     super.dispose();
   }
 
@@ -83,11 +83,7 @@ class _LoginFormState extends State<LoginForm> {
           errorText: _loginFormStore.formErrorStore.password,
           onChanged: (value) => _loginFormStore.setPassword(value),
           onFieldSubmitted: (value) {
-            if (_loginFormStore.canLogin)
-              _loginStore.login(
-                _loginFormStore.userId,
-                _loginFormStore.password,
-              );
+            if (_loginFormStore.canLogin) _login();
           },
         ),
       );
@@ -108,10 +104,7 @@ class _LoginFormState extends State<LoginForm> {
               : () {
                   DeviceUtils.hideKeyboard(context);
                   if (_loginFormStore.canLogin) {
-                    _loginStore.login(
-                      _loginFormStore.userId,
-                      _loginFormStore.password,
-                    );
+                    _login();
                   } else {
                     SnackBarUtils.createErrorMessage(
                         message: 'Please fill in all fields', title: 'Error')
@@ -120,4 +113,13 @@ class _LoginFormState extends State<LoginForm> {
                 },
         ),
       );
+
+  Future<void> _login() async {
+    try {
+      await getIt<AuthActions>()
+          .login(_loginFormStore.userId, _loginFormStore.password);
+    } catch (ex) {
+      print("[$TAG][login] $ex");
+    }
+  }
 }
