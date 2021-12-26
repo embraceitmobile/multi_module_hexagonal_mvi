@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:core/core.dart';
 import 'package:identity/repository/auth/datasources/remote/apis/change_password_api.dart';
@@ -33,7 +35,8 @@ class AuthRemoteDatasource implements IAuthRemoteDatasource {
       if (user == null) {
         throw NetworkException(ErrorResponse(
           statusCode: 401,
-          message: "Username is not valid.\nHint: Try 'Bret'",
+          message:
+              "Username is not valid.\nHint: Try '${users[Random().nextInt(users.length)]["username"]}'",
         ));
       }
 
