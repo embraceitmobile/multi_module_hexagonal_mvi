@@ -16,7 +16,10 @@ GetIt configureIdentityHexagonInjection() {
 
   gh.singleton<AuthReader>(AuthReaderImpl(getIt<AuthRepository>()));
   gh.singleton<AuthListener>(AuthListenerImpl(getIt<AuthRepository>()));
-  gh.singleton<AuthActions>(AuthActionsImpl(getIt<AuthRepository>()));
+  gh.singleton<AuthActions>(AuthActionsImpl(
+    getIt<AuthRepository>(),
+    getIt<UserRepository>(),
+  ));
 
   gh.singleton<UserReader>(UserReaderImpl(getIt<UserRepository>()));
   gh.singleton<UserEditor>(UserEditorImpl(getIt<UserRepository>()));

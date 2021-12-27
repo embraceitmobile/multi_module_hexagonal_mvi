@@ -13,6 +13,4 @@ abstract class UserEditor extends UserReader {
   Future<bool> updateUser(User user);
 
   Future<bool> removeUser(int userId);
-
-  Future<bool> removeActiveUser();
 }

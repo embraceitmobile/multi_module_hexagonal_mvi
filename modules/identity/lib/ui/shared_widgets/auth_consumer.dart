@@ -42,16 +42,8 @@ class _AutConsumerState extends State<AuthConsumer> {
                       widget.onAuthenticated!(context);
                     break;
                   case AuthState.Unauthenticated:
-                    Future.delayed(Duration(milliseconds: 500), () async {
-                      try {
-                        await getIt<UserEditor>().removeActiveUser();
-                      } catch (ex) {
-                        print(ex);
-                      }
-                    });
                     if (widget.onUnauthenticated != null)
                       widget.onUnauthenticated!(context);
-
                     break;
                 }
               },
