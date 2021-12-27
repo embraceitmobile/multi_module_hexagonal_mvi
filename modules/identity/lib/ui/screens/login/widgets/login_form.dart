@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:identity/identity.dart';
 import 'package:identity/ui/screens/login/stores/login_form_store.dart';
+import 'package:identity/ui/shared_widgets/rounded_material_button.dart';
 import 'package:identity/ui/shared_widgets/textfield_widget.dart';
 
 class LoginForm extends StatefulWidget {
@@ -37,16 +38,16 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           userIdField,
-          SizedBox(height: 12),
+          SizedBox(height: 18),
           passwordField,
-          SizedBox(height: 24),
+          SizedBox(height: 18),
           loginButton,
         ],
       ),
@@ -89,16 +90,8 @@ class _LoginFormState extends State<LoginForm> {
       );
 
   Widget get loginButton => Observer(
-        builder: (context) => MaterialButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(3.0),
-            ),
-          ),
-          disabledColor: Theme.of(context).primaryColor.withOpacity(0.5),
-          child: Text('LOGIN'),
-          color: Theme.of(context).primaryColor,
-          textColor: Theme.of(context).primaryColor.byLuminance(),
+        builder: (context) => RoundedMaterialButton(
+          text: 'LOGIN',
           onPressed: !_loginFormStore.canLogin
               ? null
               : () {

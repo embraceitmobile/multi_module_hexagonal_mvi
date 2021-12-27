@@ -20,7 +20,7 @@ abstract class _UserEditProfileStore with Store {
 
   @observable
   late ObservableStream<DataState<User>> _userState =
-      ObservableStream(_userListener.observeActiveUser());
+      ObservableStream(_userListener.observeUser());
 
   @observable
   String? _newImageUrl;

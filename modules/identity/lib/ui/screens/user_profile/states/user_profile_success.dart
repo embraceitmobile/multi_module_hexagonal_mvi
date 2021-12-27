@@ -1,8 +1,11 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:identity/identity.dart';
 import 'package:identity/ui/screens/user_edit_profile/user_edit_profile_screen.dart';
 import 'package:identity/ui/screens/user_profile/widgets/user_profile_avatar.dart';
+import 'package:identity/ui/shared_widgets/auth_consumer.dart';
+import 'package:identity/ui/shared_widgets/rounded_outlined_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserProfileSuccess extends StatelessWidget {
@@ -12,18 +15,22 @@ class UserProfileSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _UserProfileBody(user: user),
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () async =>
-                await UserEditProfileScreen.navigator.push(context),
-          )
-        ],
+    return AuthConsumer(
+      onUnauthenticated: (context) =>
+          LoginScreen.navigator.pushReplacement(context),
+      child: Scaffold(
+        body: _UserProfileBody(user: user),
+        appBar: AppBar(
+          elevation: 0,
+          automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () async =>
+                  await UserEditProfileScreen.navigator.push(context),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -109,7 +116,18 @@ class _UserProfileBody extends StatelessWidget {
             ],
           ),
         ),
-        if (user.company != null) _UserCompany(company: user.company!)
+        if (user.company != null) _UserCompany(company: user.company!),
+        Divider(height: 24),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 24),
+          child: RoundedOutlinedButton(
+            text: "Logout",
+            onPressed: () =>
+                getIt<AuthActions>().logoutUser().catchError((error) {
+              print(error);
+            }),
+          ),
+        )
       ],
     );
   }

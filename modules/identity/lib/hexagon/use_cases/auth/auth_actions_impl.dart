@@ -16,9 +16,9 @@ class AuthActionsImpl implements AuthActions {
     }
   }
 
-  Future<bool> logoutActiveUser({bool isForceLogout = false}) async {
+  Future<bool> logoutUser({bool isForceLogout = false}) async {
     try {
-      return await _repository.logoutActiveUser(isForceLogout: isForceLogout);
+      return await _repository.logoutUser(isForceLogout: isForceLogout);
     } on Exception {
       rethrow;
     }

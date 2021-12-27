@@ -41,7 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  Future<bool> logoutActiveUser({bool isForceLogout = false}) async {
+  Future<bool> logoutUser({bool isForceLogout = false}) async {
     try {
       final auth = await _localDatasource.auth;
 

@@ -18,16 +18,18 @@ class UserProfileScreen extends StatelessWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
-    return StreamBuilder<DataState<User>>(
-      stream: getIt<UserListener>().observeActiveUser(),
-      initialData: DataState.loading(),
-      builder: (context, snapshot) => AnimatedSwitcher(
-        duration: Duration(milliseconds: 500),
-        child: snapshot.requireData.when(
-          success: (user) => UserProfileSuccess(user: user),
-          loading: (progress) => UserProfileLoading(),
-          error: (error) => UserProfileError(error: error),
-          nothing: () => UserProfileNothing(),
+    return Material(
+      child: StreamBuilder<DataState<User>>(
+        stream: getIt<UserListener>().observeUser(),
+        initialData: DataState.loading(),
+        builder: (context, snapshot) => AnimatedSwitcher(
+          duration: Duration(milliseconds: 500),
+          child: snapshot.requireData.when(
+            success: (user) => UserProfileSuccess(user: user),
+            loading: (progress) => UserProfileLoading(),
+            error: (error) => UserProfileError(error: error),
+            nothing: () => UserProfileNothing(),
+          ),
         ),
       ),
     );

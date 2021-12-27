@@ -10,8 +10,6 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import '../hexagon/interfaces/auth_repo.dart' as _i14;
 import '../hexagon/interfaces/user_repo.dart' as _i12;
-import '../identity.dart' as _i15;
-import '../repository/auth/auth_repository_impl.dart' as _i16;
 import '../repository/auth/datasources/local/auth_local_datasource.dart' as _i4;
 import '../repository/auth/datasources/local/i_auth_local_datasource.dart'
     as _i3;
@@ -55,9 +53,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
         get<_i14.AuthRepository>(),
       ),
       registerFor: {_repo});
-  gh.singleton<_i15.AuthRepository>(
-      _i16.AuthRepositoryImpl(
-          get<_i3.IAuthLocalDatasource>(), get<_i6.IAuthRemoteDatasource>()),
-      registerFor: {_repo});
+  // gh.singleton<_i15.AuthRepository>(
+  //     _i16.AuthRepositoryImpl(
+  //         get<_i3.IAuthLocalDatasource>(), get<_i6.IAuthRemoteDatasource>()),
+  //     registerFor: {_repo});
   return get;
 }

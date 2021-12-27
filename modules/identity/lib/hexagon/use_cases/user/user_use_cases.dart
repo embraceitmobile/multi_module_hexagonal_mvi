@@ -6,11 +6,13 @@ abstract class UserReader {
 }
 
 abstract class UserListener {
-  Stream<DataState<User>> observeActiveUser();
+  Stream<DataState<User>> observeUser();
 }
 
 abstract class UserEditor extends UserReader {
   Future<bool> updateUser(User user);
 
   Future<bool> removeUser(int userId);
+
+  Future<bool> removeActiveUser();
 }

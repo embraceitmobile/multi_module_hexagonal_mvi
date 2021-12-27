@@ -10,7 +10,7 @@ class UserListenerImpl implements UserListener {
 
   const UserListenerImpl(this._repository);
 
-  Stream<DataState<User>> observeActiveUser() {
+  Stream<DataState<User>> observeUser() {
     return _repository.observeActiveUser();
   }
 }

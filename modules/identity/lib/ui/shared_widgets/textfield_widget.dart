@@ -71,12 +71,12 @@ class TextFieldWidget extends StatelessWidget {
             .copyWith(fontWeight: FontWeight.normal),
         decoration: decoration ??
             InputDecoration(
-              isDense: true,
+              isDense: false,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 8, horizontal: 12.0),
+                  EdgeInsets.symmetric(vertical: 12, horizontal: 16.0),
               border: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(
-                  const Radius.circular(5.0),
+                  const Radius.circular(8.0),
                 ),
                 borderSide: BorderSide(
                   color: Theme.of(context)
@@ -87,8 +87,8 @@ class TextFieldWidget extends StatelessWidget {
                   width: 1.0,
                 ),
               ),
-              hintText: this.hint,
-              labelText: this.hint,
+              hintText: hint,
+              labelText: hint,
               hintStyle: Theme.of(context)
                   .textTheme
                   .headline6!
@@ -99,11 +99,11 @@ class TextFieldWidget extends StatelessWidget {
               icon: this.isIcon ? Icon(this.icon, color: iconColor) : null,
               focusedBorder: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(
-                  const Radius.circular(5.0),
+                  const Radius.circular(8.0),
                 ),
-                borderSide: new BorderSide(
+                borderSide: BorderSide(
                   color: Theme.of(context).primaryColor,
-                  width: 1.0,
+                  width: 2.0,
                 ),
               ),
             ),

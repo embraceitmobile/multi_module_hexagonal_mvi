@@ -18,6 +18,18 @@ class UserEditorImpl extends UserReaderImpl implements UserEditor {
     }
   }
 
+  Future<bool> removeActiveUser() async {
+    try {
+      final activeUser = await _repository.user;
+      if (activeUser != null)
+        return await _repository.removeUser(activeUser.id);
+
+      return false;
+    } on Exception {
+      rethrow;
+    }
+  }
+
   Future<bool> updateUser(User user) async {
     try {
       return await _repository.updateUser(user);
