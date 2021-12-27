@@ -47,6 +47,7 @@ flutter:
    assets:
      - packages/identity/assets/images/img_connection_failed.png
      - packages/identity/assets/images/img_no_result_found.png
+     - packages/identity/assets/images/img_login_cat_illustration.png
 
   #   - images/a_dot_ham.jpeg
   #

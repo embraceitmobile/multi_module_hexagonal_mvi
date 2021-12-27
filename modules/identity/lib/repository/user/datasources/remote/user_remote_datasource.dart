@@ -33,7 +33,7 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
                 "Unable to find user details for userId: ${request.userId}"));
 
       user["imageUrl"] =
-          "https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png";
+          _avatars[((_avatars.length - 1) % (user["id"] as int))];
 
       return UserResponse.fromMap(user);
     } on InvalidDataException {
@@ -63,3 +63,9 @@ class UserRemoteDatasource implements IUserRemoteDatasource {
     }
   }
 }
+
+const _avatars = [
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqGQ8dQ-LMiMmTEyBijR0FzpQHC7tH6qTE2g&usqp=CAU",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZldEPvFgz5ysckNAa5ztdf4Exw00bb1a9qA&usqp=CAU",
+  "https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png"
+];

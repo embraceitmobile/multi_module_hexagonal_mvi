@@ -47,7 +47,7 @@ class _LoginFormState extends State<LoginForm> {
           userIdField,
           SizedBox(height: 18),
           passwordField,
-          SizedBox(height: 18),
+          SizedBox(height: 36),
           loginButton,
         ],
       ),

@@ -43,7 +43,9 @@ class _UserProfileBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
           color: Theme.of(context).primaryColor,
@@ -118,8 +120,9 @@ class _UserProfileBody extends StatelessWidget {
         ),
         if (user.company != null) _UserCompany(company: user.company!),
         Divider(height: 24),
+        Spacer(),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 24),
+          padding: const EdgeInsets.only(bottom: 32, right: 24, left: 24),
           child: RoundedOutlinedButton(
             text: "Logout",
             onPressed: () =>
@@ -127,7 +130,7 @@ class _UserProfileBody extends StatelessWidget {
               print(error);
             }),
           ),
-        )
+        ),
       ],
     );
   }

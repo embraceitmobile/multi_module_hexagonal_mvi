@@ -91,48 +91,52 @@ class UserProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: backgroundColor ?? Theme.of(context).primaryColorDark,
-          border:
-              Border.all(color: borderColor, width: borderWidth ?? size / 25),
-          boxShadow: !showDropShadow
-              ? null
-              : [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 3,
-                    blurRadius: 7,
-                    offset: Offset(3, 4), // changes position of shadow
-                  ),
-                ],
-        ),
-        width: size,
-        height: size,
-        child: imageUrl == null
-            ? _userInitials
-            : CachedNetworkImage(
-                imageUrl: imageUrl!,
-                errorWidget: (context, url, error) => _userInitials,
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor:
-                      backgroundColor ?? Theme.of(context).primaryColorDark,
-                  highlightColor: Colors.white54,
-                  child: Center(
-                    child: Container(
-                      width: size,
-                      height: size,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
+    return Center(
+      child: Padding(
+        padding: padding,
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: backgroundColor ?? Theme.of(context).primaryColorDark,
+            border:
+                Border.all(color: borderColor, width: borderWidth ?? size / 25),
+            boxShadow: !showDropShadow
+                ? null
+                : [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 3,
+                      blurRadius: 7,
+                      offset: Offset(3, 4), // changes position of shadow
+                    ),
+                  ],
+          ),
+          width: size,
+          height: size,
+          child: imageUrl == null
+              ? _userInitials
+              : ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl!,
+                    errorWidget: (context, url, error) => _userInitials,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor:
+                          backgroundColor ?? Theme.of(context).primaryColorDark,
+                      highlightColor: Colors.white54,
+                      child: Center(
+                        child: Container(
+                          width: size,
+                          height: size,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

@@ -22,18 +22,41 @@ class _LoginScreenState extends State<LoginScreen> {
       child: AuthConsumer(
         onAuthenticated: (context) async =>
             await getIt<IdentityRouter>().onLoginEvent(context),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                "User Login",
-                style: Theme.of(context).textTheme.headline3,
-                textAlign: TextAlign.center,
-              ),
-              LoginForm(),
-            ],
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Image(
+                  height: 360,
+                  alignment: Alignment.topRight,
+                  image: AssetImage(
+                    "assets/images/img_login_cat_illustration.png",
+                    package: "identity",
+                  ),
+                  fit: BoxFit.contain,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12, left: 32.0),
+                  child: Text(
+                    "Welcome!",
+                    style: Theme.of(context).textTheme.headline3,
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 32.0, bottom: 24),
+                  child: Text(
+                    "Please login to explore my humble abode!",
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                LoginForm(),
+              ],
+            ),
           ),
         ),
       ),
