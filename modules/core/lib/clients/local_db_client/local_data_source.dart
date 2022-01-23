@@ -137,21 +137,6 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
       return [];
   }
 
-  /// Returns the item matching the provided [filter]
-  /// To get all the items set filter to null
-  /// returns a list of items of the type [T]
-  Future<T?> findById({Filter? filter}) async {
-    final recordSnapshots =
-        await store.find(_dbClient.database, finder: Finder(filter: filter));
-    if (recordSnapshots.isNotEmpty) {
-      return recordSnapshots
-          .map((snapshot) => mapper(snapshot.value))
-          .toList()
-          .first;
-    } else
-      return null;
-  }
-
   /// Remove an item from the database matching the given [filter]
   /// returns count of the [itemsWithQuantity] removed
   Future<int> delete(Filter filter) async {
