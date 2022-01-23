@@ -15,10 +15,8 @@ void main() {
     setUp(() async {
       _nbr = NetworkBoundResource<MockObject>(
           shouldFetch: () async => true,
-          onFetchCachedData: () async {
-            final result = await _localDatasource.findByAll();
-            return Future.value(result as MockObject);
-          },
+          onFetchCachedData: () async =>
+              _localDatasource.findByAll().then((value) => value.first),
           onFetchFromRemoteDatasource: () async => MockObject(
                 uniqueKey: "1",
                 value: "value_new",
