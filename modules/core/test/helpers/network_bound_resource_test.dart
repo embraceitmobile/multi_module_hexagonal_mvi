@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:core/helpers/network_bound_resource.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,7 +10,8 @@ void main() {
   setUpAll(() => _localDatasource = MockLocalDatasource());
   tearDownAll(() => _localDatasource.dispose());
 
-  group('New network_bound_resource initialization', () {
+  group('Objects are correctly initializd and processing methods work properly',
+      () {
     NetworkBoundResource<MockObject>? _nbr;
 
     setUp(() async {
@@ -24,11 +26,13 @@ void main() {
           onSaveResultToCache: (value) async {
             await _localDatasource.insert(value);
           },
-          localDatasourceListener: _localDatasource
-              .observeChanges()
-              .map((event) => event.first)
-              .toDataStateStream);
+          localDatasourceListener:
+              _localDatasource.observeChanges().map((event) {
+            if (event.isEmpty) return null;
+            return event.first;
+          }).toDataStateStream);
     });
+
     tearDown(() async => await _localDatasource.clear());
 
     test(
@@ -40,6 +44,41 @@ void main() {
       expect(_nbr?.onFetchCachedData, isNotNull);
       expect(_nbr?.onSaveResultToCache, isNotNull);
       expect(_nbr?.localDatasourceListener, isNotNull);
+    });
+
+    test('On calling fetch, the correct value is returned', () async {
+      expect(
+        await _nbr!.fetch(),
+        equals(MockObject(
+          uniqueKey: "1",
+          value: "value_new",
+        )),
+      );
+    });
+
+    test('On calling fetch, local datasource is updated', () async {
+      await _nbr!.fetch();
+      expect(
+        await _localDatasource.findById("1"),
+        equals(MockObject(
+          uniqueKey: "1",
+          value: "value_new",
+        )),
+      );
+    });
+
+    test('On calling fetch, the dataListener emits the correct data', () async {
+      List<DataState> expectedResults = [
+        DataState.loading(),
+        DataState.success(MockObject(uniqueKey: "1", value: "value_new")),
+        DataState.nothing(), //called due to tearDown
+      ];
+
+      int i = 0;
+      _nbr!.dataListener.listen(expectAsync1((event) {
+        expect(event, equals(expectedResults[i]));
+        i++;
+      }, count: 2, max: 3));
     });
   });
 }

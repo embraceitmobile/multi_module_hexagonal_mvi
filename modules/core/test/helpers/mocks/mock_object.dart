@@ -14,4 +14,20 @@ class MockObject implements Dto {
   @override
   Map<String, dynamic> toDtoMap() =>
       {Dto.unique_key: uniqueKey, "value": value};
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MockObject &&
+          runtimeType == other.runtimeType &&
+          uniqueKey == other.uniqueKey &&
+          value == other.value;
+
+  @override
+  int get hashCode => uniqueKey.hashCode ^ value.hashCode;
+
+  @override
+  String toString() {
+    return 'MockObject{uniqueKey: $uniqueKey, value: $value}';
+  }
 }
