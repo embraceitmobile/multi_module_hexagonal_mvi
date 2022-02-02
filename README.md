@@ -14,6 +14,7 @@ Design Pattern
 The design pattern chosen here is [MVI](https://cycle.js.org/model-view-intent.html) a.k.a Model-View-Intent. 
 
 ![MVP vs MVI explained](https://miro.medium.com/max/1300/1*AoqX-t3VjgW1CLYVRwLD7Q.png)
+
 Reference: [https://www.novatec-gmbh.de/en/blog/mvi-in-android/](https://www.novatec-gmbh.de/en/blog/mvi-in-android/)
 
 
