@@ -3,7 +3,7 @@ import 'package:core/clients/local_db_client/base/i_local_db_client.dart';
 import 'package:core/clients/local_db_client/local_data_source.dart';
 import 'package:core/core.dart';
 import 'package:identity/repository/auth/datasources/local/i_auth_local_datasource.dart';
-import 'package:identity/repository/auth/datasources/local/models/auth_info_dto.dart';
+import 'package:identity/repository/auth/datasources/local/dtos/auth_info_dto.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: IAuthLocalDatasource)

@@ -2,12 +2,12 @@ import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/user.dart';
 import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 
-class UserModel extends User implements Dto {
+class UserDto extends User implements Dto {
   final String uniqueKey;
   final AddressModel? address;
   final CompanyModel? company;
 
-  const UserModel({
+  const UserDto({
     required int id,
     required String username,
     String? email,
@@ -30,7 +30,7 @@ class UserModel extends User implements Dto {
           imageUrl: imageUrl,
         );
 
-  factory UserModel.fromEntityMap(Map<String, dynamic> map) => UserModel(
+  factory UserDto.fromEntityMap(Map<String, dynamic> map) => UserDto(
         id: map["id"],
         name: map["name"],
         username: map["username"],
@@ -46,7 +46,7 @@ class UserModel extends User implements Dto {
         imageUrl: map["imageUrl"],
       );
 
-  factory UserModel.fromUser(User user) => UserModel(
+  factory UserDto.fromUser(User user) => UserDto(
         id: user.id,
         name: user.name,
         username: user.username,
@@ -62,7 +62,7 @@ class UserModel extends User implements Dto {
         imageUrl: user.imageUrl,
       );
 
-  factory UserModel.fromUserResponse(UserResponse user) => UserModel(
+  factory UserDto.fromUserResponse(UserResponse user) => UserDto(
         id: user.id,
         name: user.name,
         username: user.username,

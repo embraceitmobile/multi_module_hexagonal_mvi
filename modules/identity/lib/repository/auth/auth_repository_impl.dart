@@ -4,7 +4,7 @@ import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
 import 'package:identity/identity.dart';
 import 'package:identity/repository/auth/datasources/local/i_auth_local_datasource.dart';
-import 'package:identity/repository/auth/datasources/local/models/auth_info_dto.dart';
+import 'package:identity/repository/auth/datasources/local/dtos/auth_info_dto.dart';
 import 'package:identity/repository/auth/datasources/remote/apis/change_password_api.dart';
 import 'package:identity/repository/auth/datasources/remote/i_auth_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
@@ -20,7 +20,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   AuthRepositoryImpl(this._localDatasource, this._remoteDatasource) {
     _authInfoResource = NetworkBoundResource(
-      localDataSourceObservable: _localDatasource.observeAuth().toDataStateStream,
+      localDataSourceObservable:
+          _localDatasource.observeAuth().toDataStateStream,
       shouldFetch: () async => await authInfo != null,
       onFetchLocalData: () => authInfo,
       onFetchRemoteData: () async => null,

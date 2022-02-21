@@ -5,10 +5,10 @@ import 'package:identity/hexagon/entities/user.dart';
 import 'package:identity/hexagon/interfaces/auth_repo.dart';
 import 'package:identity/hexagon/interfaces/user_repo.dart';
 import 'package:identity/repository/user/datasources/local/i_user_local_datasource.dart';
-import 'package:identity/repository/user/datasources/local/models/user_model.dart';
 import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 import 'package:identity/repository/user/datasources/remote/i_user_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
+import 'datasources/local/dtos/user_dto.dart';
 
 @Singleton(as: UserRepository)
 class UserRepositoryImpl implements UserRepository {
@@ -51,7 +51,7 @@ class UserRepositoryImpl implements UserRepository {
 
   Future<bool> saveUser(User user) async {
     try {
-      final result = await _localDatasource.saveUser(UserModel.fromUser(user));
+      final result = await _localDatasource.saveUser(UserDto.fromUser(user));
       return result;
     } on Exception {
       rethrow;
@@ -60,7 +60,7 @@ class UserRepositoryImpl implements UserRepository {
 
   Future<bool> updateUser(User user) async {
     try {
-      return await _localDatasource.updateUser(UserModel.fromUser(user));
+      return await _localDatasource.updateUser(UserDto.fromUser(user));
     } on Exception {
       rethrow;
     }
