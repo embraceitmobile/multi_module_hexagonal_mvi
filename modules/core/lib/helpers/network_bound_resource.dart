@@ -12,35 +12,35 @@ class NetworkBoundResource<T> {
   final AsyncValueGetter<bool> shouldFetch;
 
   /// Called to get the cached data [T] from the database
-  final AsyncValueGetter<T?> onFetchCachedData;
+  final AsyncValueGetter<T?> onFetchLocalData;
 
   /// Called to create the API call
-  final AsyncValueGetter<T?> onFetchFromRemoteDatasource;
+  final AsyncValueGetter<T?> onFetchRemoteData;
 
   /// Called to save the result [T] of the API response into the database
-  final AsyncValueSetter<T> onSaveResultToCache;
+  final AsyncValueSetter<T> onSaveResultToLocal;
 
   /// A [Stream] to observe the changes in the local data
   /// To convert a [Stream] of [T] to a [Stream] of [DataState] of [T], you can
   /// use the simple extension method [StreamTransformer.toDataStateStream] or
   /// write you own custom transformer.
-  final Stream<DataState<T>>? localDatasourceListener;
+  final Stream<DataState<T>>? localDataSourceObservable;
 
   /// Listen to this [Stream] to observe the changes in the [NetworkBoundResource]
   /// data [T]. It will emit new events whenever there is a change in the [DataState]
-  /// of the remoteDataSource stream [_remoteStreamController] or the [localDatasourceListener]
+  /// of the remoteDataSource stream [_remoteStreamController] or the [localDataSourceObservable]
   /// if it is provided.
   late final Stream<DataState<T>> dataListener;
 
-  /// Controls the events for the [onFetchFromRemoteDatasource] and [fetchOnceFromRemoteDatasource].
+  /// Controls the events for the [onFetchRemoteData] and [fetchOnceFromRemoteDatasource].
   late final StreamController<DataState<T>> _remoteStreamController;
 
   NetworkBoundResource({
     required this.shouldFetch,
-    required this.onFetchCachedData,
-    required this.onFetchFromRemoteDatasource,
-    required this.onSaveResultToCache,
-    this.localDatasourceListener,
+    required this.onFetchLocalData,
+    required this.onFetchRemoteData,
+    required this.onSaveResultToLocal,
+    this.localDataSourceObservable,
   }) {
     _remoteStreamController = StreamController<DataState<T>>.broadcast(
       onListen: () async {
@@ -55,14 +55,14 @@ class NetworkBoundResource<T> {
 
     dataListener = StreamGroup.mergeBroadcast([
       _remoteStreamController.stream,
-      if (localDatasourceListener != null) localDatasourceListener!,
+      if (localDataSourceObservable != null) localDataSourceObservable!,
     ]);
   }
 
   Future<T?> fetch({bool alwaysFetchFreshData = false}) async {
     if (!alwaysFetchFreshData) {
       try {
-        final cachedData = await onFetchCachedData();
+        final cachedData = await onFetchLocalData();
         if (cachedData != null) return cachedData;
       } catch (e) {
         print(
@@ -77,9 +77,9 @@ class NetworkBoundResource<T> {
 
     try {
       _remoteStreamController.sink.add(DataState.loading());
-      final freshData = await onFetchFromRemoteDatasource();
+      final freshData = await onFetchRemoteData();
       if (freshData != null) {
-        await onSaveResultToCache(freshData);
+        await onSaveResultToLocal(freshData);
         return freshData;
       }
     } on Exception catch (e) {
@@ -97,7 +97,7 @@ class NetworkBoundResource<T> {
       _remoteStreamController.sink.add(DataState.loading());
       final data = await networkCall();
       if (data != null) {
-        await onSaveResultToCache(data);
+        await onSaveResultToLocal(data);
         return data;
       }
     } on Exception catch (e) {

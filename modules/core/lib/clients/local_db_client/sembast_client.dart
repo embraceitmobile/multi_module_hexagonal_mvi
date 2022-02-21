@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:cubivue_utils/basic_utils.dart';
+import 'package:core/utils/encryption/XXTeaCodec.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'base/i_local_db_client.dart';
 
@@ -29,7 +29,7 @@ class SembastDbClient implements ILocalDbClient {
       var database;
       if (encryptionKey.isNotEmpty) {
         // Initialize the encryption codec with a user password
-        var codec = EncryptionUtils.getXXTeaCodec(password: encryptionKey);
+        var codec = SembastCodec(signature: 'xxtea', codec: XXTeaCodec(encryptionKey));
         database = await databaseFactoryIo.openDatabase(dbPath, codec: codec);
       } else {
         database = await databaseFactoryIo.openDatabase(dbPath);

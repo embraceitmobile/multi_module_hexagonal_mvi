@@ -1,6 +1,5 @@
 library core;
 
-export 'package:cubivue_utils/basic_utils.dart' show SnackBarUtils;
 export 'package:dio/dio.dart';
 export 'package:sembast/sembast.dart';
 
@@ -16,7 +15,6 @@ export 'clients/remote_api_client/dio/interceptors/retry_interceptor.dart';
 export 'clients/remote_api_client/remote_api_client.dart';
 export 'constants/network_constants.dart';
 export 'di/get_it_instance.dart';
-export 'helpers/merged_stream_controller.dart';
 export 'helpers/network_bound_resource.dart';
 export 'models/data_state/data_state.dart';
 export 'models/data_state/data_super_state.dart';
@@ -27,3 +25,4 @@ export 'models/exceptions/null_exception.dart';
 export 'models/exceptions/parse_exception.dart';
 export 'models/network/base_response.dart';
 export 'router/router.dart';
+export 'utils/basic_utils.dart';

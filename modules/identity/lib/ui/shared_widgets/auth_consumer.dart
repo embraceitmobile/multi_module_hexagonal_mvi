@@ -46,20 +46,24 @@ class _AutConsumerState extends State<AuthConsumer> {
                       widget.onUnauthenticated!(context);
                     break;
                 }
+                return null;
               },
               error: (error) {
                 if (widget.onError != null)
                   widget.onError!(error);
                 else {
-                  SnackBarUtils.createErrorMessage(
-                      message: error.toString(),
-                      title: "Unable to login",
-                      duration: Duration(seconds: 6))
-                    ..show(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(error.toString()),
+                      duration: Duration(seconds: 6),
+                    ),
+                  );
                 }
+                return null;
               },
               orElse: () {
                 //Do nothing on DateState.loading and DateState.nothing
+                return null;
               },
             ));
   }

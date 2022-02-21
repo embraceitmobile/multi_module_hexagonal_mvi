@@ -16,12 +16,8 @@ dependencies:
   get_it: ^7.2.0
   dio: ^4.0.0
   sembast: ^3.0.2
-
-  cubivue_utils:
-    git:
-      url: git@bitbucket.org:embraceit/cubivueutils.git # using SSH authentication
-      ref: 48ffb347 # update ref to the latest commit in the master branch
-
+  xxtea: ^2.1.0
+  path_provider: ^2.0.9
 
 dev_dependencies:
   flutter_test:

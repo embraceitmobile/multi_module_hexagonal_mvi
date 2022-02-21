@@ -24,20 +24,21 @@ class UserRepositoryImpl implements UserRepository {
     this._authRepository,
   ) {
     _userResource = NetworkBoundResource(
-        localDatasourceListener:
-            _localDatasource.observeActiveUser().toDataStateStream,
-        shouldFetch: () async => await _localDatasource.user == null,
-        onFetchCachedData: () => _localDatasource.user,
-        onFetchFromRemoteDatasource: () async {
-          final authInfo = await _authRepository.authInfo;
-          if (authInfo == null) {
-            throw Exception("The user is not authenticated");
-          }
+      localDataSourceObservable:
+          _localDatasource.observeActiveUser().toDataStateStream,
+      shouldFetch: () async => await _localDatasource.user == null,
+      onFetchLocalData: () => _localDatasource.user,
+      onFetchRemoteData: () async {
+        final authInfo = await _authRepository.authInfo;
+        if (authInfo == null) {
+          throw Exception("The user is not authenticated");
+        }
 
-          return await _remoteDatasource
-              .getUserById(GetUserRequest(authInfo.userId));
-        },
-        onSaveResultToCache: (response) => saveUser(response));
+        return await _remoteDatasource
+            .getUserById(GetUserRequest(authInfo.userId));
+      },
+      onSaveResultToLocal: (response) => saveUser(response),
+    );
   }
 
   Future<User?> get user async {

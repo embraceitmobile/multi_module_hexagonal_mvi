@@ -17,16 +17,16 @@ void main() {
     setUp(() async {
       _nbr = NetworkBoundResource<MockObject>(
           shouldFetch: () async => true,
-          onFetchCachedData: () async =>
+          onFetchLocalData: () async =>
               _localDatasource.findByAll().then((value) => value.first),
-          onFetchFromRemoteDatasource: () async => MockObject(
+          onFetchRemoteData: () async => MockObject(
                 uniqueKey: "1",
                 value: "value_new",
               ),
-          onSaveResultToCache: (value) async {
+          onSaveResultToLocal: (value) async {
             await _localDatasource.insert(value);
           },
-          localDatasourceListener:
+          localDataSourceObservable:
               _localDatasource.observeChanges().map((event) {
             if (event.isEmpty) return null;
             return event.first;
@@ -40,10 +40,10 @@ void main() {
         () async {
       expect(_nbr, isNotNull);
       expect(_nbr?.shouldFetch, isNotNull);
-      expect(_nbr?.onFetchFromRemoteDatasource, isNotNull);
-      expect(_nbr?.onFetchCachedData, isNotNull);
-      expect(_nbr?.onSaveResultToCache, isNotNull);
-      expect(_nbr?.localDatasourceListener, isNotNull);
+      expect(_nbr?.onFetchRemoteData, isNotNull);
+      expect(_nbr?.onFetchLocalData, isNotNull);
+      expect(_nbr?.onSaveResultToLocal, isNotNull);
+      expect(_nbr?.localDataSourceObservable, isNotNull);
     });
 
     test('On calling fetch, the correct value is returned', () async {

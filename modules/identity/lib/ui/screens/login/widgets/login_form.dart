@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:cubivue_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:identity/identity.dart';
@@ -96,13 +95,17 @@ class _LoginFormState extends State<LoginForm> {
             onPressed: !_loginFormStore.canLogin
                 ? null
                 : () {
-                    DeviceUtils.hideKeyboard(context);
+                    context.hideKeyboard();
+
                     if (_loginFormStore.canLogin) {
                       _login();
                     } else {
-                      SnackBarUtils.createErrorMessage(
-                          message: 'Please fill in all fields', title: 'Error')
-                        ..show(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please fill in all fields'),
+                          duration: Duration(seconds: 6),
+                        ),
+                      );
                     }
                   },
           ),
