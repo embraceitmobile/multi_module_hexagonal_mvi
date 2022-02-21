@@ -117,7 +117,9 @@ class NetworkBoundResource<T> {
   }
 }
 
+/// Extension to convert a simple [Stream] into a [DataState] stream
 extension StreamTransformer<T> on Stream<T?> {
+
   Stream<DataState<T>> get toDataStateStream => this.asyncMap((event) =>
       event == null ? DataState.nothing() : DataState.success(event));
 }

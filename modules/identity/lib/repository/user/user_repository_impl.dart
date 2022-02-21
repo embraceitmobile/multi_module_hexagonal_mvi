@@ -16,42 +16,33 @@ class UserRepositoryImpl implements UserRepository {
   final IUserRemoteDatasource _remoteDatasource;
   final AuthRepository _authRepository;
 
-  late MergedStreamController<DataState<User>>
-      _activeUserRemoteStreamController;
+  late NetworkBoundResource<User> _userResource;
 
   UserRepositoryImpl(
     this._localDatasource,
     this._remoteDatasource,
     this._authRepository,
   ) {
-    _activeUserRemoteStreamController = MergedStreamController.broadcast(
-      streamsToMerge: [_localDatasource.observeActiveUser().toUserDataState],
-      onListen: () => user.catchError((error) {
-        print(error);
-      }),
-    );
+    _userResource = NetworkBoundResource(
+        localDatasourceListener:
+            _localDatasource.observeActiveUser().toDataStateStream,
+        shouldFetch: () async => await _localDatasource.user == null,
+        onFetchCachedData: () => _localDatasource.user,
+        onFetchFromRemoteDatasource: () async {
+          final authInfo = await _authRepository.authInfo;
+          if (authInfo == null) {
+            throw Exception("The user is not authenticated");
+          }
+
+          return await _remoteDatasource
+              .getUserById(GetUserRequest(authInfo.userId));
+        },
+        onSaveResultToCache: (response) => saveUser(response));
   }
 
   Future<User?> get user async {
     try {
-      final user = await _localDatasource.user;
-      if (user != null) return user;
-
-      final authInfo = await _authRepository.authInfo;
-      if (authInfo == null) {
-        throw Exception("The user is not authenticated");
-      }
-
-      try {
-        _activeUserRemoteStreamController.emit(DataState.loading());
-        final response = await _remoteDatasource
-            .getUserById(GetUserRequest(authInfo.userId));
-        await saveUser(response);
-        return response;
-      } on Exception catch (error) {
-        _activeUserRemoteStreamController.emit(DataState.error(error));
-        rethrow;
-      }
+      return await _userResource.fetch();
     } on Exception {
       rethrow;
     }
@@ -90,11 +81,5 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-  Stream<DataState<User>> observeActiveUser() =>
-      _activeUserRemoteStreamController.stream;
-}
-
-extension on Stream<UserModel?> {
-  Stream<DataState<User>> get toUserDataState => this.map((user) =>
-      user == null ? DataState<User>.nothing() : DataState<User>.success(user));
+  Stream<DataState<User>> observeActiveUser() => _userResource.dataListener;
 }
