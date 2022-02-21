@@ -8,7 +8,6 @@ import 'package:identity/repository/auth/datasources/local/dtos/auth_info_dto.da
 import 'package:identity/repository/auth/datasources/remote/apis/change_password_api.dart';
 import 'package:identity/repository/auth/datasources/remote/i_auth_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
-
 import 'datasources/remote/apis/login_api.dart';
 
 @Singleton(as: AuthRepository)
