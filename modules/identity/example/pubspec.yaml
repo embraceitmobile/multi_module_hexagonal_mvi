@@ -46,6 +46,7 @@ dev_dependencies:
   source_gen: ^1.1.0
   analyzer: ^2.2.0
   injectable_generator: ^1.5.2
+  platform: ^3.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

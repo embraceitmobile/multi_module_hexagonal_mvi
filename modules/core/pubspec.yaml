@@ -1,5 +1,5 @@
 name: core
-description: A new Flutter package project.
+description: The core module that includes all the basic components that the app and the other modules require
 version: 0.0.1
 publish_to: none
 

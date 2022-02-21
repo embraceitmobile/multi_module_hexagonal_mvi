@@ -16,12 +16,17 @@ class AuthRepositoryImpl implements AuthRepository {
   final IAuthLocalDatasource _localDatasource;
   final IAuthRemoteDatasource _remoteDatasource;
 
-  late MergedStreamController<DataState<AuthInfo>>
-      _authInfoRemoteStreamController;
+  late NetworkBoundResource<AuthInfo> _authInfoResource;
 
   AuthRepositoryImpl(this._localDatasource, this._remoteDatasource) {
-    _authInfoRemoteStreamController = MergedStreamController.broadcast(
-        streamsToMerge: [_localDatasource.observeAuth().toAuthInfoState]);
+    _authInfoResource = NetworkBoundResource(
+      localDatasourceListener: _localDatasource.observeAuth().toAuthInfoState,
+      shouldFetch: () async => await authInfo != null,
+      onFetchCachedData: () => authInfo,
+      onFetchFromRemoteDatasource: () async => null,
+      onSaveResultToCache: (response) =>
+          _localDatasource.saveAuth(AuthInfoDto.fromAuthInfo(response)),
+    );
   }
 
   Future<AuthInfo?> get authInfo async => await _localDatasource.auth;
@@ -29,16 +34,17 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> get isAuthenticated async => await _localDatasource.hasAuth();
 
   Future<bool> login(String email, String password) async {
-    try {
-      _authInfoRemoteStreamController.emit(DataState.loading());
-      final response = await _remoteDatasource
-          .login(LoginRequest(username: email, password: password));
-
-      return await saveAuthInfo(response.toAuthInfo);
-    } on Exception catch (error) {
-      _authInfoRemoteStreamController.emit(DataState.error(error));
-      rethrow;
-    }
+    final loginResponse =
+        await _authInfoResource.fetchOnceFromRemoteDatasource(() async {
+      try {
+        final response = await _remoteDatasource
+            .login(LoginRequest(username: email, password: password));
+        return response.toAuthInfo;
+      } on Exception {
+        rethrow;
+      }
+    });
+    return loginResponse != null;
   }
 
   Future<bool> logoutUser({bool isForceLogout = false}) async {
@@ -49,10 +55,16 @@ class AuthRepositoryImpl implements AuthRepository {
         try {
           if (auth == null)
             throw InvalidDataException("No active user found to logout");
-          _authInfoRemoteStreamController.emit(DataState.loading());
-          await _remoteDatasource.logout();
-        } on Exception catch (error) {
-          _authInfoRemoteStreamController.emit(DataState.error(error));
+
+          await _authInfoResource.fetchOnceFromRemoteDatasource(() async {
+            try {
+              await _remoteDatasource.logout();
+            } catch (e) {
+              rethrow;
+            }
+            return null;
+          });
+        } on Exception {
           rethrow;
         }
       }
@@ -85,7 +97,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   Stream<DataState<AuthInfo>> observeAuthInfo() =>
-      _authInfoRemoteStreamController.stream;
+      _authInfoResource.dataListener;
 }
 
 extension on Stream<AuthInfoDto?> {

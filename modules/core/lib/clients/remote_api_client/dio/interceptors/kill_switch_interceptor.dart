@@ -1,4 +1,6 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart'
+    show DioError, Interceptor, ErrorInterceptorHandler;
+import 'package:flutter/foundation.dart';
 
 class KillSwitchInterceptor extends Interceptor {
   final VoidCallback? onKillSwitch;

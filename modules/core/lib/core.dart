@@ -17,6 +17,7 @@ export 'clients/remote_api_client/remote_api_client.dart';
 export 'constants/network_constants.dart';
 export 'di/get_it_instance.dart';
 export 'helpers/merged_stream_controller.dart';
+export 'helpers/network_bound_resource.dart';
 export 'models/data_state/data_state.dart';
 export 'models/data_state/data_super_state.dart';
 export 'models/exceptions/entity_not_found_exception.dart';

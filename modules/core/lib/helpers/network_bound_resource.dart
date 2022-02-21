@@ -15,7 +15,7 @@ class NetworkBoundResource<T> {
   final AsyncValueGetter<T?> onFetchCachedData;
 
   /// Called to create the API call
-  final AsyncValueGetter<T> onFetchFromRemoteDatasource;
+  final AsyncValueGetter<T?> onFetchFromRemoteDatasource;
 
   /// Called to save the result [T] of the API response into the database
   final AsyncValueSetter<T> onSaveResultToCache;
@@ -86,6 +86,8 @@ class NetworkBoundResource<T> {
       _remoteStreamController.sink.add(DataState.error(e));
       rethrow;
     }
+
+    return null;
   }
 
   /// Call if you have alternate API or secondary params to fetch the data once
@@ -102,6 +104,8 @@ class NetworkBoundResource<T> {
       _remoteStreamController.sink.add(DataState.error(e));
       rethrow;
     }
+
+    return null;
   }
 
   Future<void> dispose() async {
