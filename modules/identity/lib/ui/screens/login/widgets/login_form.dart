@@ -47,7 +47,6 @@ class _LoginFormState extends State<LoginForm> {
           userIdField,
           SizedBox(height: 18),
           passwordField,
-          SizedBox(height: 36),
           loginButton,
         ],
       ),
@@ -90,20 +89,23 @@ class _LoginFormState extends State<LoginForm> {
       );
 
   Widget get loginButton => Observer(
-        builder: (context) => RoundedMaterialButton(
-          text: 'LOGIN',
-          onPressed: !_loginFormStore.canLogin
-              ? null
-              : () {
-                  DeviceUtils.hideKeyboard(context);
-                  if (_loginFormStore.canLogin) {
-                    _login();
-                  } else {
-                    SnackBarUtils.createErrorMessage(
-                        message: 'Please fill in all fields', title: 'Error')
-                      ..show(context);
-                  }
-                },
+        builder: (context) => Padding(
+          padding: const EdgeInsets.only(top: 24, bottom: 16.0),
+          child: RoundedMaterialButton(
+            text: 'LOGIN',
+            onPressed: !_loginFormStore.canLogin
+                ? null
+                : () {
+                    DeviceUtils.hideKeyboard(context);
+                    if (_loginFormStore.canLogin) {
+                      _login();
+                    } else {
+                      SnackBarUtils.createErrorMessage(
+                          message: 'Please fill in all fields', title: 'Error')
+                        ..show(context);
+                    }
+                  },
+          ),
         ),
       );
 
