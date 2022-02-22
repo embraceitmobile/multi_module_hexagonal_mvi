@@ -26,19 +26,19 @@ class NamedNavigator<T extends Object?> {
 
   const NamedNavigator(this.route);
 
-  Future<T?> push(BuildContext context, {T? args}) {
+  Future push(BuildContext context, {T? args}) {
     return Navigator.of(context).pushNamed(route, arguments: args);
   }
 
-  Future<T?> pushReplacement(BuildContext context, {T? args}) {
+  Future pushReplacement(BuildContext context, {T? args}) {
     return Navigator.of(context).pushReplacementNamed(route, arguments: args);
   }
 
-  Future<T?> popAndPush(BuildContext context, {T? args}) {
+  Future popAndPush(BuildContext context, {T? args}) {
     return Navigator.of(context).popAndPushNamed(route, arguments: args);
   }
 
-  Future<T?> pushAndRemoveUntil(BuildContext context, RoutePredicate predicate,
+  Future pushAndRemoveUntil(BuildContext context, RoutePredicate predicate,
       {T? args}) {
     return Navigator.of(context)
         .pushNamedAndRemoveUntil(route, predicate, arguments: args);
