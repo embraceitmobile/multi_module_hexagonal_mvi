@@ -27,7 +27,7 @@ class UserProfileSuccess extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.edit),
               onPressed: () async =>
-                  await UserEditProfileScreen.navigator.push(context),
+                  await UserEditProfileScreen.navigator.push(context, args: user),
             )
           ],
         ),

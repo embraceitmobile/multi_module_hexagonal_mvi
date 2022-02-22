@@ -1,4 +1,3 @@
-import 'package:core/clients/remote_api_client/base/i_remote_api_client.dart';
 import 'package:core/core.dart';
 import 'package:identity/repository/user/datasources/remote/apis/update_profile_api.dart';
 import 'package:injectable/injectable.dart';

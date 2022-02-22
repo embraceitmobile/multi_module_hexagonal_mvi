@@ -61,7 +61,7 @@ class _LoginFormState extends State<LoginForm> {
           inputType: TextInputType.visiblePassword,
           // TextInputType.visiblePassword is used for hiding suggestions in keyboard,
           // as enableSuggestions = false, and autocorrect = false do not work on all devices
-          isIcon: false,
+          hasIcon: false,
           inputAction: TextInputAction.next,
           onChanged: (value) => _loginFormStore.setUserId(value),
           errorText: _loginFormStore.formErrorStore.userId,
@@ -74,7 +74,7 @@ class _LoginFormState extends State<LoginForm> {
           hint: "Password",
           isObscure: true,
           inputType: TextInputType.text,
-          isIcon: false,
+          hasIcon: false,
           onTap: () {
             _loginFormStore.enableUserIdValidation();
             _loginFormStore.validateUserId(_loginFormStore.userId);

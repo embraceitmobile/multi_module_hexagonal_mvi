@@ -5,6 +5,8 @@ import 'package:identity/ui/screens/user_edit_profile/user_edit_profile_screen.d
 import 'package:identity/ui/screens/user_profile/user_profile_screen.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../hexagon/entities/user.dart';
+
 typedef RouteGetter<T> = Future<T> Function(BuildContext context,
     {Object? args});
 
@@ -29,6 +31,6 @@ class IdentityRouter with IRouter {
     UserProfileScreen.navigator.route: (context, args) =>
         const UserProfileScreen(),
     UserEditProfileScreen.navigator.route: (context, args) =>
-        const UserEditProfileScreen(),
+         UserEditProfileScreen(user: args as User),
   };
 }

@@ -21,6 +21,7 @@ dependencies:
   mobx: ^2.0.1
   flutter_mobx: ^2.0.0
   mobx_codegen: ^2.0.3
+  flutter_bloc: ^8.0.1
 
   get_it: ^7.2.0
   injectable: ^1.5.0

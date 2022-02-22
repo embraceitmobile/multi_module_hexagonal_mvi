@@ -5,7 +5,7 @@ class TextFieldWidget extends StatelessWidget {
   final String? hint;
   final String? errorText;
   final bool isObscure;
-  final bool isIcon;
+  final bool hasIcon;
   final bool autoFocus;
   final bool enabled;
   final bool autocorrect;
@@ -33,7 +33,7 @@ class TextFieldWidget extends StatelessWidget {
     this.inputType,
     this.enableSuggestions = false,
     this.textController,
-    this.isIcon = true,
+    this.hasIcon = true,
     this.padding = const EdgeInsets.all(0),
     this.hintColor = Colors.grey,
     this.iconColor = Colors.grey,
@@ -96,7 +96,7 @@ class TextFieldWidget extends StatelessWidget {
               errorText: errorText,
               errorStyle: TextStyle(fontSize: 11.0),
               counterText: '',
-              icon: this.isIcon ? Icon(this.icon, color: iconColor) : null,
+              icon: this.hasIcon ? Icon(this.icon, color: iconColor) : null,
               focusedBorder: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(
                   const Radius.circular(8.0),
