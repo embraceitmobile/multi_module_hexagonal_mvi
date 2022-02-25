@@ -8,7 +8,7 @@ class FormSeparator with FormElement {}
 
 abstract class FormInput<T extends Object> with FormElement {
   final String caption;
-  final TextEditingController _controller;
+  final TextEditingController controller;
   final String? hint;
   final TextInputType? inputType;
 
@@ -21,9 +21,9 @@ abstract class FormInput<T extends Object> with FormElement {
     this.hint,
     this.inputType,
     T? data,
-  }) : _controller = TextEditingController(text: data.toString());
+  }) : controller = TextEditingController(text: data.toString());
 
-  void dispose() => _controller.dispose();
+  void dispose() => controller.dispose();
 }
 
 abstract class StringFormInput extends FormInput<String> {
@@ -39,7 +39,7 @@ abstract class StringFormInput extends FormInput<String> {
         super(caption: caption, hint: hint, data: data, inputType: inputType);
 
   @override
-  String? get data => _controller.text;
+  String? get data => controller.text;
 
   @override
   ValueGetter<bool>? get validator {
@@ -51,31 +51,44 @@ abstract class StringFormInput extends FormInput<String> {
 class NumberFormInput extends FormInput<num> {
   late final InputValidator<num>? _validator;
 
-  NumberFormInput(
-      {required String caption,
-      String? hint,
-      num? data,
-      InputValidator<num>? validator,
-      bool signed = false,
-      bool decimal = false})
-      : _validator = validator,
+  NumberFormInput({
+    required String caption,
+    String? hint,
+    num? data,
+    InputValidator<num>? validator,
+    bool signed = false,
+    bool decimal = false,
+  })  : _validator = validator,
         super(
             caption: caption,
             hint: hint,
             data: data,
-            inputType: signed && decimal
+            inputType: signed || decimal
                 ? TextInputType.numberWithOptions(
                     signed: signed, decimal: decimal)
                 : TextInputType.number);
 
   @override
-  num? get data => num.tryParse(_controller.text);
+  num? get data => num.tryParse(controller.text);
 
   @override
   ValueGetter<bool>? get validator {
     if (_validator == null) return null;
     return () => _validator!.call(data);
   }
+}
+
+class NameFormInput extends StringFormInput {
+  NameFormInput({
+    required String caption,
+    String? hint,
+    String? data,
+    InputValidator<String>? validator,
+  }) : super(
+            caption: caption,
+            hint: hint,
+            data: data,
+            inputType: TextInputType.visiblePassword);
 }
 
 class TextFormInput extends StringFormInput {
@@ -163,7 +176,7 @@ class DateTimeFormInput extends FormInput<DateTime> {
             inputType: TextInputType.datetime);
 
   @override
-  DateTime? get data => DateTime.tryParse(_controller.text);
+  DateTime? get data => DateTime.tryParse(controller.text);
 
   @override
   ValueGetter<bool>? get validator {
