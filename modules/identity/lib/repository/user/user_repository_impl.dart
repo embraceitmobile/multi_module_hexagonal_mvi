@@ -49,34 +49,33 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-  Future<bool> saveUser(User user) async {
+  Future<void> saveUser(User user) async {
     try {
-      final result = await _localDatasource.saveUser(UserDto.fromUser(user));
-      return result;
+      await _localDatasource.saveUser(UserDto.fromUser(user));
     } on Exception {
       rethrow;
     }
   }
 
-  Future<bool> updateUser(User user) async {
+  Future<void> updateUser(User user) async {
     try {
-      return await _localDatasource.updateUser(UserDto.fromUser(user));
+      await _localDatasource.updateUser(UserDto.fromUser(user));
     } on Exception {
       rethrow;
     }
   }
 
-  Future<bool> removeUser(int userId) async {
+  Future<void> removeUser(int userId) async {
     try {
-      return await _localDatasource.removeUser(userId);
+      await _localDatasource.removeUser(userId);
     } on Exception {
       rethrow;
     }
   }
 
-  Future<bool> clearUsers() async {
+  Future<void> clearUsers() async {
     try {
-      return await _localDatasource.clearUsers();
+      await _localDatasource.clearUsers();
     } on Exception {
       rethrow;
     }

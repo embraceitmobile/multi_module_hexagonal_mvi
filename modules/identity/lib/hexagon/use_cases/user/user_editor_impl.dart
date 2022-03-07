@@ -10,17 +10,17 @@ class UserEditorImpl extends UserReaderImpl implements UserEditor {
 
   const UserEditorImpl(this._repository) : super(_repository);
 
-  Future<bool> removeUser(int userId) async {
+  Future<void> removeUser(int userId) async {
     try {
-      return await _repository.removeUser(userId);
+      await _repository.removeUser(userId);
     } on Exception {
       rethrow;
     }
   }
 
-  Future<bool> updateUser(User user) async {
+  Future<void> updateUser(User user) async {
     try {
-      return await _repository.updateUser(user);
+      await _repository.updateUser(user);
     } on Exception {
       rethrow;
     }
