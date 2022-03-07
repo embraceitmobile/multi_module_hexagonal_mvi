@@ -26,11 +26,11 @@ class AuthLocalDatasource extends LocalDataSource<AuthInfoDto>
 
   Future<bool> hasAuth() async => await auth != null;
 
-  Future<int> saveAuth(AuthInfoDto auth) async => await insertOrUpdate(auth);
+  Future<void> saveAuth(AuthInfoDto auth) async => await insertOrUpdate(auth);
 
-  Future<bool> updateAuth(AuthInfoDto auth) async => await update(auth) > 0;
+  Future<void> updateAuth(AuthInfoDto auth) async => await update(auth);
 
-  Future<bool> removeAuth() async => await clear() > 0;
+  Future<void> removeAuth() async => await clear() > 0;
 
   Stream<AuthInfoDto?> observeAuth() => observeChange();
 }

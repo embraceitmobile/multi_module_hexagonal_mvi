@@ -1,15 +1,15 @@
-abstract class Dto {
+abstract class LocalDto {
   static const unique_key = 'unique_key';
 
   /// DbMap should not contain any sub-lists
   Map<String, dynamic> toDtoMap();
 
-  external factory Dto.fromDtoMap(Map<String, dynamic> map);
+  external factory LocalDto.fromDtoMap(Map<String, dynamic> map);
 
-  String get uniqueKey;
+  String get pk;
 }
 
-abstract class StateDto implements Dto {
+abstract class StateDto implements LocalDto {
   LocalState get state;
 }
 

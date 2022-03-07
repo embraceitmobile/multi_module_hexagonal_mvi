@@ -47,7 +47,7 @@ class AuthRepositoryImpl implements AuthRepository {
     return loginResponse != null;
   }
 
-  Future<bool> logoutUser({bool isForceLogout = false}) async {
+  Future<void> logoutUser({bool isForceLogout = false}) async {
     try {
       final auth = await _localDatasource.auth;
 
@@ -75,11 +75,9 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  Future<bool> saveAuthInfo(AuthInfo authInfo) async {
+  Future<void> saveAuthInfo(AuthInfo authInfo) async {
     try {
-      final result =
-          await _localDatasource.saveAuth(AuthInfoDto.fromAuthInfo(authInfo));
-      return result > 0;
+      await _localDatasource.saveAuth(AuthInfoDto.fromAuthInfo(authInfo));
     } on Exception {
       rethrow;
     }

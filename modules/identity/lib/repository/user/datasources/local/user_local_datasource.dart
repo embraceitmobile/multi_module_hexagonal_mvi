@@ -19,20 +19,16 @@ class UserLocalDatasource extends LocalDataSource<UserDto>
           mapper: (map) => UserDto.fromEntityMap(map),
         );
 
-  Future<UserDto?> get user async {
-    return (await find()).firstOrNull;
-  }
+  Future<UserDto?> get user async => (await find()).firstOrNull;
 
-  Future<bool> saveUser(UserDto user) async => await insertOrUpdate(user) > 0;
+  Future<void> saveUser(UserDto user) async => await insertOrUpdate(user);
 
-  Future<bool> updateUser(UserDto user) async => await update(user) > 0;
+  Future<void> updateUser(UserDto user) async => await update(user);
 
-  Future<bool> removeUser(int userId) async =>
-      await deleteById(userId.toString()) > 0;
+  Future<void> removeUser(int userId) async =>
+      await deleteById(userId.toString());
 
-  Future<List<UserDto>> get users async => await find();
-
-  Future<bool> clearUsers() async => await clear() > 0;
+  Future<void> clearUsers() async => await clear() > 0;
 
   Stream<UserDto?> observeActiveUser() => observeChange();
 }

@@ -33,66 +33,53 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
       required String storeName,
       bool enableLogging = true})
       : _dbClient = dbClient as SembastDbClient,
-        store = intMapStoreFactory.store(storeName),
+        store = stringMapStoreFactory.store(storeName),
         _shouldLog = enableLogging,
         tag = storeName;
 
   /// Insert a single [item] into database
   /// returns count of items inserted
-  Future<int> insert(Dto item) async => _insert(item);
-
-  Future<int> _insert(Dto item, {bool log = true}) async {
-    if (_shouldLog && log)
-      print("[$tag] [insert], insert item: ${item.uniqueKey}");
-    return await store.add(_dbClient.database, item.toDtoMap()) as int;
-  }
+  Future<void> insert(LocalDto item) => _insertOrUpdate(item);
 
   /// Updates the [item] if it exists in the database
   /// returns the count of the [itemsWithQuantity] updated
-  Future<int> update(Dto item) async => _update(item);
-
-  Future<int> _update(Dto item, {bool log = true}) async {
-    if (_shouldLog && log)
-      print("[$tag] [update], updating item to db, ${item.uniqueKey}");
-
-    return await store.update(_dbClient.database, item.toDtoMap(),
-        finder: Finder(filter: DbFilters.byUniqueId(item.uniqueKey)));
-  }
+  Future<void> update(LocalDto item) => _insertOrUpdate(item);
 
   /// Insert an [item] if it does not exist in database, otherwise update the [item]
   /// returns count of items inserted or updated
-  Future<int> insertOrUpdate(Dto item) async => _insertOrUpdate(item);
+  Future<void> insertOrUpdate(LocalDto item) => _insertOrUpdate(item);
 
-  Future<int> _insertOrUpdate(Dto item, {bool log = true}) async {
-    if (_shouldLog && log)
-      print(
-          "[$tag] [insertOrUpdate], insertOrUpdate item to db, ${item.uniqueKey}");
-    return await find(filter: DbFilters.byUniqueId(item.uniqueKey)).then(
-        (list) =>
-            list.isEmpty ? _insert(item, log: log) : _update(item, log: log));
-  }
+  Future<void> _insertOrUpdate(LocalDto item, {bool log = true}) async {
+    if (_shouldLog && log) print("[$tag] [insert], insert item: ${item.pk}");
 
-  /// Insert multiple [items] into database
-  /// returns count of items inserted
-  Future<List<int>> insertMany(List<Dto> items) async {
-    if (_shouldLog)
-      print("[$tag] [insertMany], inserting ${items.length} items in db");
-
-    return store.addAll(
-            _dbClient.database, items.map((item) => item.toDtoMap()).toList())
-        as FutureOr<List<int>>;
+    try {
+      await store.record(item.pk).put(_dbClient.database, item.toDtoMap());
+    } catch (_) {
+      rethrow;
+    }
   }
 
   /// Insert or Update multiple [items] in the database
   /// returns true if all operations are completed successfully.
-  Future<bool> insertOrUpdateMany(List<Dto> items) async {
+  Future<void> insertOrUpdateMany(List<LocalDto> items) async {
     if (_shouldLog)
       print(
           "[$tag] [insertOrUpdateMany], inserting ${items.length} items in db");
-    return await Future.forEach(items,
-            (dynamic item) async => await _insertOrUpdate(item, log: false))
-        .then((_) => true);
+
+    try {
+      await _dbClient.database.transaction((txn) async {
+        for (final item in items) {
+          await _insertOrUpdate(item, log: false);
+        }
+      });
+    } catch (_) {
+      rethrow;
+    }
   }
+
+  /// Insert multiple [items] into database
+  /// returns count of items inserted
+  Future<void> insertMany(List<LocalDto> items) => insertOrUpdateMany(items);
 
   /// Return the count of records in the database
   Future<int> count() async {
@@ -103,7 +90,13 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
   /// Returns the items matching the [uniqueIds]
   /// returns a list of items of the type [T]
   Future<List<T>> getEntitiesById(List<String> uniqueIds) async {
-    return find(filter: DbFilters.byUniqueIds(uniqueIds));
+    try {
+      return (await store.records(uniqueIds).get(_dbClient.database))
+          .map((result) => result as T)
+          .toList(growable: false);
+    } catch (_) {
+      rethrow;
+    }
   }
 
   /// Returns the items matching the provided [filter]
@@ -122,30 +115,29 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
 
   /// Remove an item from the database matching the given [filter]
   /// returns count of the [itemsWithQuantity] removed
-  Future<int> delete(Filter filter) async {
+  Future<void> delete(Filter filter) async {
     final finder = Finder(filter: filter);
-    return await store.delete(_dbClient.database, finder: finder);
+    await store.delete(_dbClient.database, finder: finder);
   }
 
   /// Remove an item from the database matching the given [uniqueId].
   /// returns true if all operations are completed successfully.
-  Future<int> deleteById(String uniqueId) async {
-    final finder = Finder(filter: Filter.equals(Dto.unique_key, uniqueId));
-    return await store.delete(_dbClient.database, finder: finder);
+  Future<void> deleteById(String uniqueId) async {
+    return await store.record(uniqueId).delete(_dbClient.database);
   }
 
   /// Remove an item from the database matching the given [filters].
   /// returns true if all operations are completed successfully.
-  Future<int> deleteAll(List<String> uniqueIds) async {
-    final finder = Finder(filter: DbFilters.byUniqueIds(uniqueIds));
-    return await store.delete(_dbClient.database, finder: finder);
-  }
-
-  /// Remove an item from the database matching the given [filters].
-  /// returns true if all operations are completed successfully.
-  Future<int> deleteAllById(List<String> uniqueIds) async {
-    final finder = Finder(filter: DbFilters.byUniqueIds(uniqueIds));
-    return await store.delete(_dbClient.database, finder: finder);
+  Future<void> deleteAll(List<String> uniqueIds) async {
+    try {
+      await _dbClient.database.transaction((txn) async {
+        for (final id in uniqueIds) {
+          await deleteById(id);
+        }
+      });
+    } catch (_) {
+      rethrow;
+    }
   }
 
   /// Clears the database of all the entries

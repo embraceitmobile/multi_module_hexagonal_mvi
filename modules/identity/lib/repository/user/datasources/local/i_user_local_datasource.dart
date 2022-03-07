@@ -3,13 +3,13 @@ import 'dtos/user_dto.dart';
 abstract class IUserLocalDatasource {
   Future<UserDto?> get user;
 
-  Future<bool> saveUser(UserDto user);
+  Future<void> saveUser(UserDto user);
 
-  Future<bool> updateUser(UserDto user);
+  Future<void> updateUser(UserDto user);
 
-  Future<bool> removeUser(int userId);
+  Future<void> removeUser(int userId);
 
-  Future<bool> clearUsers();
+  Future<void> clearUsers();
 
   Stream<UserDto?> observeActiveUser();
 }

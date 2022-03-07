@@ -5,11 +5,11 @@ abstract class IAuthLocalDatasource {
 
   Future<bool> hasAuth();
 
-  Future<int> saveAuth(AuthInfoDto auth);
+  Future<void> saveAuth(AuthInfoDto auth);
 
-  Future<bool> removeAuth();
+  Future<void> removeAuth();
 
-  Future<bool> updateAuth(AuthInfoDto auth);
+  Future<void> updateAuth(AuthInfoDto auth);
 
   Stream<AuthInfoDto?> observeAuth();
 }

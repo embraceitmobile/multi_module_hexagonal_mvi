@@ -6,13 +6,13 @@ abstract class AuthRepository {
 
   Future<AuthInfo?> get authInfo;
 
-  Future<bool> saveAuthInfo(AuthInfo authToken);
+  Future<void> saveAuthInfo(AuthInfo authToken);
 
   Stream<DataState<AuthInfo>> observeAuthInfo();
 
   Future<bool> login(String email, String password);
 
-  Future<bool> logoutUser({bool isForceLogout = false});
+  Future<void> logoutUser({bool isForceLogout = false});
 
   Future<bool> changePassword(String currentPassword, String newPassword);
 }

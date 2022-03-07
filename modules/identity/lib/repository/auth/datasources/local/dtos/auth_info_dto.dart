@@ -1,14 +1,14 @@
 import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
 
-class AuthInfoDto extends AuthInfo implements Dto {
-  final String uniqueKey;
+class AuthInfoDto extends AuthInfo implements LocalDto {
+  final String pk;
 
   const AuthInfoDto({
     required int userId,
     required String accessToken,
     required String refreshToken,
-  })  : uniqueKey = "key",
+  })  : pk = "key",
         super(
           userId: userId,
           accessToken: accessToken,
@@ -32,7 +32,7 @@ class AuthInfoDto extends AuthInfo implements Dto {
         "userId": userId,
         "accessToken": accessToken,
         "refreshToken": refreshToken,
-        Dto.unique_key: uniqueKey,
+        LocalDto.unique_key: pk,
       };
 
   AuthInfoDto copyWith({

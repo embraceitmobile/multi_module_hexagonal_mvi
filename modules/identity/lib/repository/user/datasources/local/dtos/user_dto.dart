@@ -2,8 +2,8 @@ import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/user.dart';
 import 'package:identity/repository/user/datasources/remote/apis/get_user_api.dart';
 
-class UserDto extends User implements Dto {
-  final String uniqueKey;
+class UserDto extends User implements LocalDto {
+  final String pk;
   final AddressModel? address;
   final CompanyModel? company;
 
@@ -17,7 +17,7 @@ class UserDto extends User implements Dto {
     String? phone,
     String? website,
     String? imageUrl,
-  })  : uniqueKey = '$id',
+  })  : pk = '$id',
         super(
           id: id,
           name: name,
@@ -88,7 +88,7 @@ class UserDto extends User implements Dto {
         "phone": phone,
         "company": company?.toMap(),
         "imageUrl": imageUrl,
-        Dto.unique_key: uniqueKey,
+        LocalDto.unique_key: pk,
       };
 }
 

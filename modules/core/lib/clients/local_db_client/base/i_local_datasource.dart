@@ -3,24 +3,22 @@ import 'package:sembast/sembast.dart';
 
 abstract class ILocalDataSource<T> {
   /// Insert a single [item] into database
-  /// returns count of items inserted
-  Future<int> insert(Dto object);
+  Future<void> insert(LocalDto object);
 
   /// Updates the [item] if it exists in the database
-  /// returns the count of the [itemsWithQuantity] updated
-  Future<int> update(Dto object);
+  Future<void> update(LocalDto object);
 
   /// Insert an [item] if it does not exist in database, otherwise update the [item]
   /// returns count of items inserted or updated
-  Future<int> insertOrUpdate(Dto object);
+  Future<void> insertOrUpdate(LocalDto object);
 
   /// Insert multiple [items] into database
   /// returns count of items inserted
-  Future<List<int>> insertMany(List<Dto> list);
+  Future<void> insertMany(List<LocalDto> list);
 
   /// Insert or Update multiple [items] in the database
   /// returns true if all operations are completed successfully.
-  Future<bool> insertOrUpdateMany(List<Dto> list);
+  Future<void> insertOrUpdateMany(List<LocalDto> list);
 
   /// Returns the items matching the [uniqueIds]
   /// returns a list of items of the type [T]
@@ -33,19 +31,19 @@ abstract class ILocalDataSource<T> {
 
   /// Remove an item from the database matching the given [filter].
   /// returns count of the [itemsWithQuantity] removed
-  Future<int> delete(Filter filter);
+  Future<void> delete(Filter filter);
 
   /// Remove all the entities matching the [uniqueId] from the db
   /// returns true if all operations are completed successfully.
-  Future<int> deleteById(String uniqueId);
+  Future<void> deleteById(String uniqueId);
 
   /// Remove all the entities matching the [uniqueIds] from the db
   /// returns true if all operations are completed successfully.
-  Future<int> deleteAll(List<String> uniqueIds);
+  Future<void> deleteAll(List<String> uniqueIds);
 
   /// Clears the database of all the entries
   /// returns count of the [itemsWithQuantity] removed
-  Future<int> clear();
+  Future<void> clear();
 
   /// Return the count of records in the database
   Future<int> count();

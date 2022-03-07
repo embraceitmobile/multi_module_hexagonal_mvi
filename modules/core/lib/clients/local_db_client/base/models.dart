@@ -4,10 +4,10 @@ import 'dto.dart';
 
 class DbFilters {
   static Filter byUniqueId(String uniqueId) =>
-      Filter.equals(Dto.unique_key, uniqueId);
+      Filter.equals(LocalDto.unique_key, uniqueId);
 
   static Filter byUniqueIds(List<String> uniqueIds) =>
-      Filter.inList(Dto.unique_key, uniqueIds);
+      Filter.inList(LocalDto.unique_key, uniqueIds);
 }
 
 abstract class ISyncable {
