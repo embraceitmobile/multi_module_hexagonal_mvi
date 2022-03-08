@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:identity/hexagon/use_cases/user/user_use_cases.dart';
 import 'package:identity/identity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';

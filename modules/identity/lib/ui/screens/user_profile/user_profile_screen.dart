@@ -2,11 +2,6 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:identity/identity.dart';
 
-import 'states/user_profile_error.dart';
-import 'states/user_profile_loading.dart';
-import 'states/user_profile_nothing.dart';
-import 'states/user_profile_success.dart';
-
 export 'states/user_profile_error.dart';
 export 'states/user_profile_loading.dart';
 export 'states/user_profile_nothing.dart';
