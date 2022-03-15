@@ -1,16 +1,15 @@
 import 'dart:async';
 
-import 'package:core/clients/local_db_client/sembast_client.dart';
+import 'package:core/clients/local_db_clients/sembast/sembast_db_client.dart';
 import 'package:sembast/sembast.dart';
 
-import 'base/dto.dart';
-import 'base/i_local_datasource.dart';
-import 'base/i_local_db_client.dart';
-import 'base/models.dart';
+import '../base/local_dto.dart';
+import '../base/i_local_datasource.dart';
+import '../base/i_local_db_client.dart';
 
 typedef Mapper<T> = T Function(Map<String, dynamic>);
 
-class LocalDataSource<T> implements ILocalDataSource<T> {
+class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
   ///[database] this is the sembast instance to be provided using Dependency Injection
   final SembastDbClient _dbClient;
 
@@ -27,7 +26,7 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
   /// Set [_shouldLog] to true to print the result of the db operations
   final bool _shouldLog;
 
-  LocalDataSource(
+  SembastBaseLocalDataSource(
       {required ILocalDbClient dbClient,
       required this.mapper,
       required String storeName,
@@ -87,43 +86,20 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
     return await store.count(_dbClient.database);
   }
 
-  /// Returns the items matching the [uniqueIds]
-  /// returns a list of items of the type [T]
-  Future<List<T>> getEntitiesById(List<String> uniqueIds) async {
-    try {
-      return (await store.records(uniqueIds).get(_dbClient.database))
-          .map((result) => result as T)
-          .toList(growable: false);
-    } catch (_) {
-      rethrow;
-    }
+  /// Returns the item matching the [id]
+  Future<T?> find(String id) async {
+    return store.record(id).get(_dbClient.database) as T;
   }
 
-  /// Returns the items matching the provided [filter]
-  /// To get all the items set filter to null
-  /// returns a list of items of the type [T]
-  Future<List<T>> find({Filter? filter}) async {
-    // fetching data
-    final recordSnapshots =
-        await store.find(_dbClient.database, finder: Finder(filter: filter));
-
-    if (recordSnapshots.isNotEmpty)
-      return recordSnapshots.map((snapshot) => mapper(snapshot.value)).toList();
-    else
-      return [];
+  /// Returns all the items in the db records
+  Future<List<T>> findAll() async {
+    final recordSnapshots = await store.find(_dbClient.database);
+    return recordSnapshots.map((snapshot) => mapper(snapshot.value)).toList();
   }
 
-  /// Remove an item from the database matching the given [filter]
-  /// returns count of the [itemsWithQuantity] removed
-  Future<void> delete(Filter filter) async {
-    final finder = Finder(filter: filter);
-    await store.delete(_dbClient.database, finder: finder);
-  }
-
-  /// Remove an item from the database matching the given [uniqueId].
-  /// returns true if all operations are completed successfully.
-  Future<void> deleteById(String uniqueId) async {
-    return await store.record(uniqueId).delete(_dbClient.database);
+  /// Remove an item from the database matching the given [id]
+  Future<void> delete(String id) async {
+    return await store.record(id).delete(_dbClient.database);
   }
 
   /// Remove an item from the database matching the given [filters].
@@ -132,7 +108,7 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
     try {
       await _dbClient.database.transaction((txn) async {
         for (final id in uniqueIds) {
-          await deleteById(id);
+          await delete(id);
         }
       });
     } catch (_) {
@@ -152,8 +128,8 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
   /// to the stream using [Stream.listen], which returns [StreamSubscription].
   /// All the stream subscriptions need to be cancelled when they are no longer
   /// needs using [StreamSubscription.cancel]
-  Stream<T?> observeChange({Filter? filter}) {
-    final query = store.query(finder: Finder(filter: filter));
+  Stream<T?> observeChange() {
+    final query = store.query();
     return query
         .onSnapshot(_dbClient.database)
         .map((snapshot) => snapshot == null ? null : mapper(snapshot.value));
@@ -166,7 +142,7 @@ class LocalDataSource<T> implements ILocalDataSource<T> {
   /// All the stream subscriptions need to be cancelled when they are no longer
   /// needs using [StreamSubscription.cancel]
   Stream<List<T>> observeChanges({Filter? filter}) {
-    final query = store.query(finder: Finder(filter: filter));
+    final query = store.query();
     return query.onSnapshots(_dbClient.database).map((snapshots) =>
         snapshots.map((snapshot) => mapper(snapshot.value)).toList());
   }

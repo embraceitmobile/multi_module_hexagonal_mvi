@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:core/clients/local_db_client/sembast_client.dart';
+import 'package:core/clients/local_db_clients/sembast/sembast_db_client.dart';
 import 'package:core/core.dart';
 import 'package:injectable/injectable.dart';
 

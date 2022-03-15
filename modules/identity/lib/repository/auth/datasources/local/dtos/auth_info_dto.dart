@@ -1,3 +1,4 @@
+import 'package:core/clients/local_db_clients/base/local_dto.dart';
 import 'package:core/core.dart';
 import 'package:identity/hexagon/entities/auth_info.dart';
 

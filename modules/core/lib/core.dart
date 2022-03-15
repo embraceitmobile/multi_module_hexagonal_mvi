@@ -3,13 +3,13 @@ library core;
 export 'package:dio/dio.dart';
 export 'package:sembast/sembast.dart';
 
-export 'clients/local_db_client/base/dto.dart';
-export 'clients/local_db_client/base/i_local_db_client.dart';
-export 'clients/local_db_client/base/i_local_db_client.dart';
-export 'clients/local_db_client/base/models.dart';
+export 'clients/local_db_clients/base/local_dto.dart';
+export 'clients/local_db_clients/base/i_local_db_client.dart';
+export 'clients/local_db_clients/base/i_local_db_client.dart';
+export 'clients/local_db_clients/sembast/sembast_db_client.dart';
+export 'clients/local_db_clients/sembast/sembast_local_data_source.dart';
 export 'clients/remote_api_client/base/i_remote_api_client.dart';
 export 'clients/remote_api_client/dio/interceptors/auth_interceptor.dart';
-export 'clients/remote_api_client/dio/interceptors/kill_switch_interceptor.dart';
 export 'clients/remote_api_client/dio/interceptors/refresh_token_interceptor.dart';
 export 'clients/remote_api_client/dio/interceptors/retry_interceptor.dart';
 export 'clients/remote_api_client/remote_api_client.dart';
