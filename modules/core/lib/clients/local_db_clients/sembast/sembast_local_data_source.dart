@@ -92,9 +92,12 @@ class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
   }
 
   /// Returns all the items in the db records
-  Future<List<T>> findAll() async {
-    final recordSnapshots = await store.find(_dbClient.database);
-    return recordSnapshots.map((snapshot) => mapper(snapshot.value)).toList();
+  Future<List<T>> findAll([List<String>? ids]) async {
+    final results = ids != null
+        ? await store.records(ids).get(_dbClient.database)
+        : await store.find(_dbClient.database);
+
+    return results.map((snapshot) => mapper(snapshot.value)).toList();
   }
 
   /// Remove an item from the database matching the given [id]

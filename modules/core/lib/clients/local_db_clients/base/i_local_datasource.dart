@@ -23,7 +23,7 @@ abstract class ILocalDataSource<T> {
 
   /// Returns the items matching the provided [id]
   /// returns a list of items of the type [T]
-  Future<List<T>> findAll();
+  Future<List<T>> findAll([List<String>? ids]);
 
   /// Remove an item from the database matching the given [id].
   Future<void> delete(String id);
