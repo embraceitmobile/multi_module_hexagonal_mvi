@@ -8,24 +8,24 @@ import 'package:core/core.dart' as _i5;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../hexagon/interfaces/auth_repo.dart' as _i14;
-import '../hexagon/interfaces/user_repo.dart' as _i12;
-import '../repository/auth/datasources/local/auth_local_datasource.dart' as _i4;
-import '../repository/auth/datasources/local/i_auth_local_datasource.dart'
+import '../domain/interfaces/auth_repo.dart' as _i14;
+import '../domain/interfaces/user_repo.dart' as _i12;
+import '../data/auth/datasources/local/auth_local_datasource.dart' as _i4;
+import '../data/auth/datasources/local/i_auth_local_datasource.dart'
     as _i3;
-import '../repository/auth/datasources/remote/auth_remote_datasource.dart'
+import '../data/auth/datasources/remote/auth_remote_datasource.dart'
     as _i7;
-import '../repository/auth/datasources/remote/i_auth_remote_datasource.dart'
+import '../data/auth/datasources/remote/i_auth_remote_datasource.dart'
     as _i6;
-import '../repository/user/datasources/local/i_user_local_datasource.dart'
+import '../data/user/datasources/local/i_user_local_datasource.dart'
     as _i10;
-import '../repository/user/datasources/local/user_local_datasource.dart'
+import '../data/user/datasources/local/user_local_datasource.dart'
     as _i11;
-import '../repository/user/datasources/remote/i_user_remote_datasource.dart'
+import '../data/user/datasources/remote/i_user_remote_datasource.dart'
     as _i8;
-import '../repository/user/datasources/remote/user_remote_datasource.dart'
+import '../data/user/datasources/remote/user_remote_datasource.dart'
     as _i9;
-import '../repository/user/user_repository_impl.dart' as _i13;
+import '../data/user/user_repository_impl.dart' as _i13;
 
 const String _repo = 'repo';
 // ignore_for_file: unnecessary_lambdas

@@ -122,7 +122,9 @@ class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
     return await store.delete(_dbClient.database);
   }
 
-  /// Listen to the changes in the db using the provided query given in [filter]
+  /// Listen to the changes in the db when you are certain that only one result
+  /// will be returned. If more than one result is expected, then use
+  /// [observeChanges] instead.
   /// returns a [Stream] of [T] as [Stream<T?>] that can be null.
   /// In order to observe the changes emitted in the [Stream], you need to listen
   /// to the stream using [Stream.listen], which returns [StreamSubscription].

@@ -1,6 +1,6 @@
 import 'package:core/clients/remote_api_client/dio/dio_client.dart';
 import 'package:core/core.dart';
-import 'package:identity/hexagon/use_cases/auth/auth_use_cases.dart';
+import 'package:identity/domain/use_cases/auth/auth_use_cases.dart';
 import 'package:injectable/injectable.dart';
 
 @module
