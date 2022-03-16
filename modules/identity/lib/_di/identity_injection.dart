@@ -16,9 +16,9 @@ import 'package:injectable/injectable.dart';
 GetIt configureIdentityInjection() {
   final gh = GetItHelper(getIt);
 
-  configureIdentityRepositoryInjection();
-  configureIdentityHexagonInjection();
-  configureIdentityUiInjection();
+  configureIdentityDataInjection();
+  configureIdentityDomainInjection();
+  configureIdentityPresentationInjection();
 
   return getIt;
 }

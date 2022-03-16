@@ -9,7 +9,7 @@ import 'package:identity/domain/use_cases/user/user_reader_impl.dart';
 import 'package:identity/identity.dart';
 import 'package:injectable/injectable.dart';
 
-GetIt configureIdentityHexagonInjection() {
+GetIt configureIdentityDomainInjection() {
   final gh = GetItHelper(getIt);
 
   gh.singleton<AuthReader>(AuthReaderImpl(getIt<AuthRepository>()));

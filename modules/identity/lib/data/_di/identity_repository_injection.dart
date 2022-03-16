@@ -14,7 +14,7 @@ import 'package:identity/data/user/datasources/remote/user_remote_datasource.dar
 import 'package:identity/data/user/user_repository_impl.dart';
 import 'package:injectable/injectable.dart';
 
-GetIt configureIdentityRepositoryInjection() {
+GetIt configureIdentityDataInjection() {
   final gh = GetItHelper(getIt);
 
   gh.singleton<IAuthLocalDatasource>(
