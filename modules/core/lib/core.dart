@@ -17,7 +17,7 @@ export 'constants/network_constants.dart';
 export 'di/get_it_instance.dart';
 export 'helpers/network_bound_resource.dart';
 export 'models/resource/resource.dart';
-export 'models/resource/super_resource.dart';
+export 'models/resource/s_resource.dart';
 export 'models/exceptions/entity_not_found_exception.dart';
 export 'models/exceptions/invalid_data_exception.dart';
 export 'models/exceptions/network_exception.dart';

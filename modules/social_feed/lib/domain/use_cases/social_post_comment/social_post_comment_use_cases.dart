@@ -2,16 +2,16 @@ import 'package:core/core.dart';
 import 'package:social_feed/domain/entities/social_post_comment.dart';
 
 abstract class SocialPostCommentReader {
-  List<SocialPostComment> get allComments;
+  Future<List<SocialPostComment>> get allComments;
 
-  List<SocialPostComment> getCommentsForPost(int postId);
+  Future<List<SocialPostComment>> getCommentsForPost(int postId);
 }
 
 abstract class SocialPostCommentWatcher {
-  Stream<Resource<List<SuperResource<SocialPostComment>>>>
+  Stream<Resource<List<SResource<SocialPostComment>>>>
       get observeAllComments;
 
-  Stream<Resource<List<SuperResource<SocialPostComment>>>>
+  Stream<Resource<List<SResource<SocialPostComment>>>>
       observeCommentsForPost(int postId);
 }
 

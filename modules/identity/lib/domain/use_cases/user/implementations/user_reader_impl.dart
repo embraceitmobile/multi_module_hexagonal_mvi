@@ -1,16 +1,20 @@
-import 'package:core/core.dart';
 import 'package:identity/domain/entities/user.dart';
 import 'package:identity/domain/interfaces/user_repo.dart';
 import 'package:identity/domain/use_cases/user/user_use_cases.dart';
 import 'package:injectable/injectable.dart';
 
-@Singleton(as: UserListener)
-class UserListenerImpl implements UserListener {
+@Singleton(as: UserReader)
+class UserReaderImpl implements UserReader {
   final UserRepository _repository;
 
-  const UserListenerImpl(this._repository);
+  const UserReaderImpl(this._repository);
 
-  Stream<Resource<User>> observeUser() {
-    return _repository.observeActiveUser();
+  @override
+  Future<User?> get user async {
+    try {
+      return await _repository.user;
+    } on Exception {
+      rethrow;
+    }
   }
 }

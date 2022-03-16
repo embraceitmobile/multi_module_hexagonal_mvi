@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'super_resource.dart';
+part of 's_resource.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -102,7 +102,7 @@ mixin _$DataSuperState<T> {
 /// @nodoc
 abstract class $DataSuperStateCopyWith<T, $Res> {
   factory $DataSuperStateCopyWith(
-          SuperResource<T> value, $Res Function(SuperResource<T>) then) =
+          SResource<T> value, $Res Function(SResource<T>) then) =
       _$DataSuperStateCopyWithImpl<T, $Res>;
 }
 
@@ -111,9 +111,9 @@ class _$DataSuperStateCopyWithImpl<T, $Res>
     implements $DataSuperStateCopyWith<T, $Res> {
   _$DataSuperStateCopyWithImpl(this._value, this._then);
 
-  final SuperResource<T> _value;
+  final SResource<T> _value;
   // ignore: unused_field
-  final $Res Function(SuperResource<T>) _then;
+  final $Res Function(SResource<T>) _then;
 }
 
 /// @nodoc
@@ -253,7 +253,7 @@ class _$SuperSuccess<T> implements SuperSuccess<T> {
   }
 }
 
-abstract class SuperSuccess<T> implements SuperResource<T> {
+abstract class SuperSuccess<T> implements SResource<T> {
   const factory SuperSuccess(T data) = _$SuperSuccess<T>;
 
   T get data => throw _privateConstructorUsedError;
@@ -412,7 +412,7 @@ class _$SuperLoading<T> implements SuperLoading<T> {
   }
 }
 
-abstract class SuperLoading<T> implements SuperResource<T> {
+abstract class SuperLoading<T> implements SResource<T> {
   const factory SuperLoading({int progress, T? data}) = _$SuperLoading<T>;
 
   int get progress => throw _privateConstructorUsedError;
@@ -570,7 +570,7 @@ class _$SuperError<T> implements SuperError<T> {
   }
 }
 
-abstract class SuperError<T> implements SuperResource<T> {
+abstract class SuperError<T> implements SResource<T> {
   const factory SuperError(Exception error, {T? data}) = _$SuperError<T>;
 
   Exception get error => throw _privateConstructorUsedError;
@@ -692,6 +692,6 @@ class _$SuperIdleOrNoData<T> implements SuperIdleOrNoData<T> {
   }
 }
 
-abstract class SuperIdleOrNoData<T> implements SuperResource<T> {
+abstract class SuperIdleOrNoData<T> implements SResource<T> {
   const factory SuperIdleOrNoData() = _$SuperIdleOrNoData<T>;
 }

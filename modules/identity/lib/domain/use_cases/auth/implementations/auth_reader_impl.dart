@@ -12,7 +12,7 @@ class AuthReaderImpl implements AuthReader {
   Future<bool> get isAuthenticated async {
     try {
       return await _repository.isAuthenticated;
-    } on Exception {
+    } catch(_) {
       rethrow;
     }
   }
@@ -20,7 +20,7 @@ class AuthReaderImpl implements AuthReader {
   Future<AuthInfo?> get authInfo async {
     try {
       return await _repository.authInfo;
-    } on Exception {
+    } catch(_) {
       rethrow;
     }
   }

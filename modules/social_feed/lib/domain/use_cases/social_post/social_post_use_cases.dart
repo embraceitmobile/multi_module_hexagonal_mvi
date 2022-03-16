@@ -2,15 +2,15 @@ import 'package:core/core.dart';
 import 'package:social_feed/domain/entities/social_post.dart';
 
 abstract class SocialPostReader {
-  List<SocialPost> get allPosts;
+  Future<List<SocialPost>> get allPosts;
 
-  SocialPost? getPost(int postId);
+  Future<SocialPost?> getPost(int postId);
 
-  List<SocialPost> getPosts(List<int> postIds);
+  Future<List<SocialPost>> getPosts(List<int> postIds);
 }
 
 abstract class SocialPostWatcher {
-  Stream<Resource<List<SuperResource<SocialPost>>>> get observeSocialPosts;
+  Stream<Resource<List<SResource<SocialPost>>>> get observeSocialPosts;
 }
 
 abstract class SocialPostEditor {

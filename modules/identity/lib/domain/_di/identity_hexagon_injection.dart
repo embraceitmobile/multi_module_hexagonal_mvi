@@ -1,11 +1,11 @@
 import 'package:core/core.dart';
 import 'package:get_it/get_it.dart';
-import 'package:identity/domain/use_cases/auth/auth_actions_impl.dart';
-import 'package:identity/domain/use_cases/auth/auth_listener_impl.dart';
-import 'package:identity/domain/use_cases/auth/auth_reader_impl.dart';
-import 'package:identity/domain/use_cases/user/user_editor_impl.dart';
-import 'package:identity/domain/use_cases/user/user_listener_impl.dart';
-import 'package:identity/domain/use_cases/user/user_reader_impl.dart';
+import 'package:identity/domain/use_cases/auth/implementations/auth_actions_impl.dart';
+import 'package:identity/domain/use_cases/auth/implementations/auth_listener_impl.dart';
+import 'package:identity/domain/use_cases/auth/implementations/auth_reader_impl.dart';
+import 'package:identity/domain/use_cases/user/implementations/user_editor_impl.dart';
+import 'package:identity/domain/use_cases/user/implementations/user_listener_impl.dart';
+import 'package:identity/domain/use_cases/user/implementations/user_reader_impl.dart';
 import 'package:identity/identity.dart';
 import 'package:injectable/injectable.dart';
 

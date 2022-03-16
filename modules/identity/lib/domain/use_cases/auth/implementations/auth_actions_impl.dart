@@ -10,14 +10,16 @@ class AuthActionsImpl implements AuthActions {
 
   const AuthActionsImpl(this._authRepository, this._userRepository);
 
+  @override
   Future<bool> login(String email, String password) async {
     try {
       return await _authRepository.login(email, password);
-    } on Exception {
+    } catch(_) {
       rethrow;
     }
   }
 
+  @override
   Future<bool> logoutUser({bool isForceLogout = false}) async {
     try {
       _authRepository.logoutUser(isForceLogout: isForceLogout);
@@ -26,16 +28,17 @@ class AuthActionsImpl implements AuthActions {
         Future.delayed(Duration(milliseconds: 500),
             () => _userRepository.removeUser(currentUser.id));
       return true;
-    } on Exception {
+    } catch(_){
       rethrow;
     }
   }
 
+  @override
   Future<bool> changePassword(
       String currentPassword, String newPassword) async {
     try {
       return await _authRepository.changePassword(currentPassword, newPassword);
-    } on Exception {
+    } catch(_) {
       rethrow;
     }
   }
