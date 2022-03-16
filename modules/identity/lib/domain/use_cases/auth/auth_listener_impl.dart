@@ -10,13 +10,13 @@ class AuthListenerImpl implements AuthListener {
 
   const AuthListenerImpl(this._repository);
 
-  Stream<DataState<AuthState>> observeAuthState() =>
+  Stream<Resource<AuthState>> observeAuthState() =>
       _repository.observeAuthInfo().map(
             (authInfoState) => authInfoState.when(
-              success: (authInfo) => DataState.success(AuthState.Authenticated),
-              nothing: () => DataState.success(AuthState.Unauthenticated),
-              loading: (progress) => DataState.loading(),
-              error: (exception) => DataState.error(exception),
+              success: (authInfo) => Resource.success(AuthState.Authenticated),
+              nothing: () => Resource.success(AuthState.Unauthenticated),
+              loading: (progress) => Resource.loading(),
+              error: (exception) => Resource.error(exception),
             ),
           );
 }

@@ -81,5 +81,5 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-  Stream<DataState<User>> observeActiveUser() => _userResource.dataListener;
+  Stream<Resource<User>> observeActiveUser() => _userResource.dataListener;
 }

@@ -9,7 +9,7 @@ abstract class AuthReader {
 }
 
 abstract class AuthListener {
-  Stream<DataState<AuthState>> observeAuthState();
+  Stream<Resource<AuthState>> observeAuthState();
 }
 
 abstract class AuthActions {

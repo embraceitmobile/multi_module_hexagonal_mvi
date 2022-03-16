@@ -12,5 +12,5 @@ abstract class UserRepository {
 
   Future<void> clearUsers();
 
-  Stream<DataState<User>> observeActiveUser();
+  Stream<Resource<User>> observeActiveUser();
 }

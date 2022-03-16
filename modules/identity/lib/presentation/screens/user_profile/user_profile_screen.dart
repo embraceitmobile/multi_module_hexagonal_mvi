@@ -14,9 +14,9 @@ class UserProfileScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Material(
-      child: StreamBuilder<DataState<User>>(
+      child: StreamBuilder<Resource<User>>(
         stream: getIt<UserListener>().observeUser(),
-        initialData: DataState.loading(),
+        initialData: Resource.loading(),
         builder: (context, snapshot) => AnimatedSwitcher(
           duration: Duration(milliseconds: 500),
           child: snapshot.requireData.when(

@@ -26,7 +26,7 @@ class AuthConsumer extends StatefulWidget {
 }
 
 class _AutConsumerState extends State<AuthConsumer> {
-  late final StreamSubscription<DataState<AuthState>>
+  late final StreamSubscription<Resource<AuthState>>
       _observeAuthStateSubscription;
 
   @override
@@ -76,9 +76,9 @@ class _AutConsumerState extends State<AuthConsumer> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DataState<AuthState>>(
+    return StreamBuilder<Resource<AuthState>>(
       stream: getIt<AuthListener>().observeAuthState(),
-      initialData: DataState.nothing(),
+      initialData: Resource.nothing(),
       builder: (context, snapshot) => AnimatedSwitcher(
         duration: Duration(milliseconds: 500),
         child: snapshot.requireData.maybeWhen<Widget>(

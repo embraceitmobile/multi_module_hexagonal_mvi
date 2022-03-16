@@ -94,6 +94,6 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  Stream<DataState<AuthInfo>> observeAuthInfo() =>
+  Stream<Resource<AuthInfo>> observeAuthInfo() =>
       _authInfoResource.dataListener;
 }
