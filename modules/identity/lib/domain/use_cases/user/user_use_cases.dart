@@ -6,7 +6,7 @@ abstract class UserReader {
 }
 
 abstract class UserListener {
-  Stream<DataState<User>> observeUser();
+  Stream<Resource<User>> observeUser();
 }
 
 abstract class UserEditor extends UserReader {

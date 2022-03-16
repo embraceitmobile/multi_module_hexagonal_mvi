@@ -1,4 +1,4 @@
-import 'package:core/models/data_state/data_state.dart';
+import 'package:core/core.dart';
 import 'package:identity/domain/entities/user.dart';
 import 'package:identity/domain/interfaces/user_repo.dart';
 import 'package:identity/domain/use_cases/user/user_use_cases.dart';
@@ -10,7 +10,7 @@ class UserListenerImpl implements UserListener {
 
   const UserListenerImpl(this._repository);
 
-  Stream<DataState<User>> observeUser() {
+  Stream<Resource<User>> observeUser() {
     return _repository.observeActiveUser();
   }
 }

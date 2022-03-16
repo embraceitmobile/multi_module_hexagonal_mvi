@@ -21,19 +21,19 @@ class NetworkBoundResource<T> {
   final AsyncValueSetter<T> onSaveResultToLocal;
 
   /// A [Stream] to observe the changes in the local data
-  /// To convert a [Stream] of [T] to a [Stream] of [DataState] of [T], you can
+  /// To convert a [Stream] of [T] to a [Stream] of [Resource] of [T], you can
   /// use the simple extension method [StreamTransformer.toDataStateStream] or
   /// write you own custom transformer.
-  final Stream<DataState<T>>? localDataSourceObservable;
+  final Stream<Resource<T>>? localDataSourceObservable;
 
   /// Listen to this [Stream] to observe the changes in the [NetworkBoundResource]
-  /// data [T]. It will emit new events whenever there is a change in the [DataState]
+  /// data [T]. It will emit new events whenever there is a change in the [Resource]
   /// of the remoteDataSource stream [_remoteStreamController] or the [localDataSourceObservable]
   /// if it is provided.
-  late final Stream<DataState<T>> dataListener;
+  late final Stream<Resource<T>> dataListener;
 
   /// Controls the events for the [onFetchRemoteData] and [fetchOnceFromRemoteDatasource].
-  late final StreamController<DataState<T>> _remoteStreamController;
+  late final StreamController<Resource<T>> _remoteStreamController;
 
   NetworkBoundResource({
     required this.shouldFetch,
@@ -42,7 +42,7 @@ class NetworkBoundResource<T> {
     required this.onSaveResultToLocal,
     this.localDataSourceObservable,
   }) {
-    _remoteStreamController = StreamController<DataState<T>>.broadcast(
+    _remoteStreamController = StreamController<Resource<T>>.broadcast(
       onListen: () async {
         try {
           await fetch();
@@ -76,14 +76,14 @@ class NetworkBoundResource<T> {
     }
 
     try {
-      _remoteStreamController.sink.add(DataState.loading());
+      _remoteStreamController.sink.add(Resource.loading());
       final freshData = await onFetchRemoteData();
       if (freshData != null) {
         await onSaveResultToLocal(freshData);
         return freshData;
       }
     } on Exception catch (e) {
-      _remoteStreamController.sink.add(DataState.error(e));
+      _remoteStreamController.sink.add(Resource.error(e));
       rethrow;
     }
 
@@ -94,14 +94,14 @@ class NetworkBoundResource<T> {
   Future<T?> fetchOnceFromRemoteDatasource(
       AsyncValueGetter<T?> networkCall) async {
     try {
-      _remoteStreamController.sink.add(DataState.loading());
+      _remoteStreamController.sink.add(Resource.loading());
       final data = await networkCall();
       if (data != null) {
         await onSaveResultToLocal(data);
         return data;
       }
     } on Exception catch (e) {
-      _remoteStreamController.sink.add(DataState.error(e));
+      _remoteStreamController.sink.add(Resource.error(e));
       rethrow;
     }
 
@@ -117,9 +117,9 @@ class NetworkBoundResource<T> {
   }
 }
 
-/// Extension to convert a simple [Stream] into a [DataState] stream
+/// Extension to convert a simple [Stream] into a [Resource] stream
 extension StreamTransformer<T> on Stream<T?> {
 
-  Stream<DataState<T>> get toDataStateStream => this.asyncMap((event) =>
-      event == null ? DataState.nothing() : DataState.success(event));
+  Stream<Resource<T>> get toDataStateStream => this.asyncMap((event) =>
+      event == null ? Resource.nothing() : Resource.success(event));
 }

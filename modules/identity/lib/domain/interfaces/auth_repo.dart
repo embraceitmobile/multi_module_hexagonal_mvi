@@ -8,7 +8,7 @@ abstract class AuthRepository {
 
   Future<void> saveAuthInfo(AuthInfo authToken);
 
-  Stream<DataState<AuthInfo>> observeAuthInfo();
+  Stream<Resource<AuthInfo>> observeAuthInfo();
 
   Future<bool> login(String email, String password);
 
