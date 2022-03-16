@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'data_state.dart';
+part of 'resource.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -44,7 +44,7 @@ class _$DataStateTearOff {
 const $DataState = _$DataStateTearOff();
 
 /// @nodoc
-mixin _$DataState<T> {
+mixin _$Resource<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(T data) success,
@@ -100,7 +100,7 @@ mixin _$DataState<T> {
 /// @nodoc
 abstract class $DataStateCopyWith<T, $Res> {
   factory $DataStateCopyWith(
-          DataState<T> value, $Res Function(DataState<T>) then) =
+          Resource<T> value, $Res Function(Resource<T>) then) =
       _$DataStateCopyWithImpl<T, $Res>;
 }
 
@@ -108,9 +108,9 @@ abstract class $DataStateCopyWith<T, $Res> {
 class _$DataStateCopyWithImpl<T, $Res> implements $DataStateCopyWith<T, $Res> {
   _$DataStateCopyWithImpl(this._value, this._then);
 
-  final DataState<T> _value;
+  final Resource<T> _value;
   // ignore: unused_field
-  final $Res Function(DataState<T>) _then;
+  final $Res Function(Resource<T>) _then;
 }
 
 /// @nodoc
@@ -247,7 +247,7 @@ class _$Success<T> implements Success<T> {
   }
 }
 
-abstract class Success<T> implements DataState<T> {
+abstract class Success<T> implements Resource<T> {
   const factory Success(T data) = _$Success<T>;
 
   T get data => throw _privateConstructorUsedError;
@@ -392,7 +392,7 @@ class _$Loading<T> implements Loading<T> {
   }
 }
 
-abstract class Loading<T> implements DataState<T> {
+abstract class Loading<T> implements Resource<T> {
   const factory Loading({int progress}) = _$Loading<T>;
 
   int get progress => throw _privateConstructorUsedError;
@@ -535,7 +535,7 @@ class _$Error<T> implements Error<T> {
   }
 }
 
-abstract class Error<T> implements DataState<T> {
+abstract class Error<T> implements Resource<T> {
   const factory Error(Exception error) = _$Error<T>;
 
   Exception get error => throw _privateConstructorUsedError;
@@ -653,6 +653,6 @@ class _$Nothing<T> implements Nothing<T> {
   }
 }
 
-abstract class Nothing<T> implements DataState<T> {
+abstract class Nothing<T> implements Resource<T> {
   const factory Nothing() = _$Nothing<T>;
 }

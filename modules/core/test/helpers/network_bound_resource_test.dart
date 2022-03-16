@@ -68,10 +68,10 @@ void main() {
     });
 
     test('On calling fetch, the dataListener emits the correct data', () async {
-      List<DataState> expectedResults = [
-        DataState.loading(),
-        DataState.success(MockObject(uniqueKey: "1", value: "value_new")),
-        DataState.nothing(), //called due to tearDown
+      List<Resource> expectedResults = [
+        Resource.loading(),
+        Resource.success(MockObject(uniqueKey: "1", value: "value_new")),
+        Resource.nothing(), //called due to tearDown
       ];
 
       int i = 0;

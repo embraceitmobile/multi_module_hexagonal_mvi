@@ -1,5 +1,5 @@
 name: identity
-description: Module for User data_state and authentication
+description: Module for User resource and authentication
 version: 0.0.1
 publish_to: none
 
