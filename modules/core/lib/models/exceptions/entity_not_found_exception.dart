@@ -1,4 +1,4 @@
-import 'package:core/core.dart';
+import 'package:core/models/exceptions/database_exception.dart';
 
 class EntityNotFoundException implements Exception, GenericDatabaseException {
   final String entityId;

@@ -15,6 +15,8 @@ abstract class ISocialPostCommentDao {
 
   Future<void> clearCommentsForPost(int postId);
 
+  Future<void> clearAll();
+
   Stream<List<SocialPostCommentDto>> get observeAllComments;
 
   Stream<List<SocialPostCommentDto>> observeCommentsForPost(int postId);

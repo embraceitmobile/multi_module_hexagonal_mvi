@@ -56,7 +56,7 @@ void main() {
       );
     });
 
-    test('On calling fetch, local datasource is updated', () async {
+    test('On calling fetch, datasources datasource is updated', () async {
       await _nbr!.fetch();
       expect(
         await _localDatasource.findById("1"),

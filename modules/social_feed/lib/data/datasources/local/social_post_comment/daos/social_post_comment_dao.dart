@@ -1,4 +1,5 @@
-import 'package:core/core.dart';
+import 'package:core/models/exceptions/database_exception.dart';
+import 'package:core/models/exceptions/entity_not_found_exception.dart';
 import 'package:drift/drift.dart';
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 import 'package:social_feed/data/datasources/local/social_post_comment/dtos/social_post_comment_dto.dart';
@@ -96,6 +97,16 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
         entityId: postId.toString(),
         storeName: "SocialPostCommentDaos",
       );
+    }
+  }
+
+  @override
+  Future<void> clearAll() async {
+    try {
+      final query = delete(socialPostCommentDtos);
+      await query.go();
+    } catch (e) {
+      throw GenericDatabaseException(e.toString());
     }
   }
 
