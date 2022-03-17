@@ -546,6 +546,8 @@ abstract class _$SocialFeedDatabase extends GeneratedDatabase {
       $SocialPostCommentDtosTable(this);
   late final SocialPostDao socialPostDao =
       SocialPostDao(this as SocialFeedDatabase);
+  late final SocialPostCommentDao socialPostCommentDao =
+      SocialPostCommentDao(this as SocialFeedDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override

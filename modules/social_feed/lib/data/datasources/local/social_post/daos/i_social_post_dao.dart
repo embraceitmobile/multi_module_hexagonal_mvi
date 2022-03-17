@@ -1,13 +1,16 @@
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
+import 'package:social_feed/domain/entities/social_post.dart';
 
 abstract class ISocialPostDao {
-  Future<List<SocialPostDto>> get allPosts;
+  Future<List<SocialPost>> get allPosts;
 
-  Future<SocialPostDto?> getPost(int postId);
+  Future<SocialPost?> getPost(int postId);
 
-  Future<List<SocialPostDto>> getPosts(List<int> postIds);
+  Future<List<SocialPost>> getPosts(List<int> postIds);
 
-  Future<void> updatePost(SocialPostDto post);
+  Future<void> insertOrUpdatePost(SocialPost post);
+
+  Future<void> insertOrUpdatePosts(List<SocialPost> post);
 
   Future<void> removePost(int postId);
 
@@ -15,5 +18,7 @@ abstract class ISocialPostDao {
 
   Future<void> clearPosts();
 
-  Stream<List<SocialPostDto>> get observePosts;
+  Stream<List<SocialPost>> get observeAllPosts;
+
+  Stream<List<SocialPost>> observePosts(List<int> postIds);
 }
