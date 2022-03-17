@@ -1,6 +1,6 @@
-import 'dtos/social_post_dto.dart';
+import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 
-abstract class ISocialPostLocalDatasource {
+abstract class ISocialPostDao {
   Future<List<SocialPostDto>> get allPosts;
 
   Future<SocialPostDto?> getPost(int postId);
@@ -15,5 +15,5 @@ abstract class ISocialPostLocalDatasource {
 
   Future<void> clearPosts();
 
-  Stream<List<SocialPostDto>> get observeSocialPosts;
+  Stream<List<SocialPostDto>> get observePosts;
 }

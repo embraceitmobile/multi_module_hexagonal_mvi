@@ -1,4 +1,6 @@
-class EntityNotFoundException implements Exception {
+import 'package:core/core.dart';
+
+class EntityNotFoundException implements Exception, GenericDatabaseException {
   final String entityId;
   final String storeName;
   String get message =>
@@ -6,5 +8,6 @@ class EntityNotFoundException implements Exception {
 
   EntityNotFoundException({required this.entityId, required this.storeName});
 
+  @override
   String toString() => message;
 }

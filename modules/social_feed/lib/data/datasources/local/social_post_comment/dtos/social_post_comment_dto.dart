@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 
-@DataClassName("social_post_comment")
-class SocialPostCommentDto extends Table {
+class SocialPostCommentDtos extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get postId => integer()();

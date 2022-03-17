@@ -3,5 +3,6 @@ class NullException implements Exception {
 
   NullException(this.message);
 
+  @override
   String toString() => message;
 }

@@ -3,5 +3,6 @@ class ParseException implements Exception {
 
   ParseException(this.message);
 
+  @override
   String toString() => message;
 }

@@ -1,11 +1,13 @@
-import 'package:social_feed/data/social_post_comment/datasources/local/dtos/social_post_comment_dto.dart';
+import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 
-abstract class ISocialPostCommentLocalDatasource {
+abstract class ISocialPostCommentDao {
   Future<List<SocialPostCommentDto>> get allComments;
 
   Future<List<SocialPostCommentDto>> getCommentsForPost(int postId);
 
-  Future<void> updateComment(SocialPostCommentDto post);
+  Future<void> insertOrUpdateComment(SocialPostCommentDto comment);
+
+  Future<void> insertOrUpdateComments(List<SocialPostCommentDto> comments);
 
   Future<void> removeComment(int commentId);
 

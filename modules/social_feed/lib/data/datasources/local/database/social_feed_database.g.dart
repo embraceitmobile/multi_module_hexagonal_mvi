@@ -7,19 +7,19 @@ part of 'social_feed_database.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class SocialPost extends DataClass implements Insertable<SocialPost> {
+class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
   final int id;
   final int userId;
   final String title;
   final String body;
-  SocialPost(
+  SocialPostDto(
       {required this.id,
       required this.userId,
       required this.title,
       required this.body});
-  factory SocialPost.fromData(Map<String, dynamic> data, {String? prefix}) {
+  factory SocialPostDto.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return SocialPost(
+    return SocialPostDto(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       userId: const IntType()
@@ -40,8 +40,8 @@ class SocialPost extends DataClass implements Insertable<SocialPost> {
     return map;
   }
 
-  SocialPostsCompanion toCompanion(bool nullToAbsent) {
-    return SocialPostsCompanion(
+  SocialPostDtosCompanion toCompanion(bool nullToAbsent) {
+    return SocialPostDtosCompanion(
       id: Value(id),
       userId: Value(userId),
       title: Value(title),
@@ -49,10 +49,10 @@ class SocialPost extends DataClass implements Insertable<SocialPost> {
     );
   }
 
-  factory SocialPost.fromJson(Map<String, dynamic> json,
+  factory SocialPostDto.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return SocialPost(
+    return SocialPostDto(
       id: serializer.fromJson<int>(json['id']),
       userId: serializer.fromJson<int>(json['userId']),
       title: serializer.fromJson<String>(json['title']),
@@ -70,8 +70,8 @@ class SocialPost extends DataClass implements Insertable<SocialPost> {
     };
   }
 
-  SocialPost copyWith({int? id, int? userId, String? title, String? body}) =>
-      SocialPost(
+  SocialPostDto copyWith({int? id, int? userId, String? title, String? body}) =>
+      SocialPostDto(
         id: id ?? this.id,
         userId: userId ?? this.userId,
         title: title ?? this.title,
@@ -79,7 +79,7 @@ class SocialPost extends DataClass implements Insertable<SocialPost> {
       );
   @override
   String toString() {
-    return (StringBuffer('SocialPost(')
+    return (StringBuffer('SocialPostDto(')
           ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('title: $title, ')
@@ -93,25 +93,25 @@ class SocialPost extends DataClass implements Insertable<SocialPost> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is SocialPost &&
+      (other is SocialPostDto &&
           other.id == this.id &&
           other.userId == this.userId &&
           other.title == this.title &&
           other.body == this.body);
 }
 
-class SocialPostsCompanion extends UpdateCompanion<SocialPost> {
+class SocialPostDtosCompanion extends UpdateCompanion<SocialPostDto> {
   final Value<int> id;
   final Value<int> userId;
   final Value<String> title;
   final Value<String> body;
-  const SocialPostsCompanion({
+  const SocialPostDtosCompanion({
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
     this.title = const Value.absent(),
     this.body = const Value.absent(),
   });
-  SocialPostsCompanion.insert({
+  SocialPostDtosCompanion.insert({
     this.id = const Value.absent(),
     required int userId,
     required String title,
@@ -119,7 +119,7 @@ class SocialPostsCompanion extends UpdateCompanion<SocialPost> {
   })  : userId = Value(userId),
         title = Value(title),
         body = Value(body);
-  static Insertable<SocialPost> custom({
+  static Insertable<SocialPostDto> custom({
     Expression<int>? id,
     Expression<int>? userId,
     Expression<String>? title,
@@ -133,12 +133,12 @@ class SocialPostsCompanion extends UpdateCompanion<SocialPost> {
     });
   }
 
-  SocialPostsCompanion copyWith(
+  SocialPostDtosCompanion copyWith(
       {Value<int>? id,
       Value<int>? userId,
       Value<String>? title,
       Value<String>? body}) {
-    return SocialPostsCompanion(
+    return SocialPostDtosCompanion(
       id: id ?? this.id,
       userId: userId ?? this.userId,
       title: title ?? this.title,
@@ -166,7 +166,7 @@ class SocialPostsCompanion extends UpdateCompanion<SocialPost> {
 
   @override
   String toString() {
-    return (StringBuffer('SocialPostsCompanion(')
+    return (StringBuffer('SocialPostDtosCompanion(')
           ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('title: $title, ')
@@ -176,12 +176,12 @@ class SocialPostsCompanion extends UpdateCompanion<SocialPost> {
   }
 }
 
-class $SocialPostsTable extends SocialPostDto
-    with TableInfo<$SocialPostsTable, SocialPost> {
+class $SocialPostDtosTable extends SocialPostDtos
+    with TableInfo<$SocialPostDtosTable, SocialPostDto> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $SocialPostsTable(this.attachedDatabase, [this._alias]);
+  $SocialPostDtosTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -207,11 +207,11 @@ class $SocialPostsTable extends SocialPostDto
   @override
   List<GeneratedColumn> get $columns => [id, userId, title, body];
   @override
-  String get aliasedName => _alias ?? 'social_posts';
+  String get aliasedName => _alias ?? 'social_post_dtos';
   @override
-  String get actualTableName => 'social_posts';
+  String get actualTableName => 'social_post_dtos';
   @override
-  VerificationContext validateIntegrity(Insertable<SocialPost> instance,
+  VerificationContext validateIntegrity(Insertable<SocialPostDto> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -242,34 +242,34 @@ class $SocialPostsTable extends SocialPostDto
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  SocialPost map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return SocialPost.fromData(data,
+  SocialPostDto map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return SocialPostDto.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
-  $SocialPostsTable createAlias(String alias) {
-    return $SocialPostsTable(attachedDatabase, alias);
+  $SocialPostDtosTable createAlias(String alias) {
+    return $SocialPostDtosTable(attachedDatabase, alias);
   }
 }
 
-class SocialPostComment extends DataClass
-    implements Insertable<SocialPostComment> {
+class SocialPostCommentDto extends DataClass
+    implements Insertable<SocialPostCommentDto> {
   final int id;
   final int postId;
   final String name;
   final String email;
   final String body;
-  SocialPostComment(
+  SocialPostCommentDto(
       {required this.id,
       required this.postId,
       required this.name,
       required this.email,
       required this.body});
-  factory SocialPostComment.fromData(Map<String, dynamic> data,
+  factory SocialPostCommentDto.fromData(Map<String, dynamic> data,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return SocialPostComment(
+    return SocialPostCommentDto(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       postId: const IntType()
@@ -293,8 +293,8 @@ class SocialPostComment extends DataClass
     return map;
   }
 
-  SocialPostCommentsCompanion toCompanion(bool nullToAbsent) {
-    return SocialPostCommentsCompanion(
+  SocialPostCommentDtosCompanion toCompanion(bool nullToAbsent) {
+    return SocialPostCommentDtosCompanion(
       id: Value(id),
       postId: Value(postId),
       name: Value(name),
@@ -303,10 +303,10 @@ class SocialPostComment extends DataClass
     );
   }
 
-  factory SocialPostComment.fromJson(Map<String, dynamic> json,
+  factory SocialPostCommentDto.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return SocialPostComment(
+    return SocialPostCommentDto(
       id: serializer.fromJson<int>(json['id']),
       postId: serializer.fromJson<int>(json['postId']),
       name: serializer.fromJson<String>(json['name']),
@@ -326,9 +326,9 @@ class SocialPostComment extends DataClass
     };
   }
 
-  SocialPostComment copyWith(
+  SocialPostCommentDto copyWith(
           {int? id, int? postId, String? name, String? email, String? body}) =>
-      SocialPostComment(
+      SocialPostCommentDto(
         id: id ?? this.id,
         postId: postId ?? this.postId,
         name: name ?? this.name,
@@ -337,7 +337,7 @@ class SocialPostComment extends DataClass
       );
   @override
   String toString() {
-    return (StringBuffer('SocialPostComment(')
+    return (StringBuffer('SocialPostCommentDto(')
           ..write('id: $id, ')
           ..write('postId: $postId, ')
           ..write('name: $name, ')
@@ -352,7 +352,7 @@ class SocialPostComment extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is SocialPostComment &&
+      (other is SocialPostCommentDto &&
           other.id == this.id &&
           other.postId == this.postId &&
           other.name == this.name &&
@@ -360,20 +360,21 @@ class SocialPostComment extends DataClass
           other.body == this.body);
 }
 
-class SocialPostCommentsCompanion extends UpdateCompanion<SocialPostComment> {
+class SocialPostCommentDtosCompanion
+    extends UpdateCompanion<SocialPostCommentDto> {
   final Value<int> id;
   final Value<int> postId;
   final Value<String> name;
   final Value<String> email;
   final Value<String> body;
-  const SocialPostCommentsCompanion({
+  const SocialPostCommentDtosCompanion({
     this.id = const Value.absent(),
     this.postId = const Value.absent(),
     this.name = const Value.absent(),
     this.email = const Value.absent(),
     this.body = const Value.absent(),
   });
-  SocialPostCommentsCompanion.insert({
+  SocialPostCommentDtosCompanion.insert({
     this.id = const Value.absent(),
     required int postId,
     required String name,
@@ -383,7 +384,7 @@ class SocialPostCommentsCompanion extends UpdateCompanion<SocialPostComment> {
         name = Value(name),
         email = Value(email),
         body = Value(body);
-  static Insertable<SocialPostComment> custom({
+  static Insertable<SocialPostCommentDto> custom({
     Expression<int>? id,
     Expression<int>? postId,
     Expression<String>? name,
@@ -399,13 +400,13 @@ class SocialPostCommentsCompanion extends UpdateCompanion<SocialPostComment> {
     });
   }
 
-  SocialPostCommentsCompanion copyWith(
+  SocialPostCommentDtosCompanion copyWith(
       {Value<int>? id,
       Value<int>? postId,
       Value<String>? name,
       Value<String>? email,
       Value<String>? body}) {
-    return SocialPostCommentsCompanion(
+    return SocialPostCommentDtosCompanion(
       id: id ?? this.id,
       postId: postId ?? this.postId,
       name: name ?? this.name,
@@ -437,7 +438,7 @@ class SocialPostCommentsCompanion extends UpdateCompanion<SocialPostComment> {
 
   @override
   String toString() {
-    return (StringBuffer('SocialPostCommentsCompanion(')
+    return (StringBuffer('SocialPostCommentDtosCompanion(')
           ..write('id: $id, ')
           ..write('postId: $postId, ')
           ..write('name: $name, ')
@@ -448,12 +449,12 @@ class SocialPostCommentsCompanion extends UpdateCompanion<SocialPostComment> {
   }
 }
 
-class $SocialPostCommentsTable extends SocialPostCommentDto
-    with TableInfo<$SocialPostCommentsTable, SocialPostComment> {
+class $SocialPostCommentDtosTable extends SocialPostCommentDtos
+    with TableInfo<$SocialPostCommentDtosTable, SocialPostCommentDto> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $SocialPostCommentsTable(this.attachedDatabase, [this._alias]);
+  $SocialPostCommentDtosTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -484,11 +485,12 @@ class $SocialPostCommentsTable extends SocialPostCommentDto
   @override
   List<GeneratedColumn> get $columns => [id, postId, name, email, body];
   @override
-  String get aliasedName => _alias ?? 'social_post_comments';
+  String get aliasedName => _alias ?? 'social_post_comment_dtos';
   @override
-  String get actualTableName => 'social_post_comments';
+  String get actualTableName => 'social_post_comment_dtos';
   @override
-  VerificationContext validateIntegrity(Insertable<SocialPostComment> instance,
+  VerificationContext validateIntegrity(
+      Insertable<SocialPostCommentDto> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -525,26 +527,28 @@ class $SocialPostCommentsTable extends SocialPostCommentDto
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  SocialPostComment map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return SocialPostComment.fromData(data,
+  SocialPostCommentDto map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return SocialPostCommentDto.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
-  $SocialPostCommentsTable createAlias(String alias) {
-    return $SocialPostCommentsTable(attachedDatabase, alias);
+  $SocialPostCommentDtosTable createAlias(String alias) {
+    return $SocialPostCommentDtosTable(attachedDatabase, alias);
   }
 }
 
 abstract class _$SocialFeedDatabase extends GeneratedDatabase {
   _$SocialFeedDatabase(QueryExecutor e)
       : super(SqlTypeSystem.defaultInstance, e);
-  late final $SocialPostsTable socialPosts = $SocialPostsTable(this);
-  late final $SocialPostCommentsTable socialPostComments =
-      $SocialPostCommentsTable(this);
+  late final $SocialPostDtosTable socialPostDtos = $SocialPostDtosTable(this);
+  late final $SocialPostCommentDtosTable socialPostCommentDtos =
+      $SocialPostCommentDtosTable(this);
+  late final SocialPostDao socialPostDao =
+      SocialPostDao(this as SocialFeedDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [socialPosts, socialPostComments];
+      [socialPostDtos, socialPostCommentDtos];
 }
