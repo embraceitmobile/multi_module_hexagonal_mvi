@@ -1,13 +1,13 @@
-import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
+import 'package:social_feed/social_feed.dart';
 
 abstract class ISocialPostCommentDao {
-  Future<List<SocialPostCommentDto>> get allComments;
+  Future<List<SocialPostComment>> get allComments;
 
-  Future<List<SocialPostCommentDto>> getCommentsForPost(int postId);
+  Future<List<SocialPostComment>> getCommentsForPost(int postId);
 
-  Future<void> insertOrUpdateComment(SocialPostCommentDto comment);
+  Future<void> insertOrUpdateComment(SocialPostComment comment);
 
-  Future<void> insertOrUpdateComments(List<SocialPostCommentDto> comments);
+  Future<void> insertOrUpdateComments(List<SocialPostComment> comments);
 
   Future<void> removeComment(int commentId);
 
@@ -17,9 +17,9 @@ abstract class ISocialPostCommentDao {
 
   Future<void> clearAll();
 
-  Stream<List<SocialPostCommentDto>> get observeAllComments;
+  Stream<List<SocialPostComment>> get observeAllComments;
 
-  Stream<List<SocialPostCommentDto>> observeCommentsForPost(int postId);
+  Stream<List<SocialPostComment>> observeCommentsForPost(int postId);
 
-  Stream<List<SocialPostCommentDto>> observeCommentsForPosts(List<int> postIds);
+  Stream<List<SocialPostComment>> observeCommentsForPosts(List<int> postIds);
 }

@@ -3,6 +3,7 @@ import 'package:core/models/exceptions/entity_not_found_exception.dart';
 import 'package:drift/drift.dart';
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 import 'package:social_feed/data/datasources/local/social_post_comment/dtos/social_post_comment_dto.dart';
+import 'package:social_feed/social_feed.dart';
 import 'i_social_post_comment_dao.dart';
 
 part 'social_post_comment_dao.g.dart';
@@ -14,18 +15,18 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
   SocialPostCommentDao(SocialFeedDatabase db) : super(db);
 
   @override
-  Future<List<SocialPostCommentDto>> get allComments async {
+  Future<List<SocialPostComment>> get allComments async {
     try {
-      return await select(socialPostCommentDtos).get();
+      return (await select(socialPostCommentDtos).get()).toSocialPostComments;
     } catch (e) {
       throw GenericDatabaseException(e.toString());
     }
   }
 
   @override
-  Future<List<SocialPostCommentDto>> getCommentsForPost(int postId) async {
+  Future<List<SocialPostComment>> getCommentsForPost(int postId) async {
     try {
-      return await _queryCommentsByPostId(postId).get();
+      return (await _queryCommentsByPostId(postId).get()).toSocialPostComments;
     } catch (e) {
       throw EntityNotFoundException(
         entityId: postId.toString(),
@@ -35,21 +36,22 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
   }
 
   @override
-  Future<void> insertOrUpdateComment(SocialPostCommentDto comment) async {
+  Future<void> insertOrUpdateComment(SocialPostComment comment) async {
     try {
-      await into(socialPostCommentDtos).insertOnConflictUpdate(comment);
+      await into(socialPostCommentDtos)
+          .insertOnConflictUpdate(comment.toSocialPostCommentDto);
     } catch (e) {
       throw GenericDatabaseException(e.toString());
     }
   }
 
   @override
-  Future<void> insertOrUpdateComments(
-      List<SocialPostCommentDto> comments) async {
+  Future<void> insertOrUpdateComments(List<SocialPostComment> comments) async {
     try {
       await transaction(() async {
         for (final comment in comments) {
-          await into(socialPostCommentDtos).insertOnConflictUpdate(comment);
+          await into(socialPostCommentDtos)
+              .insertOnConflictUpdate(comment.toSocialPostCommentDto);
         }
       });
     } catch (e) {
@@ -107,17 +109,22 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
   }
 
   @override
-  Stream<List<SocialPostCommentDto>> get observeAllComments =>
-      select(socialPostCommentDtos).watch();
+  Stream<List<SocialPostComment>> get observeAllComments =>
+      select(socialPostCommentDtos)
+          .watch()
+          .map((comments) => comments.toSocialPostComments);
 
   @override
-  Stream<List<SocialPostCommentDto>> observeCommentsForPosts(
-          List<int> postIds) =>
-      _queryCommentsByPostIds(postIds).watch();
+  Stream<List<SocialPostComment>> observeCommentsForPosts(List<int> postIds) =>
+      _queryCommentsByPostIds(postIds)
+          .watch()
+          .map((comments) => comments.toSocialPostComments);
 
   @override
-  Stream<List<SocialPostCommentDto>> observeCommentsForPost(int postId) =>
-      _queryCommentsByPostId(postId).watch();
+  Stream<List<SocialPostComment>> observeCommentsForPost(int postId) =>
+      _queryCommentsByPostId(postId)
+          .watch()
+          .map((comments) => comments.toSocialPostComments);
 
   MultiSelectable<SocialPostCommentDto> _queryCommentsByPostId(int postId) =>
       select(socialPostCommentDtos)

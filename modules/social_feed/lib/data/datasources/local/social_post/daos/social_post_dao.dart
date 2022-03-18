@@ -4,8 +4,8 @@ import 'package:social_feed/data/datasources/local/database/social_feed_database
 import 'package:social_feed/data/datasources/local/social_post/daos/i_social_post_dao.dart';
 import 'package:social_feed/data/datasources/local/social_post/dtos/social_post_dto.dart';
 import 'package:social_feed/data/datasources/local/social_post_comment/daos/i_social_post_comment_dao.dart';
-import 'package:social_feed/domain/entities/social_post.dart';
 import 'package:collection/collection.dart';
+import 'package:social_feed/social_feed.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 part 'social_post_dao.g.dart';
@@ -39,7 +39,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
 
       final postCommentDtoList =
           await _socialPostCommentDao.getCommentsForPost(post.id);
-      return post.toSocialPost(postCommentDtoList.toSocialPostComments);
+      return post.toSocialPost(postCommentDtoList);
     } catch (e) {
       throw EntityNotFoundException(
           entityId: postId.toString(), storeName: "SocialPostDtos");
@@ -52,8 +52,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
       return [
         for (final post in await _queryPostByIds(postIds).get())
           post.toSocialPost(
-              (await _socialPostCommentDao.getCommentsForPost(post.id))
-                  .toSocialPostComments)
+              (await _socialPostCommentDao.getCommentsForPost(post.id)))
       ];
     } catch (e) {
       throw GenericDatabaseException(e.toString());
@@ -66,8 +65,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
       await transaction(() async {
         await into(socialPostDtos).insertOnConflictUpdate(post.toSocialPostDto);
         if (post.comments.isNotEmpty) {
-          await _socialPostCommentDao
-              .insertOrUpdateComments(post.comments.toSocialPostCommentDtos);
+          await _socialPostCommentDao.insertOrUpdateComments(post.comments);
         }
       });
     } catch (e) {
@@ -83,8 +81,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
           await into(socialPostDtos)
               .insertOnConflictUpdate(post.toSocialPostDto);
           if (post.comments.isNotEmpty) {
-            await _socialPostCommentDao
-                .insertOrUpdateComments(post.comments.toSocialPostCommentDtos);
+            await _socialPostCommentDao.insertOrUpdateComments(post.comments);
           }
         }
       });
@@ -131,7 +128,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
   Stream<List<SocialPost>> get observeAllPosts {
     return select(socialPostDtos).watch().combineLatest(
         _socialPostCommentDao.observeAllComments, (posts, comments) async {
-      final allCommentsMap = (comments as List<SocialPostCommentDto>)
+      final allCommentsMap = (comments as List<SocialPostComment>)
           .groupListsBy((comment) => comment.id);
       return posts.toSocialPosts(allCommentsMap);
     });
@@ -143,7 +140,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
         .watch()
         .combineLatest(_socialPostCommentDao.observeCommentsForPosts(postIds),
             (posts, comments) async {
-      final allCommentsMap = (comments as List<SocialPostCommentDto>)
+      final allCommentsMap = (comments as List<SocialPostComment>)
           .groupListsBy((comment) => comment.id);
       return posts.toSocialPosts(allCommentsMap);
     });

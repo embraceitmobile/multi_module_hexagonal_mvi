@@ -1,5 +1,4 @@
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
-import 'social_post_comment_converters.dart';
 import 'package:social_feed/social_feed.dart';
 
 extension SocialPostExtension on SocialPost {
@@ -28,10 +27,6 @@ extension SocialPostDtoExtension on SocialPostDto {
 
 extension SocialPostDtoIterableExtension on Iterable<SocialPostDto> {
   List<SocialPost> toSocialPosts(
-          Map<int, List<SocialPostCommentDto>> allCommentsMap) =>
-      map((post) => post.toSocialPost(
-            allCommentsMap[post.id].toSocialPostComments,
-          )).toList();
+          Map<int, List<SocialPostComment>> allCommentsMap) =>
+      map((post) => post.toSocialPost(allCommentsMap[post.id] ?? [])).toList();
 }
-
-
