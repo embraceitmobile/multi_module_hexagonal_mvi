@@ -1,7 +1,4 @@
-import 'package:core/core.dart';
-import 'package:core/models/network/base_response.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:core/core_pure_dart.dart';
 
 class RefreshTokenInterceptor extends Interceptor {
   static const TAG = "RefreshTokenInterceptor";

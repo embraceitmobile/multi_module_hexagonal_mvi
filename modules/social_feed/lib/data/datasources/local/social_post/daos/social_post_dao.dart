@@ -1,7 +1,5 @@
-import 'package:core/models/exceptions/database_exception.dart';
-import 'package:core/models/exceptions/entity_not_found_exception.dart';
+import 'package:core/core_pure_dart.dart';
 import 'package:drift/drift.dart';
-import 'package:social_feed/data/datasources/local/converters/social_post_comment_converters.dart';
 import 'package:social_feed/data/datasources/local/converters/social_post_converters.dart';
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 import 'package:social_feed/data/datasources/local/social_post/daos/i_social_post_dao.dart';

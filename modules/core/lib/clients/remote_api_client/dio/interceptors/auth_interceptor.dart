@@ -1,5 +1,4 @@
-import 'package:core/core.dart';
-import 'package:flutter/foundation.dart';
+import 'package:core/core_pure_dart.dart';
 
 class AuthInterceptor extends Interceptor {
   final AsyncValueGetter<String?> accessToken;

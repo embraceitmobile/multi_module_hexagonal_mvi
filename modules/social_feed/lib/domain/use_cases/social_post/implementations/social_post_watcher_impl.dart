@@ -1,5 +1,4 @@
-import 'package:core/models/resource/resource.dart';
-import 'package:core/models/resource/s_resource.dart';
+import 'package:core/core_pure_dart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:social_feed/domain/entities/social_post.dart';
 import 'package:social_feed/domain/interfaces/social_post_repository.dart';

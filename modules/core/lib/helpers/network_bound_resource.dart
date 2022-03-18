@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:async/async.dart';
-import 'package:core/core.dart';
-import 'package:flutter/foundation.dart';
+import 'package:core/models/basic/basic_types.dart';
+
+import '../models/resource/resource.dart';
 
 class NetworkBoundResource<T> {
   static const TAG = "NetworkBoundResource";

@@ -1,4 +1,3 @@
-import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 import 'package:social_feed/domain/entities/social_post.dart';
 
 abstract class ISocialPostDao {
