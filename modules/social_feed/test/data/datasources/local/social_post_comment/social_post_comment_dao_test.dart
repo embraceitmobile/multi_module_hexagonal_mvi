@@ -1,8 +1,9 @@
 import 'package:drift/native.dart';
 import 'package:social_feed/data/datasources/local/social_post_comment/daos/social_post_comment_dao.dart';
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
-import 'mock_social_post_comments.dart';
 import 'package:test/test.dart';
+
+import '../mocks/mock_social_post_comments.dart';
 
 void main() {
   late SocialFeedDatabase database;

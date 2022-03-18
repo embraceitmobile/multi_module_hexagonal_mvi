@@ -17,7 +17,8 @@ extension SocialPostIterableExtension on Iterable<SocialPost>? {
 }
 
 extension SocialPostDtoExtension on SocialPostDto {
-  SocialPost toSocialPost(List<SocialPostComment> comments) => SocialPost(
+  SocialPost toSocialPost([List<SocialPostComment> comments = const []]) =>
+      SocialPost(
         id: id,
         userId: userId,
         title: title,
@@ -28,6 +29,6 @@ extension SocialPostDtoExtension on SocialPostDto {
 
 extension SocialPostDtoIterableExtension on Iterable<SocialPostDto> {
   List<SocialPost> toSocialPosts(
-          Map<int, List<SocialPostComment>> allCommentsMap) =>
+          [Map<int, List<SocialPostComment>> allCommentsMap = const {}]) =>
       map((post) => post.toSocialPost(allCommentsMap[post.id] ?? [])).toList();
 }
