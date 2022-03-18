@@ -10,7 +10,7 @@ abstract class ISocialPostDao {
 
   Future<void> insertOrUpdatePost(SocialPost post);
 
-  Future<void> insertOrUpdatePosts(List<SocialPost> post);
+  Future<void> insertOrUpdatePosts(List<SocialPost> posts);
 
   Future<void> removePost(int postId);
 

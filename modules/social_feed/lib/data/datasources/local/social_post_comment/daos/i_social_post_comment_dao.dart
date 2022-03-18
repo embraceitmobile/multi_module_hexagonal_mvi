@@ -20,4 +20,6 @@ abstract class ISocialPostCommentDao {
   Stream<List<SocialPostCommentDto>> get observeAllComments;
 
   Stream<List<SocialPostCommentDto>> observeCommentsForPost(int postId);
+
+  Stream<List<SocialPostCommentDto>> observeCommentsForPosts(List<int> postIds);
 }

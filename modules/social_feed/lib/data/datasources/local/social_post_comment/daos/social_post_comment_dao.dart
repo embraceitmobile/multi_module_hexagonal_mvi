@@ -74,13 +74,9 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
   @override
   Future<void> removeComments(List<int> commentIds) async {
     try {
-      await transaction(() async {
-        for (final commentId in commentIds) {
-          final query = delete(socialPostCommentDtos)
-            ..where((comment) => comment.id.equals(commentId));
-          await query.go();
-        }
-      });
+      final query = delete(socialPostCommentDtos)
+        ..where((comment) => comment.id.isIn(commentIds));
+      await query.go();
     } catch (e) {
       throw GenericDatabaseException(e.toString());
     }
@@ -115,10 +111,19 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
       select(socialPostCommentDtos).watch();
 
   @override
+  Stream<List<SocialPostCommentDto>> observeCommentsForPosts(
+          List<int> postIds) =>
+      _queryCommentsByPostIds(postIds).watch();
+
+  @override
   Stream<List<SocialPostCommentDto>> observeCommentsForPost(int postId) =>
       _queryCommentsByPostId(postId).watch();
 
   MultiSelectable<SocialPostCommentDto> _queryCommentsByPostId(int postId) =>
       select(socialPostCommentDtos)
         ..where((post) => post.postId.equals(postId));
+
+  MultiSelectable<SocialPostCommentDto> _queryCommentsByPostIds(
+          List<int> postIds) =>
+      select(socialPostCommentDtos)..where((post) => post.postId.isIn(postIds));
 }
