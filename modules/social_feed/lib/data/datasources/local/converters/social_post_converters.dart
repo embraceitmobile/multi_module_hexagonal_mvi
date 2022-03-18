@@ -1,7 +1,6 @@
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 import 'package:social_feed/domain/entities/social_post.dart';
 import 'package:social_feed/domain/entities/social_post_comment.dart';
-import 'social_post_comment_converters.dart';
 
 extension SocialPostExtension on SocialPost {
   SocialPostDto get toSocialPostDto => SocialPostDto(
