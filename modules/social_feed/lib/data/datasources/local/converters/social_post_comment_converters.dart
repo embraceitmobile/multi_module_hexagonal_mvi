@@ -1,5 +1,5 @@
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
-import 'package:social_feed/social_feed.dart';
+import 'package:social_feed/domain/entities/social_post_comment.dart';
 
 extension SocialPostCommentExtension on SocialPostComment {
   SocialPostCommentDto get toSocialPostCommentDto => SocialPostCommentDto(

@@ -1,4 +1,5 @@
-import 'package:core/core.dart';
+import 'package:core/models/resource/resource.dart';
+import 'package:core/models/resource/s_resource.dart';
 import 'package:social_feed/domain/entities/social_post.dart';
 
 abstract class SocialPostRepository {

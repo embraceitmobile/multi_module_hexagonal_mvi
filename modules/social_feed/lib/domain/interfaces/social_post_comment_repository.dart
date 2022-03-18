@@ -1,4 +1,5 @@
-import 'package:core/core.dart';
+import 'package:core/models/resource/resource.dart';
+import 'package:core/models/resource/s_resource.dart';
 import 'package:social_feed/domain/entities/social_post_comment.dart';
 
 abstract class SocialPostCommentRepository {
@@ -14,9 +15,8 @@ abstract class SocialPostCommentRepository {
 
   Future<void> clearCommentsForPost(int postId);
 
-  Stream<Resource<List<SResource<SocialPostComment>>>>
-      get observeAllComments;
+  Stream<Resource<List<SResource<SocialPostComment>>>> get observeAllComments;
 
-  Stream<Resource<List<SResource<SocialPostComment>>>>
-      observeCommentsForPost(int postId);
+  Stream<Resource<List<SResource<SocialPostComment>>>> observeCommentsForPost(
+      int postId);
 }
