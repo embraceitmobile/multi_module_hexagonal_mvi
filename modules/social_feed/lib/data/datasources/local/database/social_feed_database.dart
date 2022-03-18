@@ -4,8 +4,8 @@ import 'package:social_feed/data/datasources/local/social_post/dtos/social_post_
 import 'package:social_feed/data/datasources/local/social_post_comment/daos/social_post_comment_dao.dart';
 import 'package:social_feed/data/datasources/local/social_post_comment/dtos/social_post_comment_dto.dart';
 
-export 'package:social_feed/data/datasources/local/converters/social_post_comment_converters.dart';
-export 'package:social_feed/data/datasources/local/converters/social_post_converters.dart';
+export 'package:social_feed/data/datasources/local/social_post_comment/converters/social_post_comment_converters.dart';
+export 'package:social_feed/data/datasources/local/social_post/converters/social_post_converters.dart';
 
 
 part 'social_feed_database.g.dart';

@@ -1,6 +1,6 @@
 import 'package:core/core_pure_dart.dart';
 import 'package:drift/drift.dart';
-import 'package:social_feed/data/datasources/local/converters/social_post_converters.dart';
+import 'package:social_feed/data/datasources/local/social_post/converters/social_post_converters.dart';
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 import 'package:social_feed/data/datasources/local/social_post/daos/i_social_post_dao.dart';
 import 'package:social_feed/data/datasources/local/social_post/dtos/social_post_dto.dart';
