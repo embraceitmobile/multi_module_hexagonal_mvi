@@ -24,7 +24,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
   Future<List<SocialPost>> get allPosts async {
     try {
       final allCommentsMap = (await _socialPostCommentDao.allComments)
-          .groupListsBy((comment) => comment.id);
+          .groupListsBy((comment) => comment.postId);
 
       return (await select(socialPostDtos).get()).toSocialPosts(allCommentsMap);
     } catch (e) {
@@ -130,7 +130,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
     return select(socialPostDtos).watch().combineLatest(
         _socialPostCommentDao.observeAllComments, (posts, comments) async {
       final allCommentsMap = (comments as List<SocialPostComment>)
-          .groupListsBy((comment) => comment.id);
+          .groupListsBy((comment) => comment.postId);
       return posts.toSocialPosts(allCommentsMap);
     });
   }
@@ -142,7 +142,7 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
         .combineLatest(_socialPostCommentDao.observeCommentsForPosts(postIds),
             (posts, comments) async {
       final allCommentsMap = (comments as List<SocialPostComment>)
-          .groupListsBy((comment) => comment.id);
+          .groupListsBy((comment) => comment.postId);
       return posts.toSocialPosts(allCommentsMap);
     });
   }

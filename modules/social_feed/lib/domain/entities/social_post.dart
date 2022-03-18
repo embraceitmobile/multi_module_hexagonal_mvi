@@ -14,4 +14,9 @@ class SocialPost {
     required this.body,
     this.comments = const [],
   });
+
+  @override
+  String toString() {
+    return 'SocialPost{id: $id, commentsCount: ${comments.length}';
+  }
 }

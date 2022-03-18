@@ -12,4 +12,9 @@ class SocialPostComment {
     required this.email,
     required this.body,
   });
+
+  @override
+  String toString() {
+    return 'SocialPostComment{postId: $postId, id: $id, name: $name, email: $email, body: $body}';
+  }
 }

@@ -19,3 +19,8 @@ final List<SocialPostComment> multipleComments =
     List<SocialPostCommentDto>.from(jsonDecode(multipleCommentsJson)
             .map((item) => SocialPostCommentDto.fromJson(item)))
         .toSocialPostComments;
+
+final List<SocialPostComment> commentsForPost1 =
+    List<SocialPostCommentDto>.from(jsonDecode(commentsForPost1Json)
+            .map((item) => SocialPostCommentDto.fromJson(item)))
+        .toSocialPostComments;
