@@ -5,10 +5,10 @@ import 'package:identity/domain/entities/auth_info.dart';
 import 'package:identity/identity.dart';
 import 'package:identity/data/auth/datasources/local/i_auth_local_datasource.dart';
 import 'package:identity/data/auth/datasources/local/dtos/auth_info_dto.dart';
-import 'package:identity/data/auth/datasources/remote/apis/change_password_api.dart';
+import 'package:identity/data/auth/datasources/remote/dtos/change_password_api.dart';
 import 'package:identity/data/auth/datasources/remote/i_auth_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
-import 'datasources/remote/apis/login_api.dart';
+import 'datasources/remote/dtos/login_api.dart';
 
 @Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {

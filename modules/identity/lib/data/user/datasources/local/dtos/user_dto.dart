@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:identity/domain/entities/user.dart';
-import 'package:identity/data/user/datasources/remote/apis/get_user_api.dart';
+import 'package:identity/data/user/datasources/remote/dtos/get_user_api.dart';
 
 class UserDto extends User implements LocalDto {
   final String pk;

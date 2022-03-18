@@ -5,7 +5,7 @@ import 'package:identity/domain/entities/user.dart';
 import 'package:identity/domain/interfaces/auth_repo.dart';
 import 'package:identity/domain/interfaces/user_repo.dart';
 import 'package:identity/data/user/datasources/local/i_user_local_datasource.dart';
-import 'package:identity/data/user/datasources/remote/apis/get_user_api.dart';
+import 'package:identity/data/user/datasources/remote/dtos/get_user_api.dart';
 import 'package:identity/data/user/datasources/remote/i_user_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 import 'datasources/local/dtos/user_dto.dart';

@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:core/core.dart';
-import 'package:identity/data/auth/datasources/remote/apis/change_password_api.dart';
-import 'package:identity/data/auth/datasources/remote/apis/login_api.dart';
-import 'package:identity/data/auth/datasources/remote/apis/logout_api.dart';
+import 'package:identity/data/auth/datasources/remote/dtos/change_password_api.dart';
+import 'package:identity/data/auth/datasources/remote/dtos/login_api.dart';
+import 'package:identity/data/auth/datasources/remote/dtos/logout_api.dart';
 import 'package:injectable/injectable.dart';
 
 import 'i_auth_remote_datasource.dart';

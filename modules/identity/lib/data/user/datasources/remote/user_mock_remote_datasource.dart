@@ -1,8 +1,8 @@
 import 'package:core/core.dart';
-import 'package:identity/data/user/datasources/remote/apis/update_profile_api.dart';
+import 'package:identity/data/user/datasources/remote/dtos/update_profile_api.dart';
 import 'package:injectable/injectable.dart';
 
-import 'apis/get_user_api.dart';
+import 'dtos/get_user_api.dart';
 import 'i_user_remote_datasource.dart';
 
 @Singleton(as: IUserRemoteDatasource)
