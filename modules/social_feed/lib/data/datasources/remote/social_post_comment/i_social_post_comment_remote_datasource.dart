@@ -1,9 +1,9 @@
 import 'package:social_feed/social_feed.dart';
 
 abstract class ISocialPostCommentRemoteDatasource {
-  Future<List<SocialPostComment>> getPostComments();
+  Future<List<SocialPostComment>> getComments();
 
-  Future<List<SocialPostComment>> getPostCommentsById(int commentId);
+  Future<SocialPostComment?> getCommentById(int commentId);
 
-  Future<List<SocialPostComment>> getPostCommentsByPostId(int postId);
+  Future<List<SocialPostComment>> getCommentsByPostId(int postId);
 }

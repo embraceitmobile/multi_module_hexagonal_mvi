@@ -3,12 +3,6 @@ import 'package:social_feed/domain/entities/social_post_comment.dart';
 
 const getCommentsEndpoint = "/comments";
 
-class GetCommentByIdRequest {
-  final int commentId;
-
-  const GetCommentByIdRequest(this.commentId);
-}
-
 class SocialPostCommentResponse extends SocialPostComment {
   const SocialPostCommentResponse({
     required int postId,
@@ -20,6 +14,9 @@ class SocialPostCommentResponse extends SocialPostComment {
 
   factory SocialPostCommentResponse.fromJson(String str) =>
       SocialPostCommentResponse.fromMap(json.decode(str));
+
+  static List<SocialPostCommentResponse> listFromJson(List<dynamic> response) =>
+      response.map((item) => SocialPostCommentResponse.fromMap(item)).toList();
 
   String toJson() => json.encode(toMap());
 

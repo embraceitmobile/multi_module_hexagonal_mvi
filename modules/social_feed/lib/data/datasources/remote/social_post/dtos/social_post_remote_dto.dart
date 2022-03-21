@@ -4,12 +4,6 @@ import 'package:social_feed/social_feed.dart';
 
 const getPostsEndpoint = "/posts";
 
-class GetPostByIdRequest {
-  final int postId;
-
-  const GetPostByIdRequest(this.postId);
-}
-
 class SocialPostResponse extends SocialPost {
   const SocialPostResponse({
     required int userId,
@@ -20,6 +14,9 @@ class SocialPostResponse extends SocialPost {
 
   factory SocialPostResponse.fromJson(String str) =>
       SocialPostResponse.fromMap(json.decode(str));
+
+  static List<SocialPostResponse> listFromJson(List<dynamic> response) =>
+      response.map((item) => SocialPostResponse.fromMap(item)).toList();
 
   String toJson() => json.encode(toMap());
 
