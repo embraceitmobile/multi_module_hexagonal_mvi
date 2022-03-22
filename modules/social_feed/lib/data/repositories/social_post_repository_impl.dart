@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:social_feed/data/datasources/local/social_post/daos/i_social_post_dao.dart';
 import 'package:social_feed/data/datasources/remote/social_post/i_social_post_remote_datasource.dart';
 import 'package:social_feed/social_feed.dart';
-import 'package:collection/collection.dart';
 
 @Singleton(as: SocialPostRepository)
 class SocialPostRepositoryImpl implements SocialPostRepository {
@@ -121,16 +120,8 @@ class SocialPostRepositoryImpl implements SocialPostRepository {
   }
 
   @override
-  // TODO: implement observeSocialPosts
   Stream<Resource<List<SResource<SocialPost>>>> get observeSocialPosts =>
-      throw UnimplementedError();
-
-  @override
-  Stream<Resource<List<SResource<SocialPost>>>> observePosts(
-      List<int> postIds) {
-    // TODO: implement observePosts
-    throw UnimplementedError();
-  }
+      _socialPostResource.resourceWatcher;
 }
 
 extension IterablePostExtension on Iterable<SocialPost> {

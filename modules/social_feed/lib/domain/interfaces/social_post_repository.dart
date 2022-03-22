@@ -17,6 +17,4 @@ abstract class SocialPostRepository {
   Future<void> clearPosts();
 
   Stream<Resource<List<SResource<SocialPost>>>> get observeSocialPosts;
-
-  Stream<Resource<List<SResource<SocialPost>>>> observePosts(List<int> postIds);
 }
