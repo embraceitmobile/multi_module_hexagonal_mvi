@@ -1,3 +1,4 @@
+import 'package:core/core_pure_dart.dart';
 import 'package:social_feed/social_feed.dart';
 
 abstract class ISocialPostCommentDao {
@@ -8,6 +9,11 @@ abstract class ISocialPostCommentDao {
   Future<void> insertOrUpdateComment(SocialPostComment comment);
 
   Future<void> insertOrUpdateComments(List<SocialPostComment> comments);
+
+  Future<void> insertOrUpdateCommentResource(SResource<SocialPostComment> post);
+
+  Future<void> insertOrUpdateCommentResources(
+      List<SResource<SocialPostComment>> posts);
 
   Future<void> removeComment(int commentId);
 
@@ -21,5 +27,8 @@ abstract class ISocialPostCommentDao {
 
   Stream<List<SocialPostComment>> observeCommentsForPost(int postId);
 
-  Stream<List<SocialPostComment>> observeCommentsForPosts(List<int> postIds);
+  Stream<List<SResource<SocialPostComment>>> get observeAllCommentResources;
+
+  Stream<List<SResource<SocialPostComment>>> observeCommentResourcesForPost(
+      int postId);
 }

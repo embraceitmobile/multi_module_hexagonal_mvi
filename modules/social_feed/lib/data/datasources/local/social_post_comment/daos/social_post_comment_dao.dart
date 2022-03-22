@@ -38,7 +38,7 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
   Future<void> insertOrUpdateComment(SocialPostComment comment) async {
     try {
       await into(socialPostCommentDtos)
-          .insertOnConflictUpdate(comment.toSocialPostCommentDto);
+          .insertOnConflictUpdate(comment.toSocialPostCommentDto());
     } catch (e) {
       throw GenericDatabaseException(e.toString());
     }
@@ -50,7 +50,39 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
       await transaction(() async {
         for (final comment in comments) {
           await into(socialPostCommentDtos)
-              .insertOnConflictUpdate(comment.toSocialPostCommentDto);
+              .insertOnConflictUpdate(comment.toSocialPostCommentDto());
+        }
+      });
+    } catch (e) {
+      throw GenericDatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> insertOrUpdateCommentResource(
+      SResource<SocialPostComment> comment) async {
+    try {
+      final commentResource = comment.toSocialPostCommentDto;
+      if (commentResource != null) {
+        await into(socialPostCommentDtos)
+            .insertOnConflictUpdate(commentResource);
+      }
+    } catch (e) {
+      throw GenericDatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> insertOrUpdateCommentResources(
+      List<SResource<SocialPostComment>> comments) async {
+    try {
+      await transaction(() async {
+        for (final comment in comments) {
+          final commentResource = comment.toSocialPostCommentDto;
+          if (commentResource != null) {
+            await into(socialPostCommentDtos)
+                .insertOnConflictUpdate(commentResource);
+          }
         }
       });
     } catch (e) {
@@ -114,22 +146,25 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
           .map((comments) => comments.toSocialPostComments);
 
   @override
-  Stream<List<SocialPostComment>> observeCommentsForPosts(List<int> postIds) =>
-      _queryCommentsByPostIds(postIds)
-          .watch()
-          .map((comments) => comments.toSocialPostComments);
-
-  @override
   Stream<List<SocialPostComment>> observeCommentsForPost(int postId) =>
       _queryCommentsByPostId(postId)
           .watch()
           .map((comments) => comments.toSocialPostComments);
 
+  @override
+  Stream<List<SResource<SocialPostComment>>> get observeAllCommentResources =>
+      select(socialPostCommentDtos)
+          .watch()
+          .map((comments) => comments.toSocialPostCommentResources);
+
+  @override
+  Stream<List<SResource<SocialPostComment>>> observeCommentResourcesForPost(
+          int postId) =>
+      _queryCommentsByPostId(postId)
+          .watch()
+          .map((comments) => comments.toSocialPostCommentResources);
+
   MultiSelectable<SocialPostCommentDto> _queryCommentsByPostId(int postId) =>
       select(socialPostCommentDtos)
         ..where((post) => post.postId.equals(postId));
-
-  MultiSelectable<SocialPostCommentDto> _queryCommentsByPostIds(
-          List<int> postIds) =>
-      select(socialPostCommentDtos)..where((post) => post.postId.isIn(postIds));
 }

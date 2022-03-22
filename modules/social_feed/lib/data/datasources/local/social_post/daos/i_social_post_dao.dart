@@ -23,6 +23,4 @@ abstract class ISocialPostDao {
   Future<void> clearPosts();
 
   Stream<List<SResource<SocialPost>>> get observeAllPosts;
-
-  Stream<List<SResource<SocialPost>>> observePosts(List<int> postIds);
 }

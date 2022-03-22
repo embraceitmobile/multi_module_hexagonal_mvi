@@ -10,4 +10,8 @@ class SocialPostCommentDtos extends Table {
   TextColumn get email => text()();
 
   TextColumn get body => text()();
+
+  IntColumn get loading => integer().nullable()();
+
+  TextColumn get error => text().nullable()();
 }

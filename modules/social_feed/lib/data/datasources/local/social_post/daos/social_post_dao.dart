@@ -177,18 +177,6 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
     });
   }
 
-  @override
-  Stream<List<SResource<SocialPost>>> observePosts(List<int> postIds) {
-    return _queryPostByIds(postIds)
-        .watch()
-        .combineLatest(_socialPostCommentDao.observeCommentsForPosts(postIds),
-            (posts, comments) async {
-      final allCommentsMap = (comments as List<SocialPostComment>)
-          .groupListsBy((comment) => comment.postId);
-      return posts.toSocialPostResources(allCommentsMap);
-    });
-  }
-
   MultiSelectable<SocialPostDto> _queryPostById(int postId) =>
       select(socialPostDtos)..where((post) => post.id.equals(postId));
 
