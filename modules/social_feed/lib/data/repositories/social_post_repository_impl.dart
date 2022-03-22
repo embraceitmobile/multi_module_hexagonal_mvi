@@ -28,48 +28,80 @@ class SocialPostRepositoryImpl implements SocialPostRepository {
 
   @override
   Future<List<SocialPost>> get allPosts async {
-    try {} catch (_) {
+    try {
+      final posts = await _socialPostResource.fetch();
+
+      if (posts == null) return [];
+      return posts.map((post) => post.successOrNull).filterNotNull.toList();
+    } catch (_) {
       rethrow;
     }
-    // TODO: implement getPosts
-    throw UnimplementedError();
   }
 
   @override
   Future<SocialPost?> getPost(int postId) async {
-    try {} catch (_) {
+    //TODO: save the initial state of the post as Resource.loading
+    try {
+      final response = await _remoteDatasource.getPostById(postId);
+      if (response != null) await _localDatasource.insertOrUpdatePost(response);
+      return response;
+    } catch (_) {
+      //TODO: save the error state of the post as Resource.error
       rethrow;
     }
   }
 
   @override
-  Future<List<SocialPost>> getPosts(List<int> postIds) {
-    // TODO: implement getPosts
-    throw UnimplementedError();
+  Future<List<SocialPost>> getPosts(List<int> postIds) async {
+    //TODO: save the initial state of the post as Resource.loading
+    try {
+      final response = (await Future.wait(
+              postIds.map((id) => _remoteDatasource.getPostById(id))))
+          .filterNotNull;
+      if (response.isNotEmpty) {
+        await _localDatasource.insertOrUpdatePosts(response);
+      }
+      return response;
+    } catch (_) {
+      //TODO: save the error state of the post as Resource.error
+      rethrow;
+    }
   }
 
   @override
-  Future<void> updatePost(SocialPost post) {
-    // TODO: implement updatePost
-    throw UnimplementedError();
+  Future<void> updatePost(SocialPost post) async {
+    try {
+      await _localDatasource.insertOrUpdatePost(post);
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
-  Future<void> removePost(int postId) {
-    // TODO: implement removePost
-    throw UnimplementedError();
+  Future<void> removePost(int postId) async {
+    try {
+      await _localDatasource.removePost(postId);
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
-  Future<void> removePosts(List<int> postIds) {
-    // TODO: implement removePosts
-    throw UnimplementedError();
+  Future<void> removePosts(List<int> postIds) async {
+    try {
+      await _localDatasource.removePosts(postIds);
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
-  Future<void> clearPosts() {
-    // TODO: implement clearPosts
-    throw UnimplementedError();
+  Future<void> clearPosts() async {
+    try {
+      await _localDatasource.clearPosts();
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override

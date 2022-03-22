@@ -2,7 +2,7 @@ import 'package:core/core_pure_dart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:social_feed/data/datasources/remote/social_post/dtos/social_post_remote_dto.dart';
 import 'package:social_feed/domain/entities/social_post.dart';
-
+import 'package:collection/collection.dart';
 import 'i_social_post_remote_datasource.dart';
 
 @Singleton(as: ISocialPostRemoteDatasource)
@@ -29,13 +29,13 @@ class SocialPostRemoteDatasource implements ISocialPostRemoteDatasource {
   }
 
   @override
-  Future<List<SocialPost>> getPostById(int id) async {
+  Future<SocialPost?> getPostById(int id) async {
     try {
       final response = await _apiClient.get(
         getPostsEndpoint,
         queryParameters: {"id": id},
       );
-      return SocialPostResponse.listFromJson(response);
+      return SocialPostResponse.listFromJson(response).firstOrNull;
     } on InvalidDataException {
       rethrow;
     } on NetworkException {
