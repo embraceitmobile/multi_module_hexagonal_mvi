@@ -14,8 +14,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$DataSuperStateTearOff {
-  const _$DataSuperStateTearOff();
+class _$SResourceTearOff {
+  const _$SResourceTearOff();
 
   SuperSuccess<T> success<T>(T data) {
     return SuperSuccess<T>(
@@ -37,22 +37,22 @@ class _$DataSuperStateTearOff {
     );
   }
 
-  SuperIdleOrNoData<T> idleOrNoData<T>() {
+  SuperIdleOrNoData<T> nothing<T>() {
     return SuperIdleOrNoData<T>();
   }
 }
 
 /// @nodoc
-const $DataSuperState = _$DataSuperStateTearOff();
+const $SResource = _$SResourceTearOff();
 
 /// @nodoc
-mixin _$DataSuperState<T> {
+mixin _$SResource<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(T data) success,
     required TResult Function(int progress, T? data) loading,
     required TResult Function(Exception error, T? data) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,7 +60,7 @@ mixin _$DataSuperState<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -68,7 +68,7 @@ mixin _$DataSuperState<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -77,7 +77,7 @@ mixin _$DataSuperState<T> {
     required TResult Function(SuperSuccess<T> value) success,
     required TResult Function(SuperLoading<T> value) loading,
     required TResult Function(SuperError<T> value) error,
-    required TResult Function(SuperIdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(SuperIdleOrNoData<T> value) nothing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,7 +85,7 @@ mixin _$DataSuperState<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -93,23 +93,22 @@ mixin _$DataSuperState<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DataSuperStateCopyWith<T, $Res> {
-  factory $DataSuperStateCopyWith(
+abstract class $SResourceCopyWith<T, $Res> {
+  factory $SResourceCopyWith(
           SResource<T> value, $Res Function(SResource<T>) then) =
-      _$DataSuperStateCopyWithImpl<T, $Res>;
+      _$SResourceCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class _$DataSuperStateCopyWithImpl<T, $Res>
-    implements $DataSuperStateCopyWith<T, $Res> {
-  _$DataSuperStateCopyWithImpl(this._value, this._then);
+class _$SResourceCopyWithImpl<T, $Res> implements $SResourceCopyWith<T, $Res> {
+  _$SResourceCopyWithImpl(this._value, this._then);
 
   final SResource<T> _value;
   // ignore: unused_field
@@ -126,7 +125,7 @@ abstract class $SuperSuccessCopyWith<T, $Res> {
 
 /// @nodoc
 class _$SuperSuccessCopyWithImpl<T, $Res>
-    extends _$DataSuperStateCopyWithImpl<T, $Res>
+    extends _$SResourceCopyWithImpl<T, $Res>
     implements $SuperSuccessCopyWith<T, $Res> {
   _$SuperSuccessCopyWithImpl(
       SuperSuccess<T> _value, $Res Function(SuperSuccess<T>) _then)
@@ -158,7 +157,7 @@ class _$SuperSuccess<T> implements SuperSuccess<T> {
 
   @override
   String toString() {
-    return 'DataSuperState<$T>.success(data: $data)';
+    return 'SResource<$T>.success(data: $data)';
   }
 
   @override
@@ -184,7 +183,7 @@ class _$SuperSuccess<T> implements SuperSuccess<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress, T? data) loading,
     required TResult Function(Exception error, T? data) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) {
     return success(data);
   }
@@ -195,7 +194,7 @@ class _$SuperSuccess<T> implements SuperSuccess<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) {
     return success?.call(data);
   }
@@ -206,7 +205,7 @@ class _$SuperSuccess<T> implements SuperSuccess<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -221,7 +220,7 @@ class _$SuperSuccess<T> implements SuperSuccess<T> {
     required TResult Function(SuperSuccess<T> value) success,
     required TResult Function(SuperLoading<T> value) loading,
     required TResult Function(SuperError<T> value) error,
-    required TResult Function(SuperIdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(SuperIdleOrNoData<T> value) nothing,
   }) {
     return success(this);
   }
@@ -232,7 +231,7 @@ class _$SuperSuccess<T> implements SuperSuccess<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
   }) {
     return success?.call(this);
   }
@@ -243,7 +242,7 @@ class _$SuperSuccess<T> implements SuperSuccess<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -272,7 +271,7 @@ abstract class $SuperLoadingCopyWith<T, $Res> {
 
 /// @nodoc
 class _$SuperLoadingCopyWithImpl<T, $Res>
-    extends _$DataSuperStateCopyWithImpl<T, $Res>
+    extends _$SResourceCopyWithImpl<T, $Res>
     implements $SuperLoadingCopyWith<T, $Res> {
   _$SuperLoadingCopyWithImpl(
       SuperLoading<T> _value, $Res Function(SuperLoading<T>) _then)
@@ -312,7 +311,7 @@ class _$SuperLoading<T> implements SuperLoading<T> {
 
   @override
   String toString() {
-    return 'DataSuperState<$T>.loading(progress: $progress, data: $data)';
+    return 'SResource<$T>.loading(progress: $progress, data: $data)';
   }
 
   @override
@@ -343,7 +342,7 @@ class _$SuperLoading<T> implements SuperLoading<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress, T? data) loading,
     required TResult Function(Exception error, T? data) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) {
     return loading(progress, data);
   }
@@ -354,7 +353,7 @@ class _$SuperLoading<T> implements SuperLoading<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) {
     return loading?.call(progress, data);
   }
@@ -365,7 +364,7 @@ class _$SuperLoading<T> implements SuperLoading<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -380,7 +379,7 @@ class _$SuperLoading<T> implements SuperLoading<T> {
     required TResult Function(SuperSuccess<T> value) success,
     required TResult Function(SuperLoading<T> value) loading,
     required TResult Function(SuperError<T> value) error,
-    required TResult Function(SuperIdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(SuperIdleOrNoData<T> value) nothing,
   }) {
     return loading(this);
   }
@@ -391,7 +390,7 @@ class _$SuperLoading<T> implements SuperLoading<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
   }) {
     return loading?.call(this);
   }
@@ -402,7 +401,7 @@ class _$SuperLoading<T> implements SuperLoading<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -431,8 +430,7 @@ abstract class $SuperErrorCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class _$SuperErrorCopyWithImpl<T, $Res>
-    extends _$DataSuperStateCopyWithImpl<T, $Res>
+class _$SuperErrorCopyWithImpl<T, $Res> extends _$SResourceCopyWithImpl<T, $Res>
     implements $SuperErrorCopyWith<T, $Res> {
   _$SuperErrorCopyWithImpl(
       SuperError<T> _value, $Res Function(SuperError<T>) _then)
@@ -471,7 +469,7 @@ class _$SuperError<T> implements SuperError<T> {
 
   @override
   String toString() {
-    return 'DataSuperState<$T>.error(error: $error, data: $data)';
+    return 'SResource<$T>.error(error: $error, data: $data)';
   }
 
   @override
@@ -501,7 +499,7 @@ class _$SuperError<T> implements SuperError<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress, T? data) loading,
     required TResult Function(Exception error, T? data) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) {
     return error(this.error, data);
   }
@@ -512,7 +510,7 @@ class _$SuperError<T> implements SuperError<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) {
     return error?.call(this.error, data);
   }
@@ -523,7 +521,7 @@ class _$SuperError<T> implements SuperError<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -538,7 +536,7 @@ class _$SuperError<T> implements SuperError<T> {
     required TResult Function(SuperSuccess<T> value) success,
     required TResult Function(SuperLoading<T> value) loading,
     required TResult Function(SuperError<T> value) error,
-    required TResult Function(SuperIdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(SuperIdleOrNoData<T> value) nothing,
   }) {
     return error(this);
   }
@@ -549,7 +547,7 @@ class _$SuperError<T> implements SuperError<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
   }) {
     return error?.call(this);
   }
@@ -560,7 +558,7 @@ class _$SuperError<T> implements SuperError<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -589,7 +587,7 @@ abstract class $SuperIdleOrNoDataCopyWith<T, $Res> {
 
 /// @nodoc
 class _$SuperIdleOrNoDataCopyWithImpl<T, $Res>
-    extends _$DataSuperStateCopyWithImpl<T, $Res>
+    extends _$SResourceCopyWithImpl<T, $Res>
     implements $SuperIdleOrNoDataCopyWith<T, $Res> {
   _$SuperIdleOrNoDataCopyWithImpl(
       SuperIdleOrNoData<T> _value, $Res Function(SuperIdleOrNoData<T>) _then)
@@ -606,7 +604,7 @@ class _$SuperIdleOrNoData<T> implements SuperIdleOrNoData<T> {
 
   @override
   String toString() {
-    return 'DataSuperState<$T>.idleOrNoData()';
+    return 'SResource<$T>.nothing()';
   }
 
   @override
@@ -623,9 +621,9 @@ class _$SuperIdleOrNoData<T> implements SuperIdleOrNoData<T> {
     required TResult Function(T data) success,
     required TResult Function(int progress, T? data) loading,
     required TResult Function(Exception error, T? data) error,
-    required TResult Function() idleOrNoData,
+    required TResult Function() nothing,
   }) {
-    return idleOrNoData();
+    return nothing();
   }
 
   @override
@@ -634,9 +632,9 @@ class _$SuperIdleOrNoData<T> implements SuperIdleOrNoData<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
   }) {
-    return idleOrNoData?.call();
+    return nothing?.call();
   }
 
   @override
@@ -645,11 +643,11 @@ class _$SuperIdleOrNoData<T> implements SuperIdleOrNoData<T> {
     TResult Function(T data)? success,
     TResult Function(int progress, T? data)? loading,
     TResult Function(Exception error, T? data)? error,
-    TResult Function()? idleOrNoData,
+    TResult Function()? nothing,
     required TResult orElse(),
   }) {
-    if (idleOrNoData != null) {
-      return idleOrNoData();
+    if (nothing != null) {
+      return nothing();
     }
     return orElse();
   }
@@ -660,9 +658,9 @@ class _$SuperIdleOrNoData<T> implements SuperIdleOrNoData<T> {
     required TResult Function(SuperSuccess<T> value) success,
     required TResult Function(SuperLoading<T> value) loading,
     required TResult Function(SuperError<T> value) error,
-    required TResult Function(SuperIdleOrNoData<T> value) idleOrNoData,
+    required TResult Function(SuperIdleOrNoData<T> value) nothing,
   }) {
-    return idleOrNoData(this);
+    return nothing(this);
   }
 
   @override
@@ -671,9 +669,9 @@ class _$SuperIdleOrNoData<T> implements SuperIdleOrNoData<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
   }) {
-    return idleOrNoData?.call(this);
+    return nothing?.call(this);
   }
 
   @override
@@ -682,11 +680,11 @@ class _$SuperIdleOrNoData<T> implements SuperIdleOrNoData<T> {
     TResult Function(SuperSuccess<T> value)? success,
     TResult Function(SuperLoading<T> value)? loading,
     TResult Function(SuperError<T> value)? error,
-    TResult Function(SuperIdleOrNoData<T> value)? idleOrNoData,
+    TResult Function(SuperIdleOrNoData<T> value)? nothing,
     required TResult orElse(),
   }) {
-    if (idleOrNoData != null) {
-      return idleOrNoData(this);
+    if (nothing != null) {
+      return nothing(this);
     }
     return orElse();
   }

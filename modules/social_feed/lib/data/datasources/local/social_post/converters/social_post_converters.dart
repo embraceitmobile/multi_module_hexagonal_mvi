@@ -46,7 +46,8 @@ extension SocialPostDtoIterableExtension on Iterable<SocialPostDto> {
               progress: post.loading!,
               data: post.toSocialPost(allCommentsMap[post.id] ?? []));
         } else {
-          post.toSocialPost(allCommentsMap[post.id] ?? []);
+          return SResource.success(
+              post.toSocialPost(allCommentsMap[post.id] ?? []));
         }
       }).filterNotNull.toList();
 }
@@ -58,13 +59,13 @@ extension SocialPostResourceExtension on SResource<SocialPost> {
           ?.toSocialPostDto(loading: resource.progress),
       error: (resource) => (resource.data as SocialPost?)
           ?.toSocialPostDto(error: resource.error.toString()),
-      idleOrNoData: (_) => null);
+      nothing: (_) => null);
 
   List<SocialPostComment> get toSocialPostComments => map(
       success: (resource) => (resource.data as SocialPost?)?.comments ?? [],
       loading: (resource) => (resource.data as SocialPost?)?.comments ?? [],
       error: (resource) => (resource.data as SocialPost?)?.comments ?? [],
-      idleOrNoData: (_) => []);
+      nothing: (_) => []);
 }
 
 extension SocialPostResourceIterableExtension

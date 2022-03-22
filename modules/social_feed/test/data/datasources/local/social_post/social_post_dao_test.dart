@@ -3,6 +3,7 @@ import 'package:social_feed/data/datasources/local/social_post/daos/social_post_
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 import 'package:social_feed/data/datasources/local/social_post_comment/daos/social_post_comment_dao.dart';
 import 'package:test/test.dart';
+import 'package:core/core_pure_dart.dart';
 
 import '../mocks/mock_social_post_comments.dart';
 import '../mocks/mock_social_posts.dart';
@@ -59,7 +60,7 @@ void main() {
       await socialPostDao.insertOrUpdatePost(singlePost1);
       socialPostDao.observeAllPosts.listen(expectAsync1((event) {
         expect(event.length, 1);
-        expect(event.first.id, singlePost1.id);
+        expect(event.first.successOrNull?.id, singlePost1.id);
       }));
     });
 
@@ -71,7 +72,7 @@ void main() {
       await socialPostDao.insertOrUpdatePost(singlePost3);
       socialPostDao.observeAllPosts.listen(expectAsync1((event) {
         expect(event.length, 3);
-        expect(event.last.id, singlePost3.id);
+        expect(event.last.successOrNull?.id, singlePost3.id);
       }));
     });
 
@@ -147,7 +148,8 @@ void main() {
       socialPostDao.observeAllPosts.listen(expectAsync1((event) {
         expect(event.length, jobEmitOrder[counter]);
         if (event.isNotEmpty) {
-          expect(event.first.comments.length, commentEmitOrder[counter]);
+          expect(event.first.successOrNull?.comments.length,
+              commentEmitOrder[counter]);
         }
         counter++;
       }, count: 3, max: 3));

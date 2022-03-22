@@ -14,8 +14,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$DataStateTearOff {
-  const _$DataStateTearOff();
+class _$ResourceTearOff {
+  const _$ResourceTearOff();
 
   Success<T> success<T>(T data) {
     return Success<T>(
@@ -41,7 +41,7 @@ class _$DataStateTearOff {
 }
 
 /// @nodoc
-const $DataState = _$DataStateTearOff();
+const $Resource = _$ResourceTearOff();
 
 /// @nodoc
 mixin _$Resource<T> {
@@ -98,15 +98,15 @@ mixin _$Resource<T> {
 }
 
 /// @nodoc
-abstract class $DataStateCopyWith<T, $Res> {
-  factory $DataStateCopyWith(
+abstract class $ResourceCopyWith<T, $Res> {
+  factory $ResourceCopyWith(
           Resource<T> value, $Res Function(Resource<T>) then) =
-      _$DataStateCopyWithImpl<T, $Res>;
+      _$ResourceCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class _$DataStateCopyWithImpl<T, $Res> implements $DataStateCopyWith<T, $Res> {
-  _$DataStateCopyWithImpl(this._value, this._then);
+class _$ResourceCopyWithImpl<T, $Res> implements $ResourceCopyWith<T, $Res> {
+  _$ResourceCopyWithImpl(this._value, this._then);
 
   final Resource<T> _value;
   // ignore: unused_field
@@ -121,7 +121,7 @@ abstract class $SuccessCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class _$SuccessCopyWithImpl<T, $Res> extends _$DataStateCopyWithImpl<T, $Res>
+class _$SuccessCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
     implements $SuccessCopyWith<T, $Res> {
   _$SuccessCopyWithImpl(Success<T> _value, $Res Function(Success<T>) _then)
       : super(_value, (v) => _then(v as Success<T>));
@@ -152,7 +152,7 @@ class _$Success<T> implements Success<T> {
 
   @override
   String toString() {
-    return 'DataState<$T>.success(data: $data)';
+    return 'Resource<$T>.success(data: $data)';
   }
 
   @override
@@ -264,7 +264,7 @@ abstract class $LoadingCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class _$LoadingCopyWithImpl<T, $Res> extends _$DataStateCopyWithImpl<T, $Res>
+class _$LoadingCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
     implements $LoadingCopyWith<T, $Res> {
   _$LoadingCopyWithImpl(Loading<T> _value, $Res Function(Loading<T>) _then)
       : super(_value, (v) => _then(v as Loading<T>));
@@ -296,7 +296,7 @@ class _$Loading<T> implements Loading<T> {
 
   @override
   String toString() {
-    return 'DataState<$T>.loading(progress: $progress)';
+    return 'Resource<$T>.loading(progress: $progress)';
   }
 
   @override
@@ -409,7 +409,7 @@ abstract class $ErrorCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<T, $Res> extends _$DataStateCopyWithImpl<T, $Res>
+class _$ErrorCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
     implements $ErrorCopyWith<T, $Res> {
   _$ErrorCopyWithImpl(Error<T> _value, $Res Function(Error<T>) _then)
       : super(_value, (v) => _then(v as Error<T>));
@@ -440,7 +440,7 @@ class _$Error<T> implements Error<T> {
 
   @override
   String toString() {
-    return 'DataState<$T>.error(error: $error)';
+    return 'Resource<$T>.error(error: $error)';
   }
 
   @override
@@ -551,7 +551,7 @@ abstract class $NothingCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class _$NothingCopyWithImpl<T, $Res> extends _$DataStateCopyWithImpl<T, $Res>
+class _$NothingCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
     implements $NothingCopyWith<T, $Res> {
   _$NothingCopyWithImpl(Nothing<T> _value, $Res Function(Nothing<T>) _then)
       : super(_value, (v) => _then(v as Nothing<T>));
@@ -567,7 +567,7 @@ class _$Nothing<T> implements Nothing<T> {
 
   @override
   String toString() {
-    return 'DataState<$T>.nothing()';
+    return 'Resource<$T>.nothing()';
   }
 
   @override

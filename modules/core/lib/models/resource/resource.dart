@@ -13,23 +13,9 @@ class Resource<T> with _$Resource {
   const factory Resource.nothing() = Nothing;
 }
 
-extension ResourceTransformations<T> on Resource<T> {
-  Resource<T> transformOnly<TResult extends Object?>({
-    Resource<T> Function(T data)? success,
-    Resource<T> Function(int progress)? loading,
-    Resource<T> Function(Exception error)? error,
-    Resource<T> Function()? idleOrNoData,
-  }) =>
-      this.map(
-        success: (resource) => success == null
-            ? resource as Resource<T>
-            : success(resource as T),
-        loading: (resource) => loading == null
-            ? resource as Resource<T>
-            : loading(resource as int),
-        error: (resource) => error == null
-            ? resource as Resource<T>
-            : error(resource as Exception),
-        nothing: (resource) => resource as Resource<T>,
+extension ResourceExtension<T> on Resource<T> {
+  T? get successOrNull => maybeMap(
+        success: (resource) => resource.data as T,
+        orElse: () => null,
       );
 }
