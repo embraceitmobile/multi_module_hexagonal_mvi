@@ -40,26 +40,34 @@ class SocialPostRepositoryImpl implements SocialPostRepository {
 
   @override
   Future<SocialPost?> getPost(int postId) async {
-    //TODO: save the initial state of the post as Resource.loading
     try {
       final cachedResponse = await _localDatasource.getPost(postId);
       if (cachedResponse != null) return cachedResponse;
 
+      await _localDatasource.insertOrUpdatePostResource(
+          SResource.loading(progress: -1, data: SocialPost.empty(postId)));
+
       final response = await _remoteDatasource.getPostById(postId);
       if (response != null) await _localDatasource.insertOrUpdatePost(response);
       return response;
-    } catch (_) {
-      //TODO: save the error state of the post as Resource.error
+    } on Exception catch (e) {
+      await _localDatasource.insertOrUpdatePostResource(
+        SResource.error(e, data: SocialPost.empty(postId)),
+      );
       rethrow;
     }
   }
 
   @override
   Future<List<SocialPost>> getPosts(List<int> postIds) async {
-    //TODO: save the initial state of the post as Resource.loading
     try {
       final cachedResponse = await _localDatasource.getPosts(postIds);
       if (cachedResponse.length == postIds.length) return cachedResponse;
+
+      await _localDatasource.insertOrUpdatePostResources(postIds
+          .map((postId) =>
+              SResource.loading(progress: -1, data: SocialPost.empty(postId)))
+          .toList());
 
       final response = (await Future.wait(
               postIds.map((id) => _remoteDatasource.getPostById(id))))
@@ -68,8 +76,10 @@ class SocialPostRepositoryImpl implements SocialPostRepository {
         await _localDatasource.insertOrUpdatePosts(response);
       }
       return response;
-    } catch (_) {
-      //TODO: save the error state of the post as Resource.error
+    } on Exception catch (e) {
+      await _localDatasource.insertOrUpdatePostResources(postIds
+          .map((postId) => SResource.error(e, data: SocialPost.empty(postId)))
+          .toList());
       rethrow;
     }
   }

@@ -15,6 +15,13 @@ class SocialPost {
     this.comments = const [],
   });
 
+  factory SocialPost.empty(int id) => SocialPost(
+        id: id,
+        userId: -1,
+        title: "",
+        body: "",
+      );
+
   @override
   String toString() {
     return 'SocialPost{id: $id, commentsCount: ${comments.length}';
