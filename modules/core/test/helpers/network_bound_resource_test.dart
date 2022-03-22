@@ -1,5 +1,4 @@
-import 'package:core/core.dart';
-import 'package:core/helpers/network_bound_resource.dart';
+import 'package:core/core_pure_dart.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'mocks/mock_local_data_source.dart';
@@ -15,7 +14,7 @@ void main() {
     NetworkBoundResource<MockObject>? _nbr;
 
     setUp(() async {
-      _nbr = NetworkBoundResource<MockObject>(
+      _nbr = NetworkBoundResource<MockObject>.withLocalDatasource(
           shouldFetch: () async => true,
           onFetchLocalData: () async =>
               _localDatasource.findByAll().then((value) => value.first),
@@ -26,7 +25,7 @@ void main() {
           onSaveResultToLocal: (value) async {
             await _localDatasource.insert(value);
           },
-          localDataSourceObservable:
+          localDatasourceWatcher:
               _localDatasource.observeChanges().map((event) {
             if (event.isEmpty) return null;
             return event.first;
@@ -43,7 +42,7 @@ void main() {
       expect(_nbr?.onFetchRemoteData, isNotNull);
       expect(_nbr?.onFetchLocalData, isNotNull);
       expect(_nbr?.onSaveResultToLocal, isNotNull);
-      expect(_nbr?.localDataSourceObservable, isNotNull);
+      expect(_nbr?.resourceWatchers, isNotNull);
     });
 
     test('On calling fetch, the correct value is returned', () async {
@@ -75,7 +74,7 @@ void main() {
       ];
 
       int i = 0;
-      _nbr!.dataListener.listen(expectAsync1((event) {
+      _nbr!.resourceWatcher.listen(expectAsync1((event) {
         expect(event, equals(expectedResults[i]));
         i++;
       }, count: 2, max: 3));

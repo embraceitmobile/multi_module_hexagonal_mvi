@@ -1,6 +1,5 @@
 import 'package:core/core_pure_dart.dart';
 import 'package:drift/drift.dart';
-import 'package:social_feed/data/datasources/local/social_post/converters/social_post_converters.dart';
 import 'package:social_feed/data/datasources/local/database/social_feed_database.dart';
 import 'package:social_feed/data/datasources/local/social_post/daos/i_social_post_dao.dart';
 import 'package:social_feed/data/datasources/local/social_post/dtos/social_post_dto.dart';
@@ -64,7 +63,8 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
   Future<void> insertOrUpdatePost(SocialPost post) async {
     try {
       await transaction(() async {
-        await into(socialPostDtos).insertOnConflictUpdate(post.toSocialPostDto);
+        await into(socialPostDtos)
+            .insertOnConflictUpdate(post.toSocialPostDto());
         if (post.comments.isNotEmpty) {
           await _socialPostCommentDao.insertOrUpdateComments(post.comments);
         }
@@ -80,9 +80,51 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
       await transaction(() async {
         for (final post in posts) {
           await into(socialPostDtos)
-              .insertOnConflictUpdate(post.toSocialPostDto);
+              .insertOnConflictUpdate(post.toSocialPostDto());
           if (post.comments.isNotEmpty) {
             await _socialPostCommentDao.insertOrUpdateComments(post.comments);
+          }
+        }
+      });
+    } catch (e) {
+      throw GenericDatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> insertOrUpdatePostResource(SResource<SocialPost> post) async {
+    try {
+      await transaction(() async {
+        final socialPostResource = post.toSocialPostDto;
+        if (socialPostResource != null) {
+          await into(socialPostDtos).insertOnConflictUpdate(socialPostResource);
+
+          final comments = post.toSocialPostComments;
+          if (comments.isNotEmpty) {
+            await _socialPostCommentDao.insertOrUpdateComments(comments);
+          }
+        }
+      });
+    } catch (e) {
+      throw GenericDatabaseException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> insertOrUpdatePostResources(
+      List<SResource<SocialPost>> posts) async {
+    try {
+      await transaction(() async {
+        for (final post in posts) {
+          final socialPostResource = post.toSocialPostDto;
+          if (socialPostResource != null) {
+            await into(socialPostDtos)
+                .insertOnConflictUpdate(socialPostResource);
+
+            final comments = post.toSocialPostComments;
+            if (comments.isNotEmpty) {
+              await _socialPostCommentDao.insertOrUpdateComments(comments);
+            }
           }
         }
       });
@@ -126,24 +168,24 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
   }
 
   @override
-  Stream<List<SocialPost>> get observeAllPosts {
+  Stream<List<SResource<SocialPost>>> get observeAllPosts {
     return select(socialPostDtos).watch().combineLatest(
         _socialPostCommentDao.observeAllComments, (posts, comments) async {
       final allCommentsMap = (comments as List<SocialPostComment>)
           .groupListsBy((comment) => comment.postId);
-      return posts.toSocialPosts(allCommentsMap);
+      return posts.toSocialPostResources(allCommentsMap);
     });
   }
 
   @override
-  Stream<List<SocialPost>> observePosts(List<int> postIds) {
+  Stream<List<SResource<SocialPost>>> observePosts(List<int> postIds) {
     return _queryPostByIds(postIds)
         .watch()
         .combineLatest(_socialPostCommentDao.observeCommentsForPosts(postIds),
             (posts, comments) async {
       final allCommentsMap = (comments as List<SocialPostComment>)
           .groupListsBy((comment) => comment.postId);
-      return posts.toSocialPosts(allCommentsMap);
+      return posts.toSocialPostResources(allCommentsMap);
     });
   }
 

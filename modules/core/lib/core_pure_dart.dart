@@ -25,4 +25,5 @@ export 'models/exceptions/null_exception.dart';
 export 'models/exceptions/parse_exception.dart';
 export 'models/exceptions/database_exception.dart';
 export 'models/network/base_response.dart';
+export 'utils/collection_utils.dart';
 

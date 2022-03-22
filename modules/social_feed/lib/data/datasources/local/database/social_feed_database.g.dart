@@ -12,11 +12,15 @@ class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
   final int userId;
   final String title;
   final String body;
+  final String? error;
+  final int? loading;
   SocialPostDto(
       {required this.id,
       required this.userId,
       required this.title,
-      required this.body});
+      required this.body,
+      this.error,
+      this.loading});
   factory SocialPostDto.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return SocialPostDto(
@@ -28,6 +32,10 @@ class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
           .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
       body: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}body'])!,
+      error: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}error']),
+      loading: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}loading']),
     );
   }
   @override
@@ -37,6 +45,12 @@ class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
     map['user_id'] = Variable<int>(userId);
     map['title'] = Variable<String>(title);
     map['body'] = Variable<String>(body);
+    if (!nullToAbsent || error != null) {
+      map['error'] = Variable<String?>(error);
+    }
+    if (!nullToAbsent || loading != null) {
+      map['loading'] = Variable<int?>(loading);
+    }
     return map;
   }
 
@@ -46,6 +60,11 @@ class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
       userId: Value(userId),
       title: Value(title),
       body: Value(body),
+      error:
+          error == null && nullToAbsent ? const Value.absent() : Value(error),
+      loading: loading == null && nullToAbsent
+          ? const Value.absent()
+          : Value(loading),
     );
   }
 
@@ -57,6 +76,8 @@ class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
       userId: serializer.fromJson<int>(json['userId']),
       title: serializer.fromJson<String>(json['title']),
       body: serializer.fromJson<String>(json['body']),
+      error: serializer.fromJson<String?>(json['error']),
+      loading: serializer.fromJson<int?>(json['loading']),
     );
   }
   @override
@@ -67,15 +88,25 @@ class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
       'userId': serializer.toJson<int>(userId),
       'title': serializer.toJson<String>(title),
       'body': serializer.toJson<String>(body),
+      'error': serializer.toJson<String?>(error),
+      'loading': serializer.toJson<int?>(loading),
     };
   }
 
-  SocialPostDto copyWith({int? id, int? userId, String? title, String? body}) =>
+  SocialPostDto copyWith(
+          {int? id,
+          int? userId,
+          String? title,
+          String? body,
+          String? error,
+          int? loading}) =>
       SocialPostDto(
         id: id ?? this.id,
         userId: userId ?? this.userId,
         title: title ?? this.title,
         body: body ?? this.body,
+        error: error ?? this.error,
+        loading: loading ?? this.loading,
       );
   @override
   String toString() {
@@ -83,13 +114,15 @@ class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
           ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('title: $title, ')
-          ..write('body: $body')
+          ..write('body: $body, ')
+          ..write('error: $error, ')
+          ..write('loading: $loading')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, userId, title, body);
+  int get hashCode => Object.hash(id, userId, title, body, error, loading);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -97,7 +130,9 @@ class SocialPostDto extends DataClass implements Insertable<SocialPostDto> {
           other.id == this.id &&
           other.userId == this.userId &&
           other.title == this.title &&
-          other.body == this.body);
+          other.body == this.body &&
+          other.error == this.error &&
+          other.loading == this.loading);
 }
 
 class SocialPostDtosCompanion extends UpdateCompanion<SocialPostDto> {
@@ -105,17 +140,23 @@ class SocialPostDtosCompanion extends UpdateCompanion<SocialPostDto> {
   final Value<int> userId;
   final Value<String> title;
   final Value<String> body;
+  final Value<String?> error;
+  final Value<int?> loading;
   const SocialPostDtosCompanion({
     this.id = const Value.absent(),
     this.userId = const Value.absent(),
     this.title = const Value.absent(),
     this.body = const Value.absent(),
+    this.error = const Value.absent(),
+    this.loading = const Value.absent(),
   });
   SocialPostDtosCompanion.insert({
     this.id = const Value.absent(),
     required int userId,
     required String title,
     required String body,
+    this.error = const Value.absent(),
+    this.loading = const Value.absent(),
   })  : userId = Value(userId),
         title = Value(title),
         body = Value(body);
@@ -124,12 +165,16 @@ class SocialPostDtosCompanion extends UpdateCompanion<SocialPostDto> {
     Expression<int>? userId,
     Expression<String>? title,
     Expression<String>? body,
+    Expression<String?>? error,
+    Expression<int?>? loading,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (userId != null) 'user_id': userId,
       if (title != null) 'title': title,
       if (body != null) 'body': body,
+      if (error != null) 'error': error,
+      if (loading != null) 'loading': loading,
     });
   }
 
@@ -137,12 +182,16 @@ class SocialPostDtosCompanion extends UpdateCompanion<SocialPostDto> {
       {Value<int>? id,
       Value<int>? userId,
       Value<String>? title,
-      Value<String>? body}) {
+      Value<String>? body,
+      Value<String?>? error,
+      Value<int?>? loading}) {
     return SocialPostDtosCompanion(
       id: id ?? this.id,
       userId: userId ?? this.userId,
       title: title ?? this.title,
       body: body ?? this.body,
+      error: error ?? this.error,
+      loading: loading ?? this.loading,
     );
   }
 
@@ -161,6 +210,12 @@ class SocialPostDtosCompanion extends UpdateCompanion<SocialPostDto> {
     if (body.present) {
       map['body'] = Variable<String>(body.value);
     }
+    if (error.present) {
+      map['error'] = Variable<String?>(error.value);
+    }
+    if (loading.present) {
+      map['loading'] = Variable<int?>(loading.value);
+    }
     return map;
   }
 
@@ -170,7 +225,9 @@ class SocialPostDtosCompanion extends UpdateCompanion<SocialPostDto> {
           ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('title: $title, ')
-          ..write('body: $body')
+          ..write('body: $body, ')
+          ..write('error: $error, ')
+          ..write('loading: $loading')
           ..write(')'))
         .toString();
   }
@@ -204,8 +261,19 @@ class $SocialPostDtosTable extends SocialPostDtos
   late final GeneratedColumn<String?> body = GeneratedColumn<String?>(
       'body', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _errorMeta = const VerificationMeta('error');
   @override
-  List<GeneratedColumn> get $columns => [id, userId, title, body];
+  late final GeneratedColumn<String?> error = GeneratedColumn<String?>(
+      'error', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
+  final VerificationMeta _loadingMeta = const VerificationMeta('loading');
+  @override
+  late final GeneratedColumn<int?> loading = GeneratedColumn<int?>(
+      'loading', aliasedName, true,
+      type: const IntType(), requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, userId, title, body, error, loading];
   @override
   String get aliasedName => _alias ?? 'social_post_dtos';
   @override
@@ -235,6 +303,14 @@ class $SocialPostDtosTable extends SocialPostDtos
           _bodyMeta, body.isAcceptableOrUnknown(data['body']!, _bodyMeta));
     } else if (isInserting) {
       context.missing(_bodyMeta);
+    }
+    if (data.containsKey('error')) {
+      context.handle(
+          _errorMeta, error.isAcceptableOrUnknown(data['error']!, _errorMeta));
+    }
+    if (data.containsKey('loading')) {
+      context.handle(_loadingMeta,
+          loading.isAcceptableOrUnknown(data['loading']!, _loadingMeta));
     }
     return context;
   }

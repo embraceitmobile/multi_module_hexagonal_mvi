@@ -23,8 +23,8 @@ class UserRepositoryImpl implements UserRepository {
     this._remoteDatasource,
     this._authRepository,
   ) {
-    _userResource = NetworkBoundResource(
-      localDataSourceObservable:
+    _userResource = NetworkBoundResource.withLocalDatasource(
+      localDatasourceWatcher:
           _localDatasource.observeActiveUser().toDataStateStream,
       shouldFetch: () async => await _localDatasource.user == null,
       onFetchLocalData: () => _localDatasource.user,
@@ -44,7 +44,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<User?> get user async {
     try {
       return await _userResource.fetch();
-    } on Exception {
+    } catch (_) {
       rethrow;
     }
   }
@@ -81,5 +81,5 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-  Stream<Resource<User>> observeActiveUser() => _userResource.dataListener;
+  Stream<Resource<User>> observeActiveUser() => _userResource.resourceWatcher;
 }

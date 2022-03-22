@@ -18,9 +18,8 @@ class AuthRepositoryImpl implements AuthRepository {
   late NetworkBoundResource<AuthInfo> _authInfoResource;
 
   AuthRepositoryImpl(this._localDatasource, this._remoteDatasource) {
-    _authInfoResource = NetworkBoundResource(
-      localDataSourceObservable:
-          _localDatasource.observeAuth().toDataStateStream,
+    _authInfoResource = NetworkBoundResource.withLocalDatasource(
+      localDatasourceWatcher: _localDatasource.observeAuth().toDataStateStream,
       shouldFetch: () async => await authInfo != null,
       onFetchLocalData: () => authInfo,
       onFetchRemoteData: () async => null,
@@ -95,5 +94,5 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   Stream<Resource<AuthInfo>> observeAuthInfo() =>
-      _authInfoResource.dataListener;
+      _authInfoResource.resourceWatcher;
 }

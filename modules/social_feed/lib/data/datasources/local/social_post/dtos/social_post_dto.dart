@@ -8,4 +8,8 @@ class SocialPostDtos extends Table {
   TextColumn get title => text()();
 
   TextColumn get body => text()();
+
+  TextColumn get error => text().nullable()();
+
+  IntColumn get loading => integer().nullable()();
 }

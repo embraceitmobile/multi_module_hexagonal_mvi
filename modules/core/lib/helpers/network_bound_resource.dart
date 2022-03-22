@@ -20,17 +20,16 @@ class NetworkBoundResource<T> {
   /// Called to save the result [T] of the API response into the database
   final AsyncValueSetter<T> onSaveResultToLocal;
 
-  /// A [Stream] to observe the changes in the local data
-  /// To convert a [Stream] of [T] to a [Stream] of [Resource] of [T], you can
-  /// use the simple extension method [StreamTransformer.toDataStateStream] or
-  /// write you own custom transformer.
-  final Stream<Resource<T>>? localDataSourceObservable;
+  /// Additional watchable resources that should be merged into [resourceWatcher].
+  /// Whenever a new event is emitted in any [resourceWatchers], the corresponding
+  /// event is passed onto the [resourceWatcher].
+  final List<Stream<Resource<T>>> resourceWatchers;
 
   /// Listen to this [Stream] to observe the changes in the [NetworkBoundResource]
   /// data [T]. It will emit new events whenever there is a change in the [Resource]
-  /// of the remoteDataSource stream [_remoteStreamController] or the [localDataSourceObservable]
+  /// of the remoteDataSource stream [_remoteStreamController] or the [resourceWatchers]
   /// if it is provided.
-  late final Stream<Resource<T>> dataListener;
+  late final Stream<Resource<T>> resourceWatcher;
 
   /// Controls the events for the [onFetchRemoteData] and [fetchOnceFromRemoteDatasource].
   late final StreamController<Resource<T>> _remoteStreamController;
@@ -40,7 +39,7 @@ class NetworkBoundResource<T> {
     required this.onFetchLocalData,
     required this.onFetchRemoteData,
     required this.onSaveResultToLocal,
-    this.localDataSourceObservable,
+    this.resourceWatchers = const [],
   }) {
     _remoteStreamController = StreamController<Resource<T>>.broadcast(
       onListen: () async {
@@ -53,11 +52,25 @@ class NetworkBoundResource<T> {
       },
     );
 
-    dataListener = StreamGroup.mergeBroadcast([
+    resourceWatcher = StreamGroup.mergeBroadcast([
       _remoteStreamController.stream,
-      if (localDataSourceObservable != null) localDataSourceObservable!,
+      if (resourceWatchers.isNotEmpty) ...resourceWatchers,
     ]);
   }
+
+  factory NetworkBoundResource.withLocalDatasource({
+    required AsyncValueGetter<bool> shouldFetch,
+    required AsyncValueGetter<T?> onFetchLocalData,
+    required AsyncValueGetter<T?> onFetchRemoteData,
+    required AsyncValueSetter<T> onSaveResultToLocal,
+    required Stream<Resource<T>> localDatasourceWatcher,
+  }) =>
+      NetworkBoundResource(
+          shouldFetch: shouldFetch,
+          onFetchLocalData: onFetchLocalData,
+          onFetchRemoteData: onFetchRemoteData,
+          onSaveResultToLocal: onSaveResultToLocal,
+          resourceWatchers: [localDatasourceWatcher]);
 
   Future<T?> fetch({bool alwaysFetchFreshData = false}) async {
     if (!alwaysFetchFreshData) {
@@ -119,7 +132,6 @@ class NetworkBoundResource<T> {
 
 /// Extension to convert a simple [Stream] into a [Resource] stream
 extension StreamTransformer<T> on Stream<T?> {
-
-  Stream<Resource<T>> get toDataStateStream => this.asyncMap((event) =>
-      event == null ? Resource.nothing() : Resource.success(event));
+  Stream<Resource<T>> get toDataStateStream => this.asyncMap(
+      (event) => event == null ? Resource.nothing() : Resource.success(event));
 }
