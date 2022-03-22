@@ -42,6 +42,9 @@ class SocialPostRepositoryImpl implements SocialPostRepository {
   Future<SocialPost?> getPost(int postId) async {
     //TODO: save the initial state of the post as Resource.loading
     try {
+      final cachedResponse = await _localDatasource.getPost(postId);
+      if (cachedResponse != null) return cachedResponse;
+
       final response = await _remoteDatasource.getPostById(postId);
       if (response != null) await _localDatasource.insertOrUpdatePost(response);
       return response;
@@ -55,6 +58,9 @@ class SocialPostRepositoryImpl implements SocialPostRepository {
   Future<List<SocialPost>> getPosts(List<int> postIds) async {
     //TODO: save the initial state of the post as Resource.loading
     try {
+      final cachedResponse = await _localDatasource.getPosts(postIds);
+      if (cachedResponse.length == postIds.length) return cachedResponse;
+
       final response = (await Future.wait(
               postIds.map((id) => _remoteDatasource.getPostById(id))))
           .filterNotNull;
