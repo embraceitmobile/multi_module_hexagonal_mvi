@@ -92,48 +92,6 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
   }
 
   @override
-  Future<void> insertOrUpdatePostResource(SResource<SocialPost> post) async {
-    try {
-      await transaction(() async {
-        final socialPostResource = post.toSocialPostDto;
-        if (socialPostResource != null) {
-          await into(socialPostDtos).insertOnConflictUpdate(socialPostResource);
-
-          final comments = post.toSocialPostComments;
-          if (comments.isNotEmpty) {
-            await _socialPostCommentDao.insertOrUpdateComments(comments);
-          }
-        }
-      });
-    } catch (e) {
-      throw GenericDatabaseException(e.toString());
-    }
-  }
-
-  @override
-  Future<void> insertOrUpdatePostResources(
-      List<SResource<SocialPost>> posts) async {
-    try {
-      await transaction(() async {
-        for (final post in posts) {
-          final socialPostResource = post.toSocialPostDto;
-          if (socialPostResource != null) {
-            await into(socialPostDtos)
-                .insertOnConflictUpdate(socialPostResource);
-
-            final comments = post.toSocialPostComments;
-            if (comments.isNotEmpty) {
-              await _socialPostCommentDao.insertOrUpdateComments(comments);
-            }
-          }
-        }
-      });
-    } catch (e) {
-      throw GenericDatabaseException(e.toString());
-    }
-  }
-
-  @override
   Future<void> removePost(int postId) async {
     try {
       final query = delete(socialPostDtos)
@@ -168,12 +126,12 @@ class SocialPostDao extends DatabaseAccessor<SocialFeedDatabase>
   }
 
   @override
-  Stream<List<SResource<SocialPost>>> get observeAllPosts {
+  Stream<List<SocialPost>> get observeAllPosts {
     return select(socialPostDtos).watch().combineLatest(
         _socialPostCommentDao.observeAllComments, (posts, comments) async {
       final allCommentsMap = (comments as List<SocialPostComment>)
           .groupListsBy((comment) => comment.postId);
-      return posts.toSocialPostResources(allCommentsMap);
+      return posts.toSocialPosts(allCommentsMap);
     });
   }
 

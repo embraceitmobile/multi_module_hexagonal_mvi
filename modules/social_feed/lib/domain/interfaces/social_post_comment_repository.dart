@@ -6,7 +6,7 @@ abstract class SocialPostCommentRepository {
 
   Future<List<SocialPostComment>> getCommentsForPost(int postId);
 
-  Future<void> updateComment(SocialPostComment post);
+  Future<void> updateComment(SocialPostComment comment);
 
   Future<void> removeComment(int commentId);
 
@@ -14,8 +14,7 @@ abstract class SocialPostCommentRepository {
 
   Future<void> clearCommentsForPost(int postId);
 
-  Stream<Resource<List<SResource<SocialPostComment>>>> get observeAllComments;
+  Stream<Resource<List<SocialPostComment>>> get observeAllComments;
 
-  Stream<Resource<List<SResource<SocialPostComment>>>> observeCommentsForPost(
-      int postId);
+  Stream<Resource<List<SocialPostComment>>> observeCommentsForPost(int postId);
 }

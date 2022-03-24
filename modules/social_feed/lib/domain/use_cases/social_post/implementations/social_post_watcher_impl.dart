@@ -11,6 +11,6 @@ class SocialPostWatcherImpl implements SocialPostWatcher {
   const SocialPostWatcherImpl(this._repository);
 
   @override
-  Stream<Resource<List<SResource<SocialPost>>>> get observeSocialPosts =>
+  Stream<Resource<List<SocialPost>>> get observeSocialPosts =>
       _repository.observeSocialPosts;
 }

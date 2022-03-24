@@ -10,7 +10,7 @@ abstract class SocialPostReader {
 }
 
 abstract class SocialPostWatcher {
-  Stream<Resource<List<SResource<SocialPost>>>> get observeSocialPosts;
+  Stream<Resource<List<SocialPost>>> get observeSocialPosts;
 }
 
 abstract class SocialPostEditor {

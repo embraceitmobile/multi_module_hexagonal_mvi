@@ -18,4 +18,13 @@ extension ResourceExtension<T> on Resource<T> {
         success: (resource) => resource.data as T,
         orElse: () => null,
       );
+
+  TResult mapSuccessOnly<TResult extends Object?>(
+      TResult Function(Success<T> value) success) =>
+      map(
+        success: (resource) => success(resource.data),
+        nothing: (resource) => resource as TResult,
+        loading: (resource) => resource as TResult,
+        error: (resource) => resource as TResult,
+      );
 }

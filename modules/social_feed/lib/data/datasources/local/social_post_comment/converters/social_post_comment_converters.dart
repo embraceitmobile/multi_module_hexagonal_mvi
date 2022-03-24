@@ -19,6 +19,9 @@ extension SocialPostCommentIterableExtension on Iterable<SocialPostComment>? {
   List<SocialPostCommentDto> get toSocialPostCommentDtos =>
       List<SocialPostCommentDto>.from(
           (this ?? []).map((comment) => comment.toSocialPostCommentDto()));
+
+  List<SResource<SocialPostComment>> get toSResource =>
+      (this ?? []).map((comment) => SResource.success(comment)).toList();
 }
 
 extension SocialPostCommentDtoExtension on SocialPostCommentDto {
@@ -49,22 +52,4 @@ extension SocialPostCommentDtoIterableExtension
         .filterNotNull
         .toList();
   }
-}
-
-extension SocialPostCommentResourceExtension on SResource<SocialPostComment> {
-  SocialPostCommentDto? get toSocialPostCommentDto => map(
-      success: (resource) => resource.data.toSocialPostCommentDto(),
-      loading: (resource) => (resource.data as SocialPostComment?)
-          ?.toSocialPostCommentDto(loading: resource.progress),
-      error: (resource) => (resource.data as SocialPostComment?)
-          ?.toSocialPostCommentDto(error: resource.error.toString()),
-      nothing: (_) => null);
-}
-
-extension SocialPostCommentResourceIterableExtension
-    on Iterable<SResource<SocialPostComment>>? {
-  List<SocialPostCommentDto> get toSocialPostCommentDtos =>
-      List<SocialPostCommentDto>.from((this ?? [])
-          .map((comment) => comment.toSocialPostCommentDto)
-          .filterNotNull);
 }

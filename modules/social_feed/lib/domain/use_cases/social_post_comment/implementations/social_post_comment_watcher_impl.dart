@@ -11,11 +11,11 @@ class SocialPostCommentWatcherImpl implements SocialPostCommentWatcher {
   const SocialPostCommentWatcherImpl(this._repository);
 
   @override
-  Stream<Resource<List<SResource<SocialPostComment>>>> get observeAllComments =>
+  Stream<Resource<List<SocialPostComment>>> get observeAllComments =>
       _repository.observeAllComments;
 
   @override
-  Stream<Resource<List<SResource<SocialPostComment>>>> observeCommentsForPost(
+  Stream<Resource<List<SocialPostComment>>> observeCommentsForPost(
           int postId) =>
       _repository.observeCommentsForPost(postId);
 }

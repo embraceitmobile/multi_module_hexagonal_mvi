@@ -59,38 +59,6 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
   }
 
   @override
-  Future<void> insertOrUpdateCommentResource(
-      SResource<SocialPostComment> comment) async {
-    try {
-      final commentResource = comment.toSocialPostCommentDto;
-      if (commentResource != null) {
-        await into(socialPostCommentDtos)
-            .insertOnConflictUpdate(commentResource);
-      }
-    } catch (e) {
-      throw GenericDatabaseException(e.toString());
-    }
-  }
-
-  @override
-  Future<void> insertOrUpdateCommentResources(
-      List<SResource<SocialPostComment>> comments) async {
-    try {
-      await transaction(() async {
-        for (final comment in comments) {
-          final commentResource = comment.toSocialPostCommentDto;
-          if (commentResource != null) {
-            await into(socialPostCommentDtos)
-                .insertOnConflictUpdate(commentResource);
-          }
-        }
-      });
-    } catch (e) {
-      throw GenericDatabaseException(e.toString());
-    }
-  }
-
-  @override
   Future<void> removeComment(int commentId) async {
     try {
       final query = delete(socialPostCommentDtos)
@@ -150,19 +118,6 @@ class SocialPostCommentDao extends DatabaseAccessor<SocialFeedDatabase>
       _queryCommentsByPostId(postId)
           .watch()
           .map((comments) => comments.toSocialPostComments);
-
-  @override
-  Stream<List<SResource<SocialPostComment>>> get observeAllCommentResources =>
-      select(socialPostCommentDtos)
-          .watch()
-          .map((comments) => comments.toSocialPostCommentResources);
-
-  @override
-  Stream<List<SResource<SocialPostComment>>> observeCommentResourcesForPost(
-          int postId) =>
-      _queryCommentsByPostId(postId)
-          .watch()
-          .map((comments) => comments.toSocialPostCommentResources);
 
   MultiSelectable<SocialPostCommentDto> _queryCommentsByPostId(int postId) =>
       select(socialPostCommentDtos)

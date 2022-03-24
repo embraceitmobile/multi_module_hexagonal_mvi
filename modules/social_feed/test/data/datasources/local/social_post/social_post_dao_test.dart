@@ -60,7 +60,7 @@ void main() {
       await socialPostDao.insertOrUpdatePost(singlePost1);
       socialPostDao.observeAllPosts.listen(expectAsync1((event) {
         expect(event.length, 1);
-        expect(event.first.successOrNull?.id, singlePost1.id);
+        expect(event.first.id, singlePost1.id);
       }));
     });
 
@@ -72,7 +72,7 @@ void main() {
       await socialPostDao.insertOrUpdatePost(singlePost3);
       socialPostDao.observeAllPosts.listen(expectAsync1((event) {
         expect(event.length, 3);
-        expect(event.last.successOrNull?.id, singlePost3.id);
+        expect(event.last.id, singlePost3.id);
       }));
     });
 
@@ -148,8 +148,7 @@ void main() {
       socialPostDao.observeAllPosts.listen(expectAsync1((event) {
         expect(event.length, jobEmitOrder[counter]);
         if (event.isNotEmpty) {
-          expect(event.first.successOrNull?.comments.length,
-              commentEmitOrder[counter]);
+          expect(event.first.comments.length, commentEmitOrder[counter]);
         }
         counter++;
       }, count: 3, max: 3));

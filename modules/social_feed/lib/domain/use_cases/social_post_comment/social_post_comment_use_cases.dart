@@ -8,11 +8,9 @@ abstract class SocialPostCommentReader {
 }
 
 abstract class SocialPostCommentWatcher {
-  Stream<Resource<List<SResource<SocialPostComment>>>>
-      get observeAllComments;
+  Stream<Resource<List<SocialPostComment>>> get observeAllComments;
 
-  Stream<Resource<List<SResource<SocialPostComment>>>>
-      observeCommentsForPost(int postId);
+  Stream<Resource<List<SocialPostComment>>> observeCommentsForPost(int postId);
 }
 
 abstract class SocialPostCommentEditor {

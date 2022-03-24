@@ -12,15 +12,11 @@ abstract class ISocialPostDao {
 
   Future<void> insertOrUpdatePosts(List<SocialPost> posts);
 
-  Future<void> insertOrUpdatePostResource(SResource<SocialPost> post);
-
-  Future<void> insertOrUpdatePostResources(List<SResource<SocialPost>> posts);
-
   Future<void> removePost(int postId);
 
   Future<void> removePosts(List<int> postIds);
 
   Future<void> clearPosts();
 
-  Stream<List<SResource<SocialPost>>> get observeAllPosts;
+  Stream<List<SocialPost>> get observeAllPosts;
 }

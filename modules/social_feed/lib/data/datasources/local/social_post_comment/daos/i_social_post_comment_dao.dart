@@ -10,11 +10,6 @@ abstract class ISocialPostCommentDao {
 
   Future<void> insertOrUpdateComments(List<SocialPostComment> comments);
 
-  Future<void> insertOrUpdateCommentResource(SResource<SocialPostComment> post);
-
-  Future<void> insertOrUpdateCommentResources(
-      List<SResource<SocialPostComment>> posts);
-
   Future<void> removeComment(int commentId);
 
   Future<void> removeComments(List<int> commentIds);
@@ -26,9 +21,4 @@ abstract class ISocialPostCommentDao {
   Stream<List<SocialPostComment>> get observeAllComments;
 
   Stream<List<SocialPostComment>> observeCommentsForPost(int postId);
-
-  Stream<List<SResource<SocialPostComment>>> get observeAllCommentResources;
-
-  Stream<List<SResource<SocialPostComment>>> observeCommentResourcesForPost(
-      int postId);
 }
