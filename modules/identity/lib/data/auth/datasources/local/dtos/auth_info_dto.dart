@@ -1,29 +1,27 @@
-import 'package:core/clients/local_db_clients/base/local_dto.dart';
-import 'package:core/core.dart';
+import 'package:core/core_pure_dart.dart';
 import 'package:identity/domain/entities/auth_info.dart';
 
-class AuthInfoDto extends AuthInfo implements LocalDto {
-  final String pk;
+class AuthInfoDto extends AuthInfo implements SembastDto<int> {
+  final int id;
 
   const AuthInfoDto({
-    required int userId,
+    required this.id,
     required String accessToken,
     required String refreshToken,
-  })  : pk = "key",
-        super(
-          userId: userId,
+  }) : super(
+          userId: id,
           accessToken: accessToken,
           refreshToken: refreshToken,
         );
 
   factory AuthInfoDto.fromDtoMap(Map<String, dynamic> map) => AuthInfoDto(
-        userId: map["userId"],
+        id: map["userId"],
         accessToken: map["accessToken"],
         refreshToken: map["refreshToken"],
       );
 
   factory AuthInfoDto.fromAuthInfo(AuthInfo authInfo) => AuthInfoDto(
-        userId: authInfo.userId,
+        id: authInfo.userId,
         accessToken: authInfo.accessToken,
         refreshToken: authInfo.refreshToken,
       );
@@ -33,7 +31,6 @@ class AuthInfoDto extends AuthInfo implements LocalDto {
         "userId": userId,
         "accessToken": accessToken,
         "refreshToken": refreshToken,
-        LocalDto.unique_key: pk,
       };
 
   AuthInfoDto copyWith({
@@ -42,7 +39,7 @@ class AuthInfoDto extends AuthInfo implements LocalDto {
     String? refreshToken,
   }) =>
       AuthInfoDto(
-        userId: userId ?? this.userId,
+        id: userId ?? this.userId,
         accessToken: accessToken ?? this.accessToken,
         refreshToken: refreshToken ?? this.refreshToken,
       );

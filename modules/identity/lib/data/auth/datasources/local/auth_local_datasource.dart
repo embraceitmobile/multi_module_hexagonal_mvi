@@ -5,7 +5,7 @@ import 'package:identity/data/auth/datasources/local/dtos/auth_info_dto.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: IAuthLocalDatasource)
-class AuthLocalDatasource extends SembastBaseLocalDataSource<AuthInfoDto>
+class AuthLocalDatasource extends SembastBaseLocalDataSource<int,AuthInfoDto>
     implements IAuthLocalDatasource {
   static const TAG = "AuthLocalDatasource";
   static const String AUTH_STORE_NAME = 'auth_store';

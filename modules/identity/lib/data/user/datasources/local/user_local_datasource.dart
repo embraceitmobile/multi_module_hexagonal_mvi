@@ -1,11 +1,12 @@
 import 'package:collection/collection.dart';
-import 'package:core/core.dart';
+import 'package:core/core_pure_dart.dart';
 import 'package:identity/data/user/datasources/local/i_user_local_datasource.dart';
+import 'package:identity/domain/entities/user.dart';
 import 'package:injectable/injectable.dart';
 import 'dtos/user_dto.dart';
 
 @Singleton(as: IUserLocalDatasource)
-class UserLocalDatasource extends SembastBaseLocalDataSource<UserDto>
+class UserLocalDatasource extends SembastBaseLocalDataSource<int, UserDto>
     implements IUserLocalDatasource {
   static const TAG = "UserLocalDatasource";
   static const String USER_STORE_NAME = 'user_store';
@@ -17,13 +18,15 @@ class UserLocalDatasource extends SembastBaseLocalDataSource<UserDto>
           mapper: (map) => UserDto.fromEntityMap(map),
         );
 
-  Future<UserDto?> get user async => (await findAll()).firstOrNull;
+  Future<User?> get user async => (await findAll()).firstOrNull;
 
-  Future<void> saveUser(UserDto user) async => await insertOrUpdate(user);
+  Future<void> saveUser(User user) async =>
+      await insertOrUpdate(UserDto.fromUser(user));
 
-  Future<void> updateUser(UserDto user) async => await update(user);
+  Future<void> updateUser(User user) async =>
+      await update(UserDto.fromUser(user));
 
-  Future<void> removeUser(int userId) async => await delete(userId.toString());
+  Future<void> removeUser(int userId) async => await delete(userId);
 
   Future<void> clearUsers() async => await clear() > 0;
 

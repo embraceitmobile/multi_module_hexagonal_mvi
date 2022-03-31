@@ -1,35 +1,34 @@
-import 'package:core/clients/local_db_clients/base/local_dto.dart';
-import 'package:sembast/sembast.dart';
+import 'package:core/datasources/local/local_dto.dart';
 
-abstract class ILocalDataSource<T> {
+abstract class ILocalDataSource<K, T extends LocalDto> {
   /// Insert a single [item] into database
-  Future<void> insert(LocalDto object);
+  Future<void> insert(T object);
 
   /// Updates the [item] if it exists in the database
-  Future<void> update(LocalDto object);
+  Future<void> update(T object);
 
   /// Insert an [item] if it does not exist in database, otherwise update the [item]
-  Future<void> insertOrUpdate(LocalDto object);
+  Future<void> insertOrUpdate(T object);
 
   /// Insert multiple [items] into database
-  Future<void> insertMany(List<LocalDto> list);
+  Future<void> insertMany(List<T> list);
 
   /// Insert or Update multiple [items] in the database
-  Future<void> insertOrUpdateMany(List<LocalDto> list);
+  Future<void> insertOrUpdateMany(List<T> list);
 
   /// Returns the items matching the provided [id]
   /// returns the object [T] if [id] exists, otherwise returns null
-  Future<T?> find(String id);
+  Future<T?> find(K id);
 
   /// Returns the items matching the provided [id]
   /// returns a list of items of the type [T]
-  Future<List<T>> findAll([List<String>? ids]);
+  Future<List<T>> findAll([List<K>? ids]);
 
   /// Remove an item from the database matching the given [id].
-  Future<void> delete(String id);
+  Future<void> delete(K id);
 
   /// Remove all the entities matching the [ids] from the db
-  Future<void> deleteAll(List<String> ids);
+  Future<void> deleteAll(List<K> ids);
 
   /// Clears the database of all the entries
   Future<void> clear();

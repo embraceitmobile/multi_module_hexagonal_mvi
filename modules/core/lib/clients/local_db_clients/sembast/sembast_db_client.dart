@@ -1,11 +1,10 @@
 import 'dart:async';
-
+import 'package:core/datasources/local/i_local_db_client.dart';
 import 'package:core/utils/encryption/XXTeaCodec.dart';
 import 'package:path/path.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
-import '../base/i_local_db_client.dart';
 
 const DB_NAME = 'sample.db';
 

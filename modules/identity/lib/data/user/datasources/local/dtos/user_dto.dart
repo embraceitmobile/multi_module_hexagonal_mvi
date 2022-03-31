@@ -1,9 +1,8 @@
-import 'package:core/core.dart';
+import 'package:core/core_pure_dart.dart';
 import 'package:identity/domain/entities/user.dart';
 import 'package:identity/data/user/datasources/remote/dtos/get_user_api.dart';
 
-class UserDto extends User implements LocalDto {
-  final String pk;
+class UserDto extends User implements SembastDto<int> {
   final AddressModel? address;
   final CompanyModel? company;
 
@@ -17,8 +16,7 @@ class UserDto extends User implements LocalDto {
     String? phone,
     String? website,
     String? imageUrl,
-  })  : pk = '$id',
-        super(
+  }) : super(
           id: id,
           name: name,
           username: username,
@@ -88,7 +86,6 @@ class UserDto extends User implements LocalDto {
         "phone": phone,
         "company": company?.toMap(),
         "imageUrl": imageUrl,
-        LocalDto.unique_key: pk,
       };
 }
 

@@ -1,15 +1,12 @@
 import 'dart:async';
-
 import 'package:core/clients/local_db_clients/sembast/sembast_db_client.dart';
+import 'package:core/clients/local_db_clients/sembast/sembast_dto.dart';
+import 'package:core/datasources/local/base_datasource/i_local_datasource.dart';
+import 'package:core/datasources/local/i_local_db_client.dart';
 import 'package:sembast/sembast.dart';
 
-import '../base/local_dto.dart';
-import '../base/i_local_datasource.dart';
-import '../base/i_local_db_client.dart';
-
-typedef Mapper<T> = T Function(Map<String, dynamic>);
-
-class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
+class SembastBaseLocalDataSource<K, T extends SembastDto<K>>
+    implements ILocalDataSource<K, T> {
   ///[database] this is the sembast instance to be provided using Dependency Injection
   final SembastDbClient _dbClient;
 
@@ -38,21 +35,21 @@ class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
 
   /// Insert a single [item] into database
   /// returns count of items inserted
-  Future<void> insert(LocalDto item) => _insertOrUpdate(item);
+  Future<void> insert(T item) => _insertOrUpdate(item);
 
   /// Updates the [item] if it exists in the database
   /// returns the count of the [itemsWithQuantity] updated
-  Future<void> update(LocalDto item) => _insertOrUpdate(item);
+  Future<void> update(T item) => _insertOrUpdate(item);
 
   /// Insert an [item] if it does not exist in database, otherwise update the [item]
   /// returns count of items inserted or updated
-  Future<void> insertOrUpdate(LocalDto item) => _insertOrUpdate(item);
+  Future<void> insertOrUpdate(T item) => _insertOrUpdate(item);
 
-  Future<void> _insertOrUpdate(LocalDto item, {bool log = true}) async {
-    if (_shouldLog && log) print("[$tag] [insert], insert item: ${item.pk}");
+  Future<void> _insertOrUpdate(T item, {bool log = true}) async {
+    if (_shouldLog && log) print("[$tag] [insert], insert item: ${item.id}");
 
     try {
-      await store.record(item.pk).put(_dbClient.database, item.toDtoMap());
+      await store.record(item.id).put(_dbClient.database, item.toDtoMap());
     } catch (_) {
       rethrow;
     }
@@ -60,7 +57,7 @@ class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
 
   /// Insert or Update multiple [items] in the database
   /// returns true if all operations are completed successfully.
-  Future<void> insertOrUpdateMany(List<LocalDto> items) async {
+  Future<void> insertOrUpdateMany(List<T> items) async {
     if (_shouldLog)
       print(
           "[$tag] [insertOrUpdateMany], inserting ${items.length} items in db");
@@ -78,7 +75,7 @@ class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
 
   /// Insert multiple [items] into database
   /// returns count of items inserted
-  Future<void> insertMany(List<LocalDto> items) => insertOrUpdateMany(items);
+  Future<void> insertMany(List<T> items) => insertOrUpdateMany(items);
 
   /// Return the count of records in the database
   Future<int> count() async {
@@ -87,12 +84,12 @@ class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
   }
 
   /// Returns the item matching the [id]
-  Future<T?> find(String id) async {
+  Future<T?> find(K id) async {
     return store.record(id).get(_dbClient.database) as T;
   }
 
   /// Returns all the items in the db records
-  Future<List<T>> findAll([List<String>? ids]) async {
+  Future<List<T>> findAll([List<K>? ids]) async {
     final results = ids != null
         ? await store.records(ids).get(_dbClient.database)
         : await store.find(_dbClient.database);
@@ -101,13 +98,13 @@ class SembastBaseLocalDataSource<T> implements ILocalDataSource<T> {
   }
 
   /// Remove an item from the database matching the given [id]
-  Future<void> delete(String id) async {
+  Future<void> delete(K id) async {
     return await store.record(id).delete(_dbClient.database);
   }
 
   /// Remove an item from the database matching the given [filters].
   /// returns true if all operations are completed successfully.
-  Future<void> deleteAll(List<String> uniqueIds) async {
+  Future<void> deleteAll(List<K> uniqueIds) async {
     try {
       await _dbClient.database.transaction((txn) async {
         for (final id in uniqueIds) {

@@ -1,15 +1,15 @@
-import 'dtos/user_dto.dart';
+import 'package:identity/domain/entities/user.dart';
 
 abstract class IUserLocalDatasource {
-  Future<UserDto?> get user;
+  Future<User?> get user;
 
-  Future<void> saveUser(UserDto user);
+  Future<void> saveUser(User user);
 
-  Future<void> updateUser(UserDto user);
+  Future<void> updateUser(User user);
 
   Future<void> removeUser(int userId);
 
   Future<void> clearUsers();
 
-  Stream<UserDto?> observeActiveUser();
+  Stream<User?> observeActiveUser();
 }
